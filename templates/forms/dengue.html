@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dengue Prediction</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='cssFiles/Dengue.css') }}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="sticky-nav">
+        <!-- Logo -->
+        <a href="#" class="logo">
+            <i class='bx bx-heart'></i>Health & Lifestyle
+        </a>
+
+        <!-- Navigation Links -->
+        <ul class="nav-links">
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="#about" style="color: #1e345e;">Dengue</a></li>
+            <li><a href="{{ url_for('userfeedback') }}">Feedback</a></li>
+            <li><a href="{{ url_for('About_dengue') }}">About</a></li>
+            <li><a href="{{ url_for('contact_dengue') }}">Contact</a></li>
+        </ul>
+
+        <!-- Profile Dropdown -->
+        <div class="profile-container">
+            <button class="profile-btn" id="profileToggle">
+                {% if user.photo_id %}
+                    <img src="{{ url_for('get_photo', photo_id=user.photo_id) }}" alt="Profile" class="profile-img">
+                    <span class="notification-badge">3</span>
+                {% else %}
+                    <div class="profile-icon">{{ user.name[0] | upper}}</div>
+                    <span class="notification-badge">3</span>
+                {% endif %}
+            </button>
+            <div class="dropdown-content" id="dropdownContent">
+                <ul>
+                    <li><i class='bx bx-user'></i> {{ user.name }}</li>
+                    <li><i class='bx bx-envelope'></i> {{ user.email }}</li>
+                    <li><a href="{{ url_for('profile') }}"><i class='bx bx-cog'></i> Edit Profile</a></li>
+                    <li class="dropdown-divider"></li>
+                    <li><a href="{{ url_for('back_to_login') }}"><i class='bx bx-log-out'></i> Log Out</a></li>
+                    <li><a href="{{ url_for('logout') }}" class="delete-account"><i class='bx bx-trash'></i> Delete Account</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dengue Symptom Form -->
+    <div class="form-container">
+        <h1>Dengue Symptom Form</h1>
+	    <form  id="dengueForm">
+            <label for="fever">Do you have fever?:</label>
+                <input type="radio" id="feverYes" name="fever" value="yes" required>
+                <label for="feverYes">Yes</label>
+                <input type="radio" id="feverNo" name="fever" value="no" required>
+                <label for="feverNo">No</label>
+		</br>	
+	</br>	
+
+            <label for="headache">Do you have Headache?:</label>
+                <input type="radio" id="headacheYes" name="headache" value="yes" required>
+                <label for="headacheYes">Yes</label>
+                <input type="radio" id="headacheNo" name="headache" value="no" required>
+                <label for="headacheNo">No</label>
+            
+		</br>	
+	</br>	
+
+
+            <label for="jointPain">Do you have any Joint Pains?:</label>
+                <input type="radio" id="jointPainYes" name="jointPain" value="yes" required>
+                <label for="jointPainYes">Yes</label>
+                <input type="radio" id="jointPainNo" name="jointPain" value="no" required>
+                <label for="jointPainNo">No</label>
+    	</br>
+	</br>	
+	
+
+
+            <label for="bleeding">Do you have any bleeding gums?:</label>
+                <input type="radio" id="bleedingYes" name="bleeding" value="yes" required>
+                <label for="bleedingYes">Yes</label>
+                <input type="radio" id="bleedingNo" name="bleeding" value="no" required>
+                <label for="bleedingNo">No</label>
+	</br>
+</br>	
+
+
+            <input type="submit" value="Submit" class="submit-btn">
+        </form>
+    </div>
+<!-- This should be right after your form-container div -->
+<div id="response" class="response-container"></div>
+;
+    <!-- Footer -->
+    <footer>
+        <p>WE ARE TRYING TO GIVE 100% ACCURACY PREDICTION</p>
+    </footer>
+
+    <script>
+        // Enhanced Profile Dropdown
+        const profileToggle = document.getElementById('profileToggle');
+        const dropdownContent = document.getElementById('dropdownContent');
+        const profileContainer = document.querySelector('.profile-container');
+        let dropdownTimeout;
+
+        profileToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            clearTimeout(dropdownTimeout);
+            dropdownContent.classList.toggle('show');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.profile-container')) {
+                dropdownContent.classList.remove('show');
+            }
+        });
+
+        // Close dropdown when pressing Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                dropdownContent.classList.remove('show');
+            }
+        });
+
+        // Add hover effect with delay for desktop
+        if (window.innerWidth > 768) {
+            profileToggle.addEventListener('mouseenter', function() {
+                clearTimeout(dropdownTimeout);
+                dropdownTimeout = setTimeout(() => {
+                    dropdownContent.classList.add('show');
+                }, 300);
+            });
+
+            profileContainer.addEventListener('mouseleave', function() {
+                clearTimeout(dropdownTimeout);
+                dropdownTimeout = setTimeout(() => {
+                    dropdownContent.classList.remove('show');
+                }, 500);
+            });
+
+            dropdownContent.addEventListener('mouseenter', function() {
+                clearTimeout(dropdownTimeout);
+            });
+
+            dropdownContent.addEventListener('mouseleave', function() {
+                clearTimeout(dropdownTimeout);
+                dropdownTimeout = setTimeout(() => {
+                    dropdownContent.classList.remove('show');
+                }, 300);
+            });
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('.sticky-nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Notification badge interaction
+        const notificationBadge = document.querySelector('.notification-badge');
+        if (notificationBadge) {
+            notificationBadge.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        }
+        function getFormData(event) {
+            event.preventDefault(); // Prevent form submission
+            
+            let formData = {
+                fever: document.querySelector('input[name="fever"]:checked').value,
+                headache: document.querySelector('input[name="headache"]:checked').value,
+                jointPain: document.querySelector('input[name="jointPain"]:checked').value,
+                bleeding: document.querySelector('input[name="bleeding"]:checked').value
+            };
+
+            console.log("Form Data as JSON:", JSON.stringify(formData));
+
+            fetch('http://127.0.0.1:5000/click', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())  // Convert response to JSON
+            .then(data => {
+                console.log("Response:", data);
+                document.getElementById('response').innerText = data.reply || data.error;  // Show response
+            })
+            .catch(error => console.error("Error:", error));
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("dengueForm").addEventListener("submit", getFormData);
+        });
+        // Replace your current getFormData function with this:
+function getFormData(event) {
+    event.preventDefault();
+    
+    // Show loading state
+    const submitBtn = document.querySelector('.submit-btn');
+    submitBtn.disabled = true;
+    submitBtn.value = 'Processing...';
+
+    let formData = {
+        fever: document.querySelector('input[name="fever"]:checked').value,
+        headache: document.querySelector('input[name="headache"]:checked').value,
+        jointPain: document.querySelector('input[name="jointPain"]:checked').value,
+        bleeding: document.querySelector('input[name="bleeding"]:checked').value
+    };
+
+    fetch('http://127.0.0.1:5000/click', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        const responseElement = document.getElementById('response');
+        
+        // Reset button
+        submitBtn.disabled = false;
+        submitBtn.value = 'Submit';
+        
+        // Show response
+        responseElement.innerText = data.reply || data.error;
+        responseElement.classList.add('show');
+        
+        // Scroll to response
+        responseElement.scrollIntoView({ behavior: 'smooth' });
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        submitBtn.disabled = false;
+        submitBtn.value = 'Submit';
+        document.getElementById('response').innerText = "An error occurred. Please try again.";
+        document.getElementById('response').classList.add('show');
+    });
+}
+
+// Add this to clear response when form is interacted with
+document.querySelectorAll('#dengueForm input').forEach(input => {
+    input.addEventListener('change', () => {
+        document.getElementById('response').classList.remove('show');
+    });
+});
+    </script>
+</body>
+</html>

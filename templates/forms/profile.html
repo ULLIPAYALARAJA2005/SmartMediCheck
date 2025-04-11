@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/bg1.png') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 350px;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        h2 {
+            font-weight: 600;
+        }
+        p {
+            font-size: 14px;
+            color: #e0e0e0;
+        }
+
+        .buttons {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .btn {
+            padding: 10px;
+            width: 100%;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .edit-btn { background: #ff9f43; }
+        .edit-btn:hover { background: #ff7849; }
+        .back-btn { background: #17a2b8; }
+        .back-btn:hover { background: #138496; }
+        .logout-btn { background: #dc3545; }
+        .logout-btn:hover { background: #c82333; }
+        .edit-form {
+            display: none;
+            margin-top: 20px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        label {
+            display: block;
+            font-size: 14px;
+            margin: 10px 0 5px;
+        }
+        input[type="text"],
+        input[type="file"] {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .profile-img-wrapper {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+        }
+        .skeleton-loader {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 1;
+        }
+        .skeleton-loader::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.2) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            animation: skeleton-shimmer 1.5s infinite;
+        }
+        @keyframes skeleton-shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        .profile-img {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 2;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .profile-img.loaded {
+            opacity: 1;
+        }
+        .profile-img-wrapper.loaded .skeleton-loader {
+            display: none;
+        }
+        .edit-photo-wrapper {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 20px;
+        }
+        .edit-photo-wrapper img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .edit-photo-wrapper label {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: #ff9f43;
+            border-radius: 50%;
+            padding: 8px;
+            cursor: pointer;
+            color: white;
+            font-size: 20px;
+        }
+        .edit-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .cancel-btn {
+            background: #6c757d;
+        }
+        .cancel-btn:hover {
+            background: #5a6268;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- Profile Section -->
+        <div id="profileSection">
+            <h2>Welcome, {{ user.name }}</h2>
+            <p>Email: {{ user.email }}</p>
+
+            {% if user.photo_id %}
+            <div class="profile-img-wrapper" id="profileImgWrapper">
+                <div class="skeleton-loader"></div>
+                <img class="profile-img" 
+                     src="{{ url_for('get_photo', photo_id=user.photo_id) }}" 
+                     alt="User Photo"
+                     onload="this.classList.add('loaded'); this.parentElement.classList.add('loaded')">
+            </div>
+            {% else %}
+            <p>No photo uploaded.</p>
+            {% endif %}
+
+            <div class="buttons">
+                <button class="btn edit-btn" onclick="showEditForm()">Edit Profile</button>
+                <button class="btn back-btn" onclick="history.back()">Back</button>
+                <form action="{{ url_for('logout') }}" method="post">
+                    <button type="submit" class="btn logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Edit Form Section -->
+        <div class="edit-form" id="editForm">
+            <h3>Edit Profile</h3>
+            <form action="/update_profile" method="post" enctype="multipart/form-data">
+
+                <label for="new_photo">Update Profile Picture:</label>
+                <div class="edit-photo-wrapper">
+                    <img src="{{ url_for('get_photo', photo_id=user.photo_id) if user.photo_id else url_for('static', filename='images/default-user.png') }}" alt="Current Photo">
+                    <label for="new_photo"><i class="fas fa-plus"></i></label>
+                    <input type="file" name="new_photo" id="new_photo" style="display:none">
+                </div>
+                <label for="new_name">Update Name:</label>
+                <input type="text" name="new_name" value="{{ user.name }}" required><br>
+
+                <div class="edit-buttons">
+                    <button class="btn edit-btn" type="submit">Update</button>
+                    <button class="btn cancel-btn" type="button" onclick="cancelEdit()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function showEditForm() {
+            document.getElementById("profileSection").style.display = "none";
+            document.getElementById("editForm").style.display = "block";
+        }
+
+        function cancelEdit() {
+            document.getElementById("editForm").style.display = "none";
+            document.getElementById("profileSection").style.display = "block";
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const wrapper = document.getElementById('profileImgWrapper');
+            if (wrapper) {
+                const startTime = Date.now();
+                const minDisplayTime = 1000;
+                const img = wrapper.querySelector('.profile-img');
+                if (img.complete) {
+                    img.classList.add('loaded');
+                    wrapper.classList.add('loaded');
+                } else {
+                    img.onload = function() {
+                        const elapsed = Date.now() - startTime;
+                        const remaining = Math.max(0, minDisplayTime - elapsed);
+                        setTimeout(() => {
+                            img.classList.add('loaded');
+                            wrapper.classList.add('loaded');
+                        }, remaining);
+                    };
+                    img.onerror = function() {
+                        wrapper.classList.add('error');
+                        wrapper.innerHTML = '<div class="error-icon"><i class="fas fa-user-circle"></i></div>';
+                    };
+                }
+            }
+        });
+    </script>
+</body>
+</html>

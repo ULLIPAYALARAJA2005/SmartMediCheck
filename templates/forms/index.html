@@ -1,0 +1,155 @@
+<html>
+    <head>
+      <title>Disease Prediction</title>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="{{ url_for('static', filename='cssFiles/home-style.css') }}">
+      <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    </head>
+    <body> 
+      <div class="navbar">
+        <img src="static/images/logo.png" alt="logo" class="logo">
+        <p>MedPredict</p>
+        <nav>
+          <ul>
+            <li><a href="#container">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li class="profile-container">
+              <button class="profile-btn" id="profileToggle">
+                {% if user.photo_id %}
+                    <img src="{{ url_for('get_photo', photo_id=user.photo_id) }}" alt="Profile" class="profile-img">
+                    <span class="notification-badge">3</span>
+                {% else %}
+                    <div class="profile-icon">{{ user.name[0] | upper}}</div>
+                    <span class="notification-badge">3</span>
+                {% endif %}
+              </button>
+              <div class="dropdown-content" id="dropdownContent">
+                <ul>
+                  <li><i class='bx bx-user'></i> {{ user.name }}</li>
+                  <li><i class='bx bx-envelope'></i> {{ user.email }}</li>
+                  <li><a href="{{ url_for('profile') }}"><i class='bx bx-cog'></i> Edit Profile</a></li>
+                  <li class="dropdown-divider"></li>
+                  <li><a href="{{ url_for('back_to_login') }}"><i class='bx bx-log-out'></i> Log Out</a></li>
+                  <li><a href="{{ url_for('logout') }}" class="delete-account"><i class='bx bx-trash'></i> Delete Account</a></li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      
+      <!-- Rest of your existing HTML content remains unchanged -->
+      <div id="container">
+        <div class="row">
+          <div class="col">
+            <h1 class="cursor typewriter-animation">Predict.Protect.Live</h1>
+            <p class="p_in_img">Get personalised disease predictions based on your health data. Take control of your health today for a healthier you....</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="bgimg">
+        <div style="width:100%;height:70vh;">
+          <div class="imag"><img width=50% src="{{ url_for('static', filename='images/bg2.png') }}" align="left" style="background-size: cover;"></div>
+          <div class="text-container"><span style="position: relative; top: 25px;left: 20px;">Healthy living results in &nbsp</span>
+            <span>
+              <div class="dropping-texts">
+                <div>Happiness</div>
+                <div>Strength</div>
+                <div>Peace</div>
+                <div>Confidence</div>
+              </div>
+            </span>
+          </div>
+        </div>
+        
+        <div id="about">
+          <h2 id="about_head">About us</h2>
+          <p style="font-size:25px;">"At MedPredict, we leverage advanced machine learning algorithms and medical expertise to provide personalized disease predictions.
+            Our platform empowers individuals to take proactive control of their health by identifying potential risks and recommending preventive measures.
+            Our mission is to deliver accurate, reliable, and accessible health insights, bridging the gap between individuals and healthcare professionals.
+            We are committed to transforming healthcare through AI-driven innovation."</p>
+        </div>
+        
+        <div class="disease">
+          <h2 style="margin-bottom: 30px;padding-top: 100px;color:#03055B;">Check Your Health!!</h2>
+          <div class="images">
+            <figure><a href="{{ url_for('obesity') }}"><img src="{{ url_for('static', filename='images/obesity.jpeg') }}" alt="obesity"></a><figcaption>Obesity Test</figcaption></figure>
+            <figure><a href="{{ url_for('depression') }}"><img src="{{ url_for('static', filename='images/depression.jpg') }}" alt="depression"></a><figcaption> Student Depression Test</figcaption></figure>
+            <figure><a href="{{ url_for('migraine') }}"><img src="{{ url_for('static', filename='images/migrains.jpg') }}" alt="migraine"></a><figcaption>Migraine Test</figcaption></figure>
+            <figure><a href="{{ url_for('dengue') }}"><img src="{{ url_for('static', filename='images/dengue.jpeg') }}" alt="disease4"></a><figcaption>Dengue Test</figcaption></figure>
+          </div>
+        </div>
+      </div>
+      
+      <div id="contact">
+        <h2 style="font-size:40px;margin-bottom: 30px;color:rgb(22, 132, 151);">Contact Details</h2>
+        <p style="font-size:25px;line-height:35px">Email: diseaseprediction@gmail.com<br>Contact no: 1234567890</p>
+      </div>
+      
+      <script>
+        // Enhanced Profile Dropdown
+        const profileToggle = document.getElementById('profileToggle');
+        const dropdownContent = document.getElementById('dropdownContent');
+        const profileContainer = document.querySelector('.profile-container');
+        let dropdownTimeout;
+
+        profileToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            clearTimeout(dropdownTimeout);
+            dropdownContent.classList.toggle('show');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.profile-container')) {
+                dropdownContent.classList.remove('show');
+            }
+        });
+
+        // Close dropdown when pressing Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                dropdownContent.classList.remove('show');
+            }
+        });
+
+        // Add hover effect with delay for desktop
+        if (window.innerWidth > 768) {
+            profileToggle.addEventListener('mouseenter', function() {
+                clearTimeout(dropdownTimeout);
+                dropdownTimeout = setTimeout(() => {
+                    dropdownContent.classList.add('show');
+                }, 300);
+            });
+
+            profileContainer.addEventListener('mouseleave', function() {
+                clearTimeout(dropdownTimeout);
+                dropdownTimeout = setTimeout(() => {
+                    dropdownContent.classList.remove('show');
+                }, 500);
+            });
+
+            dropdownContent.addEventListener('mouseenter', function() {
+                clearTimeout(dropdownTimeout);
+            });
+
+            dropdownContent.addEventListener('mouseleave', function() {
+                clearTimeout(dropdownTimeout);
+                dropdownTimeout = setTimeout(() => {
+                    dropdownContent.classList.remove('show');
+                }, 300);
+            });
+        }
+
+        // Dropping text animation
+        const droppingTexts = document.querySelectorAll('.dropping-texts > div');
+        droppingTexts.forEach((text, index) => {
+          text.style.animationDelay = `${index * 1}s`;
+        });
+      </script>
+    </body>
+</html>

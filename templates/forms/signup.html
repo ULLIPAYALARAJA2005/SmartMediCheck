@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signup Form | Dan Aleko</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='cssFiles/styles.css') }}">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+
+
+  <div class="card p-4 shadow-lg">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+  <!-- Video background -->
+  <video class="background-video" autoplay muted loop>
+    <source src="{{ url_for('static', filename='images/snow.mp4') }}" type="video/mp4">
+    <img src="{{ url_for('static', filename='images/bg.jpg') }}" alt="background image" class="background-image">
+</video>
+
+
+  <div class="form-container">
+    <form action="{{ url_for('signup_action') }}" method="POST" enctype="multipart/form-data">
+      <h1>Sign Up</h1>
+      <div class="input-field">
+        <input type="text" placeholder="Username" name="name" required>
+        <i class='bx bxs-user'></i>      </div>
+      <div class="input-field">
+        <input type="email" placeholder="Email" name="email" required>
+        <i class='bx bxs-envelope'></i>
+      </div>
+      <div class="input-field">
+        <input type="password" placeholder="Password" name="password" required>
+        <i class='bx bxs-lock-alt'></i>
+      </div>
+      <div class="input-field">
+        <input type="password" placeholder="Confirm Password" name="confirm_password" required>
+        <i class='bx bxs-lock-alt'></i>
+      </div>
+      <button type="submit" class="submit-btn">Sign Up</button>
+      <div class="login-link">
+        <p>Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
+      </div>
+      <input type="file" name="photo" ><br><br>
+    </form>
+  </div>
+</body>
+</html>

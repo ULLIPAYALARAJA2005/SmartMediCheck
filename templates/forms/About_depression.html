@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health & Lifestyle Survey</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='cssFiles/About_Obesity.css') }}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="sticky-nav">
+        <!-- Logo -->
+        <a href="#" class="logo">
+            <i class='bx bx-heart'></i>Health & Lifestyle
+        </a>
+
+        <!-- Navigation Links -->
+        <ul class="nav-links">
+            <li><a href="{{ url_for('index') }}">Home</a></li> <!-- Home link -->
+            <li><a href="{{ url_for('depression') }}">Depression</a></li> <!-- Survey link -->
+            <li><a href="{{ url_for('userfeedback') }}">Feed back</a></li>
+            <li><a href="#" style="color: #1e345e;">About</a></li> <!-- About link -->
+            <li><a href="{{ url_for('contact_depression') }}">Contact</a></li> <!-- Contact link -->
+        </ul>
+
+        <!-- Profile Dropdown -->
+        <div class="profile-container">
+            <button class="profile-btn" id="profileToggle">
+                {% if user.photo_id %}
+                    <img src="{{ url_for('get_photo', photo_id=user.photo_id) }}" alt="Profile" class="profile-img">
+                    <span class="notification-badge">3</span>
+                {% else %}
+                    <div class="profile-icon">{{ user.name[0] | upper}}</div>
+                    <span class="notification-badge">3</span>
+                {% endif %}
+            </button>
+            <div class="dropdown-content" id="dropdownContent">
+                <ul>
+                    <li><i class='bx bx-user'></i> {{ user.name }}</li>
+                    <li><i class='bx bx-envelope'></i> {{ user.email }}</li>
+                    <li><a href="{{ url_for('profile') }}"><i class='bx bx-cog'></i> Edit Profile</a></li>
+                    <li class="dropdown-divider"></li>
+                    <li><a href="{{ url_for('back_to_login') }}"><i class='bx bx-log-out'></i> Log Out</a></li>
+                    <li><a href="{{ url_for('logout') }}" class="delete-account"><i class='bx bx-trash'></i> Delete Account</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header>
+        <h1>Depression: A Comprehensive Overview</h1>
+    </header>
+
+    <div class="container">
+        <div id="top" class="section">
+            <h2>Classification</h2>
+            <p>Depression is classified as a mood disorder that causes persistent feelings of sadness and loss of interest. The Diagnostic and Statistical Manual of Mental Disorders (DSM-5) categorizes depressive disorders into several types:</p>
+            <ul>
+                <li><strong>Major Depressive Disorder (MDD):</strong> Characterized by severe symptoms that interfere with daily life</li>
+                <li><strong>Persistent Depressive Disorder (Dysthymia):</strong> A chronic form of depression lasting two years or more</li>
+                <li><strong>Seasonal Affective Disorder (SAD):</strong> Depression related to changes in seasons</li>
+                <li><strong>Postpartum Depression:</strong> Depression occurring after childbirth</li>
+                <li><strong>Bipolar Depression:</strong> Depressive episodes occurring as part of bipolar disorder</li>
+            </ul>
+            <p>These classifications help clinicians determine appropriate treatment approaches and understand the potential course of the illness.</p>
+        </div>
+
+        <div class="section">
+            <h2>Effects on Health</h2>
+            <h3>Physical Health</h3>
+            <p>Depression can have significant physical manifestations and increase the risk of developing other medical conditions:</p>
+            <ul>
+                <li><strong>Chronic Pain:</strong> Depression is closely linked with unexplained aches and pains</li>
+                <li><strong>Cardiovascular Disease:</strong> Depression increases the risk of heart disease and stroke</li>
+                <li><strong>Immune System Suppression:</strong> Depression can weaken the immune system</li>
+                <li><strong>Sleep Disorders:</strong> Insomnia or excessive sleeping are common symptoms</li>
+                <li><strong>Appetite Changes:</strong> Significant weight loss or gain may occur</li>
+            </ul>
+            <h3>Mental Health</h3>
+            <p>Depression affects cognitive function and emotional well-being:</p>
+            <ul>
+                <li><strong>Impaired Concentration:</strong> Difficulty focusing or making decisions</li>
+                <li><strong>Memory Problems:</strong> Trouble with recall and working memory</li>
+                <li><strong>Anxiety:</strong> Often co-occurs with depression</li>
+                <li><strong>Suicidal Thoughts:</strong> In severe cases, depression can lead to suicidal ideation</li>
+            </ul>
+            <h3>Social Impact</h3>
+            <p>Depression affects relationships and social functioning:</p>
+            <ul>
+                <li><strong>Social Withdrawal:</strong> Loss of interest in social activities</li>
+                <li><strong>Relationship Strain:</strong> Difficulty maintaining personal relationships</li>
+                <li><strong>Work Performance:</strong> Decreased productivity and increased absenteeism</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Causes</h2>
+            <h3>Biological Factors</h3>
+            <p>Imbalances in neurotransmitters like serotonin, norepinephrine, and dopamine play a role in depression. Genetic predisposition also increases risk.</p>
+            <h3>Psychological Factors</h3>
+            <p>Negative thought patterns, low self-esteem, and poor coping skills can contribute to depression.</p>
+            <h3>Environmental Factors</h3>
+            <p>Traumatic life events, chronic stress, childhood adversity, and social isolation may trigger depression.</p>
+            <h3>Medical Conditions</h3>
+            <p>Chronic illnesses, hormonal imbalances, and certain medications can lead to depressive symptoms.</p>
+            <h3>Substance Abuse</h3>
+            <p>Alcohol and drug abuse are both causes and consequences of depression.</p>
+        </div>
+
+        <div class="section">
+            <h2>Pathophysiology</h2>
+            <p>Depression involves complex interactions between biological, psychological, and social factors. Neuroimaging studies show structural and functional changes in brain regions involved in mood regulation. The hypothalamic-pituitary-adrenal (HPA) axis is often dysregulated in depression, leading to abnormal stress responses. Inflammation and neuroplasticity changes also play important roles.</p>
+        </div>
+
+        <div class="section">
+            <h2>Management</h2>
+            <h3>Psychotherapy</h3>
+            <p>Evidence-based therapies include Cognitive Behavioral Therapy (CBT), Interpersonal Therapy (IPT), and Psychodynamic Therapy.</p>
+            <h3>Medication</h3>
+            <p>Antidepressants like SSRIs, SNRIs, and atypical antidepressants help regulate brain chemistry.</p>
+            <h3>Lifestyle Changes</h3>
+            <p>Regular exercise, healthy diet, sleep hygiene, and stress management can alleviate symptoms.</p>
+            <h3>Brain Stimulation Therapies</h3>
+            <p>For treatment-resistant depression, options include ECT, TMS, and VNS.</p>
+            <h3>Hospitalization</h3>
+            <p>May be necessary for severe cases with risk of self-harm.</p>
+        </div>
+
+        <div class="section">
+            <h2>Epidemiology</h2>
+            <p>Depression affects about 280 million people worldwide, making it one of the most common mental disorders. Women are twice as likely as men to experience depression. The average age of onset is in the late 20s, though depression can occur at any age. Only about half of those affected receive treatment.</p>
+        </div>
+
+        <div class="section">
+            <h2>History</h2>
+            <h3>Historical Understanding</h3>
+            <p>Ancient civilizations described melancholia as early as the second millennium BCE. Hippocrates proposed that melancholia resulted from an imbalance of bodily fluids.</p>
+            <h3>Modern Conceptualization</h3>
+            <p>The term "depression" gained prominence in the 19th century. The first antidepressants were discovered accidentally in the 1950s.</p>
+            <h3>Cultural Representations</h3>
+            <p>Depression has been depicted in art, literature, and music throughout history, often misunderstood or romanticized.</p>
+        </div>
+
+        <div class="section">
+            <h2>Society and Culture</h2>
+            <h3>Economic Impact</h3>
+            <p>Depression is a leading cause of disability worldwide, costing billions in lost productivity and healthcare expenses.</p>
+            <h3>Stigma</h3>
+            <p>Despite growing awareness, stigma remains a barrier to treatment and social acceptance.</p>
+            <h3>Public Health Initiatives</h3>
+            <p>Mental health awareness campaigns aim to improve understanding and access to care.</p>
+        </div>
+
+        <div class="section">
+            <h2>Reports</h2>
+            <p>WHO reports depression as the leading cause of disability worldwide. The Global Burden of Disease Study tracks depression's impact across nations.</p>
+        </div>
+
+        <div class="section">
+            <h2>Childhood and Adolescent Depression</h2>
+            <p>Depression in young people manifests differently than in adults, often with irritability rather than sadness. Early intervention is crucial for preventing chronic illness.</p>
+        </div>
+
+        <div class="section">
+            <h2>See Also</h2>
+            <p>Related topics include anxiety disorders, bipolar disorder, suicide prevention, and mental health first aid.</p>
+        </div>
+
+        <div class="section">
+            <h2>References</h2>
+            <h3>Citations</h3>
+            <p>1. World Health Organization. (2021). Depression fact sheet.<br>
+            2. American Psychiatric Association. (2013). DSM-5.<br>
+            3. National Institute of Mental Health. (2022). Depression statistics.</p>
+            <h3>Further Reading</h3>
+            <p>- "The Noonday Demon" by Andrew Solomon<br>
+            - "Lost Connections" by Johann Hari<br>
+            - "Feeling Good" by David D. Burns</p>
+            <h3>External Links</h3>
+            <p>- <a href="https://www.who.int/news-room/fact-sheets/detail/depression" target="_blank">WHO Depression Information</a><br>
+            - <a href="https://www.nimh.nih.gov/health/topics/depression" target="_blank">NIMH Depression Resources</a></p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>WE ARE TRYING TO GIVE 100% ACCURACY PREDICTION</p>
+    </footer>
+
+    <script>
+        // Enhanced Profile Dropdown
+        const profileToggle = document.getElementById('profileToggle');
+        const dropdownContent = document.getElementById('dropdownContent');
+        let dropdownTimeout;
+
+        profileToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            clearTimeout(dropdownTimeout);
+            dropdownContent.classList.toggle('show');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.profile-container')) {
+                dropdownContent.classList.remove('show');
+            }
+        });
+
+        // Close dropdown when pressing Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                dropdownContent.classList.remove('show');
+            }
+        });
+
+        // Add hover effect with delay for desktop
+        if (window.innerWidth > 768) {
+            profileToggle.addEventListener('mouseenter', function() {
+                clearTimeout(dropdownTimeout);
+                dropdownTimeout = setTimeout(() => {
+                    dropdownContent.classList.add('show');
+                }, 300);
+            });
+
+            profileContainer.addEventListener('mouseleave', function() {
+                clearTimeout(dropdownTimeout);
+                dropdownTimeout = setTimeout(() => {
+                    dropdownContent.classList.remove('show');
+                }, 500);
+            });
+
+            dropdownContent.addEventListener('mouseenter', function() {
+                clearTimeout(dropdownTimeout);
+            });
+
+            dropdownContent.addEventListener('mouseleave', function() {
+                clearTimeout(dropdownTimeout);
+                dropdownTimeout = setTimeout(() => {
+                    dropdownContent.classList.remove('show');
+                }, 300);
+            });
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('.sticky-nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Notification badge interaction
+        const notificationBadge = document.querySelector('.notification-badge');
+        if (notificationBadge) {
+            notificationBadge.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health & Lifestyle Survey</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='cssFiles/About_Obesity.css') }}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="sticky-nav">
+        <!-- Logo -->
+        <a href="#" class="logo">
+            <i class='bx bx-heart'></i>Health & Lifestyle
+        </a>
+
+        <!-- Navigation Links -->
+        <ul class="nav-links">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('migraine') }}">Migraine</a></li>
+                <li><a href="{{ url_for('userfeedback') }}">Feedback</a></li>
+                <li><a href="#about" style="color: #1e345e;">About</a></li>
+                <li><a href="{{ url_for('contact_obesity') }}">Contact</a></li> <!-- Contact link -->
+        </ul>
+
+        <!-- Profile Dropdown -->
+        <div class="profile-container">
+            <button class="profile-btn" id="profileToggle">
+                {% if user.photo_id %}
+                    <img src="{{ url_for('get_photo', photo_id=user.photo_id) }}" alt="Profile" class="profile-img">
+                    <span class="notification-badge">3</span>
+                {% else %}
+                    <div class="profile-icon">{{ user.name[0] | upper}}</div>
+                    <span class="notification-badge">3</span>
+                {% endif %}
+            </button>
+            <div class="dropdown-content" id="dropdownContent">
+                <ul>
+                    <li><i class='bx bx-user'></i> {{ user.name }}</li>
+                    <li><i class='bx bx-envelope'></i> {{ user.email }}</li>
+                    <li><a href="{{ url_for('profile') }}"><i class='bx bx-cog'></i> Edit Profile</a></li>
+                    <li class="dropdown-divider"></li>
+                    <li><a href="{{ url_for('back_to_login') }}"><i class='bx bx-log-out'></i> Log Out</a></li>
+                    <li><a href="{{ url_for('logout') }}" class="delete-account"><i class='bx bx-trash'></i> Delete Account</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+  <!-- Header -->
+  <header>
+    <h1>Migraine: A Comprehensive Overview</h1>
+</header>
+
+<div class="container">
+    <div id="top" class="section">
+        <h2>What is Migraine?</h2>
+        <p>Migraine is a neurological condition characterized by intense, debilitating headaches, often accompanied by nausea, vomiting, and sensitivity to light and sound. It affects millions worldwide and can significantly impact daily life.</p>
+    </div>
+
+    <div class="section">
+        <h2>Types of Migraine</h2>
+        <ul>
+            <li><strong>Migraine without Aura:</strong> The most common type, featuring throbbing pain without warning signs.</li>
+            <li><strong>Migraine with Aura:</strong> Includes visual disturbances or sensory changes before the headache begins.</li>
+            <li><strong>Chronic Migraine:</strong> Occurs for 15 or more days per month.</li>
+            <li><strong>Hemiplegic Migraine:</strong> Causes temporary weakness on one side of the body.</li>
+            <li><strong>Retinal Migraine:</strong> Leads to temporary vision loss in one eye.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Causes and Triggers</h2>
+        <p>Migraines can be triggered by a variety of factors, including:</p>
+        <ul>
+            <li><strong>Hormonal Changes:</strong> Fluctuations in estrogen, especially in women.</li>
+            <li><strong>Dietary Factors:</strong> Caffeine, alcohol, processed foods, and skipping meals.</li>
+            <li><strong>Stress and Anxiety:</strong> Emotional stress is a common trigger.</li>
+            <li><strong>Environmental Triggers:</strong> Bright lights, loud noises, and strong smells.</li>
+            <li><strong>Sleep Patterns:</strong> Lack of sleep or excessive sleep.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Symptoms</h2>
+        <p>Migraines often progress through four stages:</p>
+        <ul>
+            <li><strong>Prodrome:</strong> Early warning signs like mood changes, food cravings, and neck stiffness.</li>
+            <li><strong>Aura:</strong> Visual or sensory disturbances (e.g., flashing lights, tingling sensations).</li>
+            <li><strong>Attack:</strong> Severe head pain, nausea, vomiting, and sensitivity to light/sound.</li>
+            <li><strong>Postdrome:</strong> A lingering feeling of exhaustion and confusion.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Treatment and Management</h2>
+        <h3>Medications</h3>
+        <p>Treatment options include:</p>
+        <ul>
+            <li><strong>Pain Relievers:</strong> Over-the-counter drugs like ibuprofen and aspirin.</li>
+            <li><strong>Triptans:</strong> Prescription medications targeting serotonin levels.</li>
+            <li><strong>Preventive Medications:</strong> Beta-blockers, antidepressants, and anti-seizure drugs.</li>
+        </ul>
+        <h3>Lifestyle Modifications</h3>
+        <p>To reduce migraine frequency:</p>
+        <ul>
+            <li>Maintain a consistent sleep schedule.</li>
+            <li>Stay hydrated and follow a balanced diet.</li>
+            <li>Manage stress through meditation and relaxation techniques.</li>
+            <li>Avoid known triggers.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Migraine and Society</h2>
+        <p>Migraines impact work productivity and quality of life. Public awareness and workplace accommodations are essential for supporting individuals with chronic migraines.</p>
+    </div>
+
+    <div class="section">
+        <h2>Further Reading</h2>
+        <p>- "The Migraine Brain" by Dr. Carolyn Bernstein<br>- "A Brain Wider Than the Sky" by Andrew Levy</p>
+    </div>
+
+    <div class="section">
+        <h2>References</h2>
+        <p>1. American Migraine Foundation (2022).<br>2. World Health Organization (2021).<br>3. National Institutes of Health (2020).</p>
+    </div>
+</div>
+
+    <!-- Footer -->
+    <footer>
+        <p>WE ARE TRYING TO GIVE 100% ACCURACY PREDICTION</p>
+    </footer>
+
+    <script>
+        // Enhanced Profile Dropdown
+        const profileToggle = document.getElementById('profileToggle');
+        const dropdownContent = document.getElementById('dropdownContent');
+        let dropdownTimeout;
+
+        profileToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            clearTimeout(dropdownTimeout);
+            dropdownContent.classList.toggle('show');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.profile-container')) {
+                dropdownContent.classList.remove('show');
+            }
+        });
+
+        // Close dropdown when pressing Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                dropdownContent.classList.remove('show');
+            }
+        });
+
+        // Add hover effect with delay for desktop
+        if (window.innerWidth > 768) {
+            profileToggle.addEventListener('mouseenter', function() {
+                clearTimeout(dropdownTimeout);
+                dropdownTimeout = setTimeout(() => {
+                    dropdownContent.classList.add('show');
+                }, 300);
+            });
+
+            profileContainer.addEventListener('mouseleave', function() {
+                clearTimeout(dropdownTimeout);
+                dropdownTimeout = setTimeout(() => {
+                    dropdownContent.classList.remove('show');
+                }, 500);
+            });
+
+            dropdownContent.addEventListener('mouseenter', function() {
+                clearTimeout(dropdownTimeout);
+            });
+
+            dropdownContent.addEventListener('mouseleave', function() {
+                clearTimeout(dropdownTimeout);
+                dropdownTimeout = setTimeout(() => {
+                    dropdownContent.classList.remove('show');
+                }, 300);
+            });
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('.sticky-nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Notification badge interaction
+        const notificationBadge = document.querySelector('.notification-badge');
+        if (notificationBadge) {
+            notificationBadge.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        }
+    </script>
+</body>
+</html>

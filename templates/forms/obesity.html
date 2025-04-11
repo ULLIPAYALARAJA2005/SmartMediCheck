@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Prediction</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='cssFiles/obesity.css') }}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="sticky-nav">
+        <a href="#" class="logo"><i class='bx bx-heart'></i>Health & Lifestyle</a>
+        <ul class="nav-links">
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="#survey" style="color: #1e345e;">BMI</a></li>
+            <li><a href="{{ url_for('userfeedback') }}">Feedback</a></li>
+            <li><a href="{{ url_for('About_obesity') }}">About</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact</a></li>
+        </ul>
+
+        <!-- Profile Dropdown -->
+        <div class="profile-container">
+            <button class="profile-btn" id="profileToggle">
+                {% if user.photo_id %}
+                    <img src="{{ url_for('get_photo', photo_id=user.photo_id) }}" alt="Profile" class="profile-img">
+                    <span class="notification-badge">3</span>
+                {% else %}
+                    <div class="profile-icon">{{ user.name[0] | upper}}</div>
+                    <span class="notification-badge">3</span>
+                {% endif %}
+            </button>
+            <div class="dropdown-content" id="dropdownContent">
+                <ul>
+                    <li><i class='bx bx-user'></i> {{ user.name }}</li>
+                    <li><i class='bx bx-envelope'></i> {{ user.email }}</li>
+                    <li><a href="{{ url_for('profile') }}"><i class='bx bx-cog'></i> Edit Profile</a></li>
+                    <li class="dropdown-divider"></li>
+                    <li><a href="{{ url_for('back_to_login') }}"><i class='bx bx-log-out'></i> Log Out</a></li>
+                    <li><a href="{{ url_for('logout') }}" class="delete-account"><i class='bx bx-trash'></i> Delete Account</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- BMI Form -->
+    <div class="form-container">
+        <h1>BMI Prediction Form</h1>
+        <form id="obesityForm">
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" placeholder="Enter your age" required>
+            <label for="height">Height (cm):</label>
+            <input type="number" id="height" name="height" placeholder="Enter height in cm" required>
+            <label for="weight">Weight (kg):</label>
+            <input type="number" id="weight" name="weight" placeholder="Enter weight in kg" required>
+            <label for="veg_frequency">Vegetable Intake (0-5):</label>
+            <input type="number" id="veg_frequency" name="veg_frequency" min="0" max="5" placeholder="0 (Never) - 5 (Daily)" required>
+            <label for="activity_frequency">Physical Activity (per week):</label>
+            <input type="number" id="activity_frequency" name="activity_frequency" placeholder="No. of times/week" required>
+            <label for="family_history">Family History of Health Issues:</label>
+            <select id="family_history" name="family_history" required>
+                <option value="" disabled selected>Select an option</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+            <label for="sex">Sex:</label>
+            <select id="sex" name="sex" required>
+                <option value="" disabled selected>Select</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select>
+            <label for="transportation">Transportation Mode:</label>
+            <select id="transportation" name="transportation" required>
+                <option value="" disabled selected>Select</option>
+                <option value="public_transportation">Public Transport</option>
+                <option value="automobile">Automobile</option>
+                <option value="walking">Walking</option>
+                <option value="motorbike">Motorbike</option>
+                <option value="bike">Bike</option>
+            </select>
+            <input type="submit" value="Submit" class="submit-btn">
+        </form>
+    </div>
+
+    <!-- Response Display -->
+    <div id="response" class="response-container" style="margin-top: 20px; display: none;"></div>
+
+    <!-- Footer -->
+    <footer>
+        <p>WE ARE TRYING TO GIVE 100% ACCURACY PREDICTION</p>
+    </footer>
+
+    <script>
+        // Enhanced Profile Dropdown
+        const profileToggle = document.getElementById('profileToggle');
+        const dropdownContent = document.getElementById('dropdownContent');
+        const profileContainer = document.querySelector('.profile-container');
+        let dropdownTimeout;
+
+        profileToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            clearTimeout(dropdownTimeout);
+            dropdownContent.classList.toggle('show');
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.profile-container')) {
+                dropdownContent.classList.remove('show');
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                dropdownContent.classList.remove('show');
+            }
+        });
+
+        if (window.innerWidth > 768) {
+            profileToggle.addEventListener('mouseenter', function() {
+                clearTimeout(dropdownTimeout);
+                dropdownTimeout = setTimeout(() => {
+                    dropdownContent.classList.add('show');
+                }, 300);
+            });
+
+            profileContainer.addEventListener('mouseleave', function() {
+                clearTimeout(dropdownTimeout);
+                dropdownTimeout = setTimeout(() => {
+                    dropdownContent.classList.remove('show');
+                }, 500);
+            });
+        }
+
+        // Form Submission Handler
+        function getFormData(event) {
+            event.preventDefault();
+
+            const submitBtn = document.querySelector('.submit-btn');
+            const responseBox = document.getElementById('response');
+            submitBtn.disabled = true;
+            submitBtn.value = 'Processing...';
+
+            const formData = {
+                age: document.getElementById("age").value,
+                height: document.getElementById("height").value,
+                weight: document.getElementById("weight").value,
+                veg_frequency: document.getElementById("veg_frequency").value,
+                activity_frequency: document.getElementById("activity_frequency").value,
+                family_history: document.getElementById("family_history").value,
+                sex: document.getElementById("sex").value,
+                transportation: document.getElementById("transportation").value
+            };
+
+            fetch("http://127.0.0.1:5000/submit", {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            })
+            .then(res => res.json())
+            .then(data => {
+                submitBtn.disabled = false;
+                submitBtn.value = 'Submit';
+                responseBox.innerText = data.reply || data.error || "No response received.";
+                responseBox.style.display = "block";
+                responseBox.scrollIntoView({ behavior: "smooth" });
+            })
+            .catch(err => {
+                submitBtn.disabled = false;
+                submitBtn.value = 'Submit';
+                responseBox.innerText = "An error occurred. Please try again.";
+                responseBox.style.display = "block";
+                console.error("Error:", err);
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("obesityForm").addEventListener("submit", getFormData);
+            document.querySelectorAll('#obesityForm input, #obesityForm select').forEach(elem => {
+                elem.addEventListener("input", () => {
+                    document.getElementById("response").style.display = "none";
+                });
+            });
+        });
+    </script>
+</body>
+</html>

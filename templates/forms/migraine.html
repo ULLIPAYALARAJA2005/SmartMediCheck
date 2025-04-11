@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Migraine Tracker</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='cssFiles/Migrane_form.css') }}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="sticky-nav">
+        <!-- Logo -->
+        <a href="#" class="logo">
+            <i class='bx bx-heart'></i>Health & Lifestyle
+        </a>
+
+        <!-- Navigation Links -->
+        <ul class="nav-links">
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="#survey" style="color: #1e345e;">Migraine</a></li>
+            <li><a href="{{ url_for('userfeedback') }}">Feedback</a></li>
+            <li><a href="{{ url_for('About_migraint') }}">About</a></li>
+            <li><a href="{{ url_for('contact_obesity') }}">Contact</a></li>
+        </ul>
+
+        <!-- Profile Dropdown -->
+        <div class="profile-container">
+            <button class="profile-btn" id="profileToggle">
+                {% if user.photo_id %}
+                    <img src="{{ url_for('get_photo', photo_id=user.photo_id) }}" alt="Profile" class="profile-img">
+                    <span class="notification-badge">3</span>
+                {% else %}
+                    <div class="profile-icon">{{ user.name[0] | upper}}</div>
+                    <span class="notification-badge">3</span>
+                {% endif %}
+            </button>
+            <div class="dropdown-content" id="dropdownContent">
+                <ul>
+                    <li><i class='bx bx-user'></i> {{ user.name }}</li>
+                    <li><i class='bx bx-envelope'></i> {{ user.email }}</li>
+                    <li><a href="{{ url_for('profile') }}"><i class='bx bx-cog'></i> Edit Profile</a></li>
+                    <li class="dropdown-divider"></li>
+                    <li><a href="{{ url_for('back_to_login') }}"><i class='bx bx-log-out'></i> Log Out</a></li>
+                    <li><a href="{{ url_for('logout') }}" class="delete-account"><i class='bx bx-trash'></i> Delete Account</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Migraine Tracker Form -->
+    <div class="form-container">
+        <h1>Migraine Tracker Form</h1>
+	    <form id="migraineForm">
+            <!-- Age Field -->
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" min="1" placeholder="Enter your age" required>
+
+            <!-- Number of Times Headache in a Day -->
+            <label for="severity">Number of times headache in a day (1-8):</label>
+            <input type="number" id="severity" name="severity" min="1" max="8" required placeholder="Frequency you affect">
+
+            <!-- Vomiting Sensation -->
+            <label>Did you have a vomiting sensation?</label>
+            <div class="radio-group">
+                <div class="radio-option">
+                    <input type="radio" id="vomit_sensation_yes" name="vomit_sensation" value="Yes" required>
+                    <label for="vomit_sensation_yes">Yes</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="vomit_sensation_no" name="vomit_sensation" value="No" required>
+                    <label for="vomit_sensation_no">No</label>
+                </div>
+            </div>
+
+            <!-- Vomiting Occurrence -->
+            <label>Did you vomit?</label>
+            <div class="radio-group">
+                <div class="radio-option">
+                    <input type="radio" id="vomit_yes" name="vomit" value="Yes" required>
+                    <label for="vomit_yes">Yes</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="vomit_no" name="vomit" value="No" required>
+                    <label for="vomit_no">No</label>
+                </div>
+            </div>
+
+            <!-- Sensitivity to Sound -->
+            <label>Were you sensitive to sound?</label>
+            <div class="radio-group">
+                <div class="radio-option">
+                    <input type="radio" id="sound_sensitivity_yes" name="sound_sensitivity" value="Yes" required>
+                    <label for="sound_sensitivity_yes">Yes</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="sound_sensitivity_no" name="sound_sensitivity" value="No" required>
+                    <label for="sound_sensitivity_no">No</label>
+                </div>
+            </div>
+
+            <!-- Sensitivity to Light -->
+            <label>Were you sensitive to light?</label>
+            <div class="radio-group">
+                <div class="radio-option">
+                    <input type="radio" id="light_sensitivity_yes" name="light_sensitivity" value="Yes" required>
+                    <label for="light_sensitivity_yes">Yes</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="light_sensitivity_no" name="light_sensitivity" value="No" required>
+                    <label for="light_sensitivity_no">No</label>
+                </div>
+            </div>
+
+            <!-- Sensation of Movement -->
+            <label>Did you feel movement though you were not moving?</label>
+            <div class="radio-group">
+                <div class="radio-option">
+                    <input type="radio" id="movement_sensation_yes" name="movement_sensation" value="Yes" required>
+                    <label for="movement_sensation_yes">Yes</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="movement_sensation_no" name="movement_sensation" value="No" required>
+                    <label for="movement_sensation_no">No</label>
+                </div>
+            </div>
+
+            <!-- Ear Noise -->
+            <label>Did you hear noises in your ears?</label>
+            <div class="radio-group">
+                <div class="radio-option">
+                    <input type="radio" id="ear_noise_yes" name="ear_noise" value="Yes" required>
+                    <label for="ear_noise_yes">Yes</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="ear_noise_no" name="ear_noise" value="No" required>
+                    <label for="ear_noise_no">No</label>
+                </div>
+            </div>
+            
+            <!-- Hearing Loss -->
+            <label>Did you experience partial loss of hearing or hearing loss?</label>
+            <div class="radio-group">
+                <div class="radio-option">
+                    <input type="radio" id="hearing_loss_yes" name="hearing_loss" value="Yes" required>
+                    <label for="hearing_loss_yes">Yes</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="hearing_loss_no" name="hearing_loss" value="No" required>
+                    <label for="hearing_loss_no">No</label>
+                </div>
+            </div>
+
+            <!-- Double Vision -->
+            <label>Did you experience double vision or seeing double?</label>
+            <div class="radio-group">
+                <div class="radio-option">
+                    <input type="radio" id="double_vision_yes" name="double_vision" value="Yes" required>
+                    <label for="double_vision_yes">Yes</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="double_vision_no" name="double_vision" value="No" required>
+                    <label for="double_vision_no">No</label>
+                </div>
+            </div>
+
+            <!-- Pricking Sensation -->
+            <label>Did you experience sensation of pricking, tingling, or creeping on the skin that has no objective cause?</label>
+            <div class="radio-group">
+                <div class="radio-option">
+                    <input type="radio" id="pricking_sensation_yes" name="pricking_sensation" value="Yes" required>
+                    <label for="pricking_sensation_yes">Yes</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="pricking_sensation_no" name="pricking_sensation" value="No" required>
+                    <label for="pricking_sensation_no">No</label>
+                </div>
+            </div>
+
+            <!-- Medication Taken -->
+            <label for="medication">Medication Taken:</label>
+            <input type="text" id="medication" name="medication" placeholder="E.g., aspirin, ibuprofen" required>
+
+            <!-- Additional Notes -->
+            <label for="notes">Additional Notes:</label>
+            <textarea id="notes" name="notes" rows="4" placeholder="Any other relevant information..."></textarea>
+
+            <input type="submit" value="Submit" class="submit-btn">
+        </form>
+    </div>
+    <p id="response" style="margin-top: 20px; padding: 15px; font-size: 18px; font-style: italic; font-weight: 600; color: #333; background-color: var(--primary-color); border-left: 5px solid #FF4500;border-top: 5px solid #FF4500; border-radius: 8px; text-align: left; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);"></p>
+
+    <footer>
+        <p>WE ARE TRYING TO GIVE 100% ACCURACY PREDICTION</p>
+    </footer>
+
+    <script>
+        // Enhanced Profile Dropdown
+        const profileToggle = document.getElementById('profileToggle');
+        const dropdownContent = document.getElementById('dropdownContent');
+        const profileContainer = document.querySelector('.profile-container');
+        let dropdownTimeout;
+
+        profileToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            clearTimeout(dropdownTimeout);
+            dropdownContent.classList.toggle('show');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.profile-container')) {
+                dropdownContent.classList.remove('show');
+            }
+        });
+
+        // Close dropdown when pressing Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                dropdownContent.classList.remove('show');
+            }
+        });
+
+        // Add hover effect with delay for desktop
+        if (window.innerWidth > 768) {
+            profileToggle.addEventListener('mouseenter', function() {
+                clearTimeout(dropdownTimeout);
+                dropdownTimeout = setTimeout(() => {
+                    dropdownContent.classList.add('show');
+                }, 300);
+            });
+
+            profileContainer.addEventListener('mouseleave', function() {
+                clearTimeout(dropdownTimeout);
+                dropdownTimeout = setTimeout(() => {
+                    dropdownContent.classList.remove('show');
+                }, 500);
+            });
+
+            dropdownContent.addEventListener('mouseenter', function() {
+                clearTimeout(dropdownTimeout);
+            });
+
+            dropdownContent.addEventListener('mouseleave', function() {
+                clearTimeout(dropdownTimeout);
+                dropdownTimeout = setTimeout(() => {
+                    dropdownContent.classList.remove('show');
+                }, 300);
+            });
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('.sticky-nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Notification badge interaction
+        const notificationBadge = document.querySelector('.notification-badge');
+        if (notificationBadge) {
+            notificationBadge.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        }
+
+        function getFormData(event) {
+            event.preventDefault(); // Prevent default form submission
+            
+            let formData = {
+                age: document.getElementById("age").value,
+                severity: document.getElementById("severity").value,
+                vomit_sensation: document.querySelector('input[name="vomit_sensation"]:checked').value,
+                vomit: document.querySelector('input[name="vomit"]:checked').value,
+                sound_sensitivity: document.querySelector('input[name="sound_sensitivity"]:checked').value,
+                light_sensitivity: document.querySelector('input[name="light_sensitivity"]:checked').value,
+                movement_sensation: document.querySelector('input[name="movement_sensation"]:checked').value,
+                ear_noise: document.querySelector('input[name="ear_noise"]:checked').value,
+                hearing_loss: document.querySelector('input[name="hearing_loss"]:checked').value,
+                double_vision: document.querySelector('input[name="double_vision"]:checked').value,
+                pricking_sensation: document.querySelector('input[name="pricking_sensation"]:checked').value,
+                medication: document.getElementById("medication").value,
+                notes: document.getElementById("notes").value
+            };
+
+            console.log("Form Data as JSON:", JSON.stringify(formData));
+
+            fetch('http://127.0.0.1:5000/give', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Response:", data);
+                document.getElementById('response').innerText = data.reply || data.error;
+            })
+            .catch(error => console.error("Error:", error));
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("migraineForm").addEventListener("submit", getFormData);
+        });
+    </script>
+</body>
+</html>

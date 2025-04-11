@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Feedback | Disease Prediction System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4cc9f0;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #4bb543;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7ff;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 0.5rem;
+            color: var(--accent-color);
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .btn i {
+            margin-right: 0.5rem;
+        }
+
+        .page-title {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark-color);
+            position: relative;
+            display: inline-block;
+        }
+
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        .feedback-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feedback-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feedback-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .feedback-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--accent-color);
+        }
+
+        .feedback-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+
+        .user-info {
+            flex-grow: 1;
+        }
+
+        .user-name {
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+
+        .feedback-date {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+
+        .feedback-content {
+            padding: 0.5rem 0;
+            color: #495057;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            grid-column: 1 / -1;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: #adb5bd;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #6c757d;
+        }
+
+        .success-message {
+            background: rgba(75, 181, 67, 0.2);
+            color: var(--success-color);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .success-message i {
+            margin-right: 0.5rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .feedback-card {
+            animation: slideUp 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .search-filter {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            gap: 1rem;
+        }
+
+        .search-box {
+            flex-grow: 1;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 3rem;
+            border: 1px solid #dee2e6;
+            border-radius: 50px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(76, 201, 240, 0.2);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+        }
+
+        @media (max-width: 768px) {
+            .feedback-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .search-filter {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>HealthPredict</span>
+            </div>
+            <a href="feedback_form.html" class="btn">
+                <i class="fas fa-plus"></i>
+                Add Feedback
+            </a>
+        </header>
+
+        <h1 class="page-title">User Feedback</h1>
+        
+        <div class="search-filter">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search feedback..." id="searchInput">
+            </div>
+        </div>
+
+        <div class="feedback-grid" id="feedbackGrid">
+            <!-- Feedback cards will be inserted here by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // Sample feedback data
+        const feedbackData = [
+            {
+                name: "Sarah Johnson",
+                email: "sarah@example.com",
+                feedback: "The disease prediction was incredibly accurate! It helped me identify symptoms I didn't even realize were connected. Thank you for this valuable tool.",
+                date: "2023-11-15T14:30:00"
+            },
+            {
+                name: "Michael Chen",
+                email: "michael@example.com",
+                feedback: "Very intuitive interface. The results were presented in a clear way that was easy to understand even for someone without medical knowledge.",
+                date: "2023-11-10T09:15:00"
+            },
+            {
+                name: "Anonymous",
+                email: "",
+                feedback: "I appreciate the privacy options. Being able to get health information without creating an account is important to me.",
+                date: "2023-11-05T16:45:00"
+            },
+            {
+                name: "Dr. Emma Wilson",
+                email: "emma.wilson@example.com",
+                feedback: "As a physician, I find this tool helpful for patient education. It's not a replacement for professional diagnosis but serves as a good starting point for health conversations.",
+                date: "2023-10-28T11:20:00"
+            },
+            {
+                name: "Robert Taylor",
+                email: "robert.t@example.com",
+                feedback: "The prediction helped me decide to see a doctor sooner than I would have otherwise. Turns out I needed treatment and this tool may have saved me from complications.",
+                date: "2023-10-22T13:10:00"
+            },
+            {
+                name: "Lisa M.",
+                email: "lisa.m@example.com",
+                feedback: "Would love to see more information about prevention tips alongside the predictions. Otherwise great experience!",
+                date: "2023-10-15T08:30:00"
+            }
+        ];
+
+        // Function to render feedback cards
+        function renderFeedback(feedbackItems) {
+            const grid = document.getElementById('feedbackGrid');
+            grid.innerHTML = '';
+
+            if (feedbackItems.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <i class="far fa-comment-dots"></i>
+                        <h3>No Feedback Found</h3>
+                        <p>Try adjusting your search terms.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            feedbackItems.forEach((item, index) => {
+                const initial = item.name && item.name !== 'Anonymous' 
+                    ? item.name.charAt(0).toUpperCase() 
+                    : 'A';
+                
+                const date = new Date(item.date);
+                const formattedDate = date.toLocaleDateString('en-US', { 
+                    month: 'short', 
+                    day: 'numeric', 
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                const card = document.createElement('div');
+                card.className = 'feedback-card';
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.innerHTML = `
+                    <div class="feedback-header">
+                        <div class="user-avatar">${initial}</div>
+                        <div class="user-info">
+                            <div class="user-name">${item.name || 'Anonymous'}</div>
+                            <div class="feedback-date">${formattedDate}</div>
+                        </div>
+                    </div>
+                    <div class="feedback-content">${item.feedback.replace(/\n/g, '<br>')}</div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Initial render
+        renderFeedback(feedbackData);
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const filtered = feedbackData.filter(item => {
+                return (
+                    (item.name && item.name.toLowerCase().includes(searchTerm)) ||
+                    (item.feedback && item.feedback.toLowerCase().includes(searchTerm))
+                );
+            });
+            renderFeedback(filtered);
+        });
+
+        // Check for success parameter in URL
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('success')) {
+            const successMessage = document.createElement('div');
+            successMessage.className = 'success-message';
+            successMessage.innerHTML = `
+                <i class="fas fa-check-circle"></i>
+                Thank you for your valuable feedback! We appreciate your input.
+            `;
+            document.querySelector('.container').insertBefore(successMessage, document.querySelector('.page-title'));
+        }
+    </script>
+</body>
+</html>

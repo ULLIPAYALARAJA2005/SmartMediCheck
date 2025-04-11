@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health & Lifestyle Survey</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='cssFiles/About_Obesity.css') }}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="sticky-nav">
+        <!-- Logo -->
+        <a href="#" class="logo">
+            <i class='bx bx-heart'></i>Health & Lifestyle
+        </a>
+
+        <!-- Navigation Links -->
+        <ul class="nav-links">
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('obesity') }}">BMI</a></li>
+            <li><a href="{{ url_for('userfeedback') }}">Feedback</a></li>
+            <li><a href="#"style="color: #1e345e;">About</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact</a></li>
+        </ul>
+
+        <!-- Profile Dropdown -->
+        <div class="profile-container">
+            <button class="profile-btn" id="profileToggle">
+                {% if user.photo_id %}
+                    <img src="{{ url_for('get_photo', photo_id=user.photo_id) }}" alt="Profile" class="profile-img">
+                    <span class="notification-badge">3</span>
+                {% else %}
+                    <div class="profile-icon">{{ user.name[0] | upper}}</div>
+                    <span class="notification-badge">3</span>
+                {% endif %}
+            </button>
+            <div class="dropdown-content" id="dropdownContent">
+                <ul>
+                    <li><i class='bx bx-user'></i> {{ user.name }}</li>
+                    <li><i class='bx bx-envelope'></i> {{ user.email }}</li>
+                    <li><a href="{{ url_for('profile') }}"><i class='bx bx-cog'></i> Edit Profile</a></li>
+                    <li class="dropdown-divider"></li>
+                    <li><a href="{{ url_for('back_to_login') }}"><i class='bx bx-log-out'></i> Log Out</a></li>
+                    <li><a href="{{ url_for('logout') }}" class="delete-account"><i class='bx bx-trash'></i> Delete Account</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+ <header>
+    <h1>Obesity: A Comprehensive Overview</h1>
+</header>
+
+<div class="container">
+    <div id="top" class="section">
+        <h2>Classification</h2>
+        <p>Obesity is classified based on Body Mass Index (BMI), which is calculated as weight in kilograms divided by height in meters squared. A BMI of 30 or above is considered obese, while a BMI between 25 and 29.9 is classified as overweight. Obesity is further categorized into:</p>
+        <ul>
+            <li><strong>Class I:</strong> BMI 30-34.9</li>
+            <li><strong>Class II:</strong> BMI 35-39.9</li>
+            <li><strong>Class III:</strong> BMI ≥ 40 (also known as severe or morbid obesity)</li>
+        </ul>
+        <p>These classifications help in assessing health risks and determining appropriate interventions. For example, individuals with Class III obesity are at higher risk for conditions like heart disease, diabetes, and sleep apnea.</p>
+    </div>
+
+    <div class="section">
+        <h2>Effects on Health</h2>
+        <h3>Mortality</h3>
+        <p>Obesity is associated with increased mortality rates due to its link with chronic diseases such as cardiovascular disease, diabetes, and certain cancers. Studies show that individuals with a BMI over 30 have a significantly higher risk of premature death compared to those with a normal BMI.</p>
+        <h3>Morbidity</h3>
+        <p>Obesity contributes to a wide range of health conditions, including:</p>
+        <ul>
+            <li><strong>Hypertension:</strong> High blood pressure is common in obese individuals due to increased strain on the heart.</li>
+            <li><strong>Type 2 Diabetes:</strong> Excess body fat leads to insulin resistance, a key factor in diabetes development.</li>
+            <li><strong>Sleep Apnea:</strong> Obesity is a major risk factor for obstructive sleep apnea, a condition that disrupts breathing during sleep.</li>
+            <li><strong>Osteoarthritis:</strong> Excess weight puts additional stress on joints, leading to joint pain and degeneration.</li>
+            <li><strong>Mental Health Disorders:</strong> Obesity is linked to depression, anxiety, and low self-esteem due to societal stigma and body image issues.</li>
+        </ul>
+        <h3>Metrics of Health</h3>
+        <p>Health metrics such as waist circumference, waist-to-hip ratio, and body fat percentage are often used alongside BMI to assess obesity-related health risks. These metrics provide a more comprehensive understanding of an individual's health status.</p>
+        <h3>Survival Paradox</h3>
+        <p>Some studies suggest that overweight or mildly obese individuals may have better survival rates in certain conditions, such as heart failure or chronic kidney disease. This phenomenon, known as the "obesity survival paradox," remains a topic of debate among researchers.</p>
+    </div>
+
+    <div class="section">
+        <h2>Causes</h2>
+        <h3>Diet</h3>
+        <p>Excessive calorie intake, particularly from high-fat and high-sugar foods, is a primary cause of obesity. Processed foods and sugary beverages contribute significantly to weight gain.</p>
+        <h3>Sedentary Lifestyle</h3>
+        <p>Lack of physical activity due to sedentary jobs, increased screen time, and reliance on automobiles has led to a global rise in obesity rates.</p>
+        <h3>Genetics</h3>
+        <p>Genetic predisposition plays a role in obesity, with certain genes influencing appetite, metabolism, and fat storage.</p>
+        <h3>Other Illnesses</h3>
+        <p>Conditions such as hypothyroidism, polycystic ovary syndrome (PCOS), and Cushing's syndrome can contribute to weight gain and obesity.</p>
+        <h3>Drug-Induced Obesity</h3>
+        <p>Certain medications, including antidepressants, antipsychotics, and corticosteroids, can lead to weight gain as a side effect.</p>
+        <h3>Social Determinants</h3>
+        <p>Socioeconomic factors, such as poverty, limited access to healthy foods, and unsafe neighborhoods, contribute to higher obesity rates in certain populations.</p>
+        <h3>Gut Bacteria</h3>
+        <p>Emerging research suggests that the composition of gut microbiota may influence weight regulation and contribute to obesity.</p>
+        <h3>Other Factors</h3>
+        <p>Sleep deprivation, stress, and environmental toxins are additional factors that can contribute to obesity.</p>
+    </div>
+
+    <div class="section">
+        <h2>Pathophysiology</h2>
+        <p>Obesity results from an imbalance between energy intake and expenditure. Excess calories are stored as fat in adipose tissue, leading to weight gain. Hormonal imbalances, such as leptin resistance, disrupt appetite regulation and energy metabolism. Chronic inflammation associated with obesity contributes to insulin resistance and other metabolic disorders.</p>
+    </div>
+
+    <div class="section">
+        <h2>Management</h2>
+        <h3>Health Policy</h3>
+        <p>Governments and organizations implement policies to combat obesity, such as taxing sugary drinks, promoting physical activity, and regulating food advertising.</p>
+        <h3>Medical Interventions</h3>
+        <p>Medical management includes lifestyle modifications, pharmacotherapy, and bariatric surgery for severe cases.</p>
+        <h3>Medication</h3>
+        <p>Weight-loss medications, such as orlistat and liraglutide, are prescribed to help individuals achieve and maintain weight loss.</p>
+        <h3>Surgery</h3>
+        <p>Bariatric surgery, including gastric bypass and sleeve gastrectomy, is effective for long-term weight loss in individuals with severe obesity.</p>
+    </div>
+
+    <div class="section">
+        <h2>Epidemiology</h2>
+        <p>Obesity is a global epidemic, with prevalence rates rising in both developed and developing countries. According to the World Health Organization (WHO), over 650 million adults worldwide were obese in 2016. Childhood obesity is also a growing concern, with long-term implications for public health.</p>
+    </div>
+
+    <div class="section">
+        <h2>History</h2>
+        <h3>Etymology</h3>
+        <p>The term "obesity" comes from the Latin word "obesus," meaning "having eaten until fat." It has been used since the 17th century to describe excessive body fat.</p>
+        <h3>Historical Attitudes</h3>
+        <p>Historically, obesity was often associated with wealth and prosperity. However, in modern times, it is viewed as a health concern and a risk factor for chronic diseases.</p>
+        <h3>The Arts</h3>
+        <p>Obesity has been depicted in art and literature throughout history, often symbolizing abundance or gluttony.</p>
+    </div>
+
+    <div class="section">
+        <h2>Society and Culture</h2>
+        <h3>Economic Impact</h3>
+        <p>Obesity imposes significant economic costs, including healthcare expenses and lost productivity. It is estimated to cost the global economy billions of dollars annually.</p>
+        <h3>Size Acceptance</h3>
+        <p>The body positivity movement advocates for the acceptance of all body sizes, challenging societal stigma against obesity.</p>
+        <h3>Industry Influence on Research</h3>
+        <p>The food and beverage industry has been criticized for funding research that downplays the health risks of obesity and promotes unhealthy products.</p>
+    </div>
+
+    <div class="section">
+        <h2>Reports</h2>
+        <p>Numerous reports by organizations like the WHO and the Centers for Disease Control and Prevention (CDC) highlight the growing prevalence of obesity and its impact on public health.</p>
+    </div>
+
+    <div class="section">
+        <h2>Childhood Obesity</h2>
+        <p>Childhood obesity is a major public health concern, with long-term consequences for physical and mental health. Factors contributing to childhood obesity include poor diet, lack of physical activity, and genetic predisposition.</p>
+    </div>
+
+    <div class="section">
+        <h2>Other Animals</h2>
+        <p>Obesity is not limited to humans; it is also observed in pets and wildlife. Overfeeding and lack of exercise are common causes of obesity in animals.</p>
+    </div>
+
+    <div class="section">
+        <h2>See Also</h2>
+        <p>Related topics include metabolic syndrome, weight loss strategies, and public health initiatives to combat obesity.</p>
+    </div>
+
+    <div class="section">
+        <h2>References</h2>
+        <h3>Citations</h3>
+        <p>1. World Health Organization. (2020). Obesity and overweight. <br>2. Centers for Disease Control and Prevention. (2021). Adult obesity facts. <br>3. National Institutes of Health. (2019). Health risks of obesity.</p>
+        <h3>Further Reading</h3>
+        <p>- "The Obesity Code" by Dr. Jason Fung <br>- "Fat Chance" by Dr. Robert Lustig <br>- "Why We Get Fat" by Gary Taubes</p>
+        <h3>External Links</h3>
+        <p>- <a href="https://www.who.int/health-topics/obesity" target="_blank">WHO Obesity Information</a> <br>- <a href="https://www.cdc.gov/obesity/index.html" target="_blank">CDC Obesity Resources</a></p>
+    </div>
+</div>
+
+
+
+    <!-- Footer -->
+    <footer>
+        <p>WE ARE TRYING TO GIVE 100% ACCURACY PREDICTION</p>
+    </footer>
+
+    <script>
+        // Enhanced Profile Dropdown
+        const profileToggle = document.getElementById('profileToggle');
+        const dropdownContent = document.getElementById('dropdownContent');
+        let dropdownTimeout;
+
+        profileToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            clearTimeout(dropdownTimeout);
+            dropdownContent.classList.toggle('show');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.profile-container')) {
+                dropdownContent.classList.remove('show');
+            }
+        });
+
+        // Close dropdown when pressing Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                dropdownContent.classList.remove('show');
+            }
+        });
+
+        // Add hover effect with delay for desktop
+        if (window.innerWidth > 768) {
+            profileToggle.addEventListener('mouseenter', function() {
+                clearTimeout(dropdownTimeout);
+                dropdownTimeout = setTimeout(() => {
+                    dropdownContent.classList.add('show');
+                }, 300);
+            });
+
+            profileContainer.addEventListener('mouseleave', function() {
+                clearTimeout(dropdownTimeout);
+                dropdownTimeout = setTimeout(() => {
+                    dropdownContent.classList.remove('show');
+                }, 500);
+            });
+
+            dropdownContent.addEventListener('mouseenter', function() {
+                clearTimeout(dropdownTimeout);
+            });
+
+            dropdownContent.addEventListener('mouseleave', function() {
+                clearTimeout(dropdownTimeout);
+                dropdownTimeout = setTimeout(() => {
+                    dropdownContent.classList.remove('show');
+                }, 300);
+            });
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('.sticky-nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Notification badge interaction
+        const notificationBadge = document.querySelector('.notification-badge');
+        if (notificationBadge) {
+            notificationBadge.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+/* Global Styles */
+:root {
+    --primary-color: #C9E4CA;/* Primary color (purple) */
+    --secondary-color:#F5F5DC; /* Secondary color (light purple) */
+    --background-gradient: linear-gradient(135deg, #C9E4CA,#F5F5DC); /* Gradient background */
+    --glassmorphism-bg: rgba(255, 255, 255, 0.1); /* Semi-transparent background for glassmorphism effect */
+    --neumorphism-shadow: 10px 10px 20px rgba(0, 0, 0, 0.1), -10px -10px 20px rgba(255, 255, 255, 0.5); /* Shadow for neumorphism effect */
+    --font-primary: 'Poppins', sans-serif; /* Primary font for the website */
+}
+
+/* Body styles */
+body {
+    font-family: var(--font-primary); /* Use the primary font */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    background: var(--background-gradient); /* Apply the gradient background */
+    color: #2E4053; /* Set text color to white */
+    overflow-x: hidden; /* Hide horizontal scrollbar */
+}
+
+/* Sticky Navigation Bar */
+.sticky-nav {
+    position: sticky; /* Make the navigation bar stick to the top */
+    top: 0; /* Stick to the top of the page */
+    background: var(--glassmorphism-bg); /* Apply glassmorphism background */
+    backdrop-filter: blur(10px); /* Add blur effect to the background */
+    box-shadow: var(--neumorphism-shadow); /* Apply neumorphism shadow */
+    z-index: 1000; /* Ensure the nav bar stays on top of other elements */
+}
+
+
+
+/* Navigation container */
+.nav-container {
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Space out items horizontally */
+    align-items:center; /* Center items vertically */
+    padding: 1rem 2rem; /* Add padding inside the container */
+}
+
+/* Logo styles */
+.logo {
+    font-size: 1.5rem; /* Set font size */
+    font-weight: bold; /* Make the text bold */
+    color: #04795f; /* Set text color to white */
+    text-decoration: none; /* Remove underline from links */
+}
+
+/* Navigation links */
+.nav-links {
+    display: flex; /* Use flexbox for layout */
+    gap: 2rem; /* Add space between links */
+    list-style: none; /* Remove bullet points from the list */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+}
+
+/* Navigation link styles */
+.nav-links a {
+    color: #04795f; /* Set link color to white */
+    text-decoration: none; /* Remove underline from links */
+    transition: color 0.3s ease; /* Add smooth color transition on hover */
+}
+
+/* Navigation link hover effect */
+.nav-links a:hover {
+    color:#000000; /* Change link color to primary color on hover */
+}
+
+/* Form Container */
+.form-container {
+    max-width: 600px; /* Set maximum width for the form */
+    margin: 4rem auto; /* Center the form horizontally with top and bottom margin */
+    padding: 2rem; /* Add padding inside the form */
+    background: var(--glassmorphism-bg); /* Apply glassmorphism background */
+    backdrop-filter: blur(10px); /* Add blur effect to the background */
+    border-radius: 15px; /* Round the corners of the form */
+    box-shadow: var(--neumorphism-shadow); /* Apply neumorphism shadow */
+}
+
+/* Form heading */
+.form-container h1 {
+    text-align: center; /* Center the heading text */
+    margin-bottom: 1.5rem; /* Add space below the heading */
+    color:#2E4053; /* Set text color to white */
+}
+
+/* Form label styles */
+.form-container label {
+    display: block; /* Make labels block-level elements */
+    margin-bottom: 0.5rem; /* Add space below each label */
+    color: #2E4053; /* Set text color to white */
+    font-weight: bold; /* Make labels bold */
+}
+
+/* Form input and select styles */
+.form-container input,
+.form-container select {
+    width: 100%; /* Make inputs and selects full width */
+    padding: 0.75rem; /* Add padding inside inputs and selects */
+    margin-bottom: 1rem; /* Add space below each input/select */
+    border: 1px solid #ccc; /* Add a light gray border */
+    border-radius: 5px; /* Round the corners */
+    background: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+    color: #333; /* Set text color to dark gray */
+    font-size: 1rem; /* Set font size */
+    box-sizing: border-box; /* Include padding and border in the element's total width */
+}
+
+/* Submit button styles */
+.form-container input[type="submit"] {
+    background: var(--primary-color); /* Set background to primary color */
+    color: #2E4053; /* Set text color to white */
+    border: none; /* Remove border */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    padding: 1rem; /* Add padding inside the button */
+    border-radius: 5px; /* Round the corners */
+    font-size: 1rem; /* Set font size */
+}
+
+/* Submit button hover effect */
+.form-container input[type="submit"]:hover {
+    background: rgb(124, 223, 177); /* Change background to blue on hover */
+}
+
+/* Footer styles */
+footer {
+    text-align: center; /* Center the text */
+    padding: 1rem; /* Add padding inside the footer */
+    background: var(--glassmorphism-bg); /* Apply glassmorphism background */
+    backdrop-filter: blur(10px); /* Add blur effect to the background */
+    margin-top: 2rem; /* Add space above the footer */
+    box-shadow: var(--neumorphism-shadow); /* Apply neumorphism shadow */
+    clear: both; /* Clear floats to prevent layout issues */
+}
+
+/* Footer paragraph styles */
+footer p {
+    margin: 0; /* Remove default margin */
+    color: #2E4053; /* Set text color to white */
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none; /* Hide navigation links on smaller screens */
+    }
+
+    .form-container {
+        margin: 2rem auto; /* Center the form horizontally */
+        padding: 1rem; /* Reduce padding for smaller screens */
+    }
+}

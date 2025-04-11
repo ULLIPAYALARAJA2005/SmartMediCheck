@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health & Lifestyle Survey</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='cssFiles/obesity.css') }}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="sticky-nav">
+        <!-- Logo -->
+        <a href="#" class="logo">
+            <i class='bx bx-heart'></i>Health & Lifestyle
+        </a>
+
+        <!-- Navigation Links -->
+        <ul class="nav-links">
+            <li><a href="{{ url_for('index') }}">Home</a></li> <!-- Home link -->
+            <li><a href="#survey" style="color: #1e345e;">Depression</a></li> <!-- Survey link -->
+            <li><a href="{{ url_for('userfeedback') }}">Feed back</a></li>
+            <li><a href="{{ url_for('About_depression') }}">About</a></li> <!-- About link -->
+            <li><a href="{{ url_for('contact_depression') }}">Contact</a></li> <!-- Contact link -->
+        </ul>
+
+        <!-- Profile Dropdown -->
+        <div class="profile-container">
+            <button class="profile-btn" id="profileToggle">
+                {% if user.photo_id %}
+                    <img src="{{ url_for('get_photo', photo_id=user.photo_id) }}" alt="Profile" class="profile-img">
+                    <span class="notification-badge">3</span>
+                {% else %}
+                    <div class="profile-icon">{{ user.name[0] | upper}}</div>
+                    <span class="notification-badge">3</span>
+                {% endif %}
+            </button>
+            <div class="dropdown-content" id="dropdownContent">
+                <ul>
+                    <li><i class='bx bx-user'></i> {{ user.name }}</li>
+                    <li><i class='bx bx-envelope'></i> {{ user.email }}</li>
+                    <li><a href="{{ url_for('profile') }}"><i class='bx bx-cog'></i> Edit Profile</a></li>
+                    <li class="dropdown-divider"></li>
+                    <li><a href="{{ url_for('back_to_login') }}"><i class='bx bx-log-out'></i> Log Out</a></li>
+                    <li><a href="{{ url_for('logout') }}" class="delete-account"><i class='bx bx-trash'></i> Delete Account</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Survey Form -->
+    <div class="form-container">
+        <h1>STUDENT DEPRESSION TEST</h1>
+        <form id='depressionForm'>
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="" disabled selected>Select your gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select>
+
+
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" min="1" placeholder="Enter your age" required>
+
+            <label for="acd_pressure">Academic Pressure (0-5):</label>
+            <input type="number" id="acd_pressure" name="acd_pressure" min="0" max="5" placeholder=" 0 - 5 " required>
+
+            <label for="cgpa">CGPA (0-10):</label>
+            <input type="number" id="cgpa" name="cgpa" min="0" max="10" placeholder=" 0 - 10 " step="0.1" required>
+
+            <label for="sleep">Sleep Duration:</label>
+            <select id="sleep" name="sleep" required>
+                <option value="" disabled selected>Select your sleep duration</option>
+                <option value="less than 5">Less than 5 hours</option>
+                <option value="5-6 hours">5-6 hours</option>
+                <option value="7-8 hours">7-8 hours</option>
+                <option value="more than 8 hours">More than 8 hours</option>
+                <option value="others">Others</option>
+            </select>
+
+            <label for="diet">Dietry Habits:</label>
+            <select id="diet" name="diet" required>
+                <option value="" disabled selected>Select your dietry habit</option>
+                <option value="unhealthy">Unhealthy</option>
+                <option value="moderate">Moderate</option>
+                <option value="healthy">Healthy</option>
+                <option value="others">Others</option>
+            </select>
+
+            <label for="suicide">Have you ever had suicidal thoughts?</label>
+            <select id="suicide" name="smoke" required>
+                <option value="" disabled selected>Select an option</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+
+            <label for="study_hours">Study hours:</label>
+            <input type="number" id="study_hours" name="studt_hours" min="0" max="24" placeholder="Study hours" required>
+
+            <label for="fin_stress">Financial Stress(0-5):</label>
+            <input type="number" id="fin_stress" name="fin_stress" min="0" max="5" placeholder=" 0 - 5 " required>
+
+            <label for="mental_ill">Family history of mental illness?</label>
+            <select id="mental_ill" name="mental_ill" required>
+                <option value="" disabled selected>Select an option</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+
+            <input type="submit" value="Submit" onclick="getFormData(event)">
+        </form>
+    </div>
+    <p id="response" class="hidden" style="margin-top: 20px; padding: 15px; font-size: 18px; font-style: italic; font-weight: 600; color: #333; background-color: var(--primary-color); border-left: 5px solid black; border-top: 5px solid black;border-radius: 8px; text-align: left; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);"></p>
+    <!-- Footer -->
+    <footer>
+        <p>WE ARE TRYING TO GIVE 100% ACCURACY PREDICTION</p>
+    </footer>
+
+    <script>
+        // Enhanced Profile Dropdown
+        const profileToggle = document.getElementById('profileToggle');
+        const dropdownContent = document.getElementById('dropdownContent');
+        let dropdownTimeout;
+
+        profileToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            clearTimeout(dropdownTimeout);
+            dropdownContent.classList.toggle('show');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.profile-container')) {
+                dropdownContent.classList.remove('show');
+            }
+        });
+
+        // Close dropdown when pressing Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                dropdownContent.classList.remove('show');
+            }
+        });
+
+        // Add hover effect with delay for desktop
+        if (window.innerWidth > 768) {
+            profileToggle.addEventListener('mouseenter', function() {
+                clearTimeout(dropdownTimeout);
+                dropdownTimeout = setTimeout(() => {
+                    dropdownContent.classList.add('show');
+                }, 300);
+            });
+
+            profileContainer.addEventListener('mouseleave', function() {
+                clearTimeout(dropdownTimeout);
+                dropdownTimeout = setTimeout(() => {
+                    dropdownContent.classList.remove('show');
+                }, 500);
+            });
+
+            dropdownContent.addEventListener('mouseenter', function() {
+                clearTimeout(dropdownTimeout);
+            });
+
+            dropdownContent.addEventListener('mouseleave', function() {
+                clearTimeout(dropdownTimeout);
+                dropdownTimeout = setTimeout(() => {
+                    dropdownContent.classList.remove('show');
+                }, 300);
+            });
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('.sticky-nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Notification badge interaction
+        const notificationBadge = document.querySelector('.notification-badge');
+        if (notificationBadge) {
+            notificationBadge.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        }
+        function getFormData(event) {
+            event.preventDefault();
+            
+            let formData = {
+                gender: document.getElementById('gender').value,
+                age: document.getElementById('age').value,
+                acd_pressure: document.getElementById('acd_pressure').value,
+                cgpa: document.getElementById('cgpa').value,
+                sleep: document.getElementById('sleep').value,
+                diet: document.getElementById('diet').value,
+                suicide: document.getElementById('suicide').value,
+                study_hours: document.getElementById('study_hours').value,
+                fin_stress: document.getElementById('fin_stress').value,
+                mental_ill: document.getElementById('mental_ill').value
+            };
+            
+            console.log("Form Data as JSON:", JSON.stringify(formData));
+            
+            fetch('http://127.0.0.1:5000/enter', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('response').innerText = data.reply || data.error;
+            })
+            .catch(error => console.error("Error:", error));
+        }
+        
+    </script>
+</body>
+</html>
