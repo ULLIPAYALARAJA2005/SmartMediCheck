@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>OTP Verification</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
         :root {
             --primary: #6c5ce7;
@@ -18,13 +18,13 @@
             --border-radius: 12px;
             --box-shadow: 0 10px 30px rgba(108, 92, 231, 0.2);
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #f9f9f9;
@@ -32,23 +32,20 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            color: var(--text);
-            line-height: 1.6;
             padding: 20px;
         }
-        
+
         .container {
-            background-color: white;
+            background: #fff;
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
             padding: 40px;
-            width: 100%;
             max-width: 500px;
+            width: 100%;
             text-align: center;
             position: relative;
-            overflow: hidden;
         }
-        
+
         .progress-bar {
             position: absolute;
             top: 0;
@@ -58,117 +55,58 @@
             background-color: #f0f0f0;
             border-radius: var(--border-radius) var(--border-radius) 0 0;
         }
-        
+
         .progress {
             height: 100%;
             width: 0;
             background: linear-gradient(45deg, var(--primary), var(--secondary));
             transition: width 0.3s ease;
-            border-radius: var(--border-radius) 0 0 0;
         }
-        
+
         h2 {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 8px;
             color: var(--primary);
+            font-size: 24px;
+            margin-bottom: 8px;
         }
-        
+
         .subtitle {
             font-size: 14px;
             color: #666;
             margin-bottom: 30px;
         }
-/* Flash Messages Styles */
-.message {
-    padding: 12px 20px;
-    border-radius: var(--border-radius);
-    margin-bottom: 20px;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    animation: fadeIn 0.3s ease;
-    position: relative;
-    border: 1px solid transparent;
-}
 
-.message::before {
-    content: '';
-    display: inline-block;
-    width: 18px;
-    height: 18px;
-    margin-right: 10px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-}
+        .message {
+            padding: 12px 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            border: 1px solid transparent;
+        }
 
-.message.success {
-    background-color: rgba(0, 184, 148, 0.1);
-    color: var(--success);
-    border-color: rgba(0, 184, 148, 0.3);
-}
+        .message.success {
+            background-color: rgba(0, 184, 148, 0.1);
+            color: var(--success);
+            border-color: rgba(0, 184, 148, 0.3);
+        }
 
-.message.success::before {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2300b894'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z'/%3E%3C/svg%3E");
-}
+        .message.error {
+            background-color: rgba(214, 48, 49, 0.1);
+            color: var(--error);
+            border-color: rgba(214, 48, 49, 0.3);
+        }
 
-.message.error {
-    background-color: rgba(214, 48, 49, 0.1);
-    color: var(--error);
-    border-color: rgba(214, 48, 49, 0.3);
-}
-
-.message.error::before {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23d63031'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z'/%3E%3C/svg%3E");
-}
-
-.message.warning {
-    background-color: rgba(253, 203, 110, 0.1);
-    color: #b8860b;
-    border-color: rgba(253, 203, 110, 0.3);
-}
-
-.message.warning::before {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23b8860b'%3E%3Cpath d='M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z'/%3E%3C/svg%3E");
-}
-
-/* Animation for message appearance */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Animation for message removal */
-.message.fade-out {
-    animation: fadeOut 0.3s ease forwards;
-}
-
-@keyframes fadeOut {
-    from {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    to {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-}
-        
         .otp-container {
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 30px;
+            justify-content: center;
             gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
         }
-        
+
         .otp-input {
             width: 50px;
             height: 60px;
@@ -177,20 +115,19 @@
             font-weight: 600;
             border: 2px solid #e0e0e0;
             border-radius: var(--border-radius);
-            outline: none;
             transition: all 0.3s ease;
         }
-        
+
         .otp-input:focus {
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2);
         }
-        
+
         .otp-input.filled {
             border-color: var(--primary);
             background-color: rgba(108, 92, 231, 0.05);
         }
-        
+
         .verify-btn {
             width: 100%;
             padding: 15px;
@@ -202,69 +139,46 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-bottom: 20px;
         }
-        
+
         .verify-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
         }
-        
+
         .verify-btn:disabled {
             background: #e0e0e0;
             cursor: not-allowed;
-            transform: none;
             box-shadow: none;
         }
-        
+
         .resend-container {
+            margin-top: 15px;
             font-size: 14px;
             color: #666;
         }
-        
+
         .resend-link {
             color: var(--primary);
             font-weight: 600;
-            text-decoration: none;
             cursor: pointer;
-            transition: all 0.2s ease;
+            text-decoration: none;
         }
-        
+
         .resend-link:hover {
             text-decoration: underline;
         }
-        
+
         .timer {
             color: var(--error);
             font-weight: 600;
             margin-left: 5px;
         }
-        
-        .confetti {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            z-index: 10;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
+
         @media (max-width: 480px) {
-            .container {
-                padding: 30px 20px;
-            }
-            
             .otp-input {
                 width: 40px;
                 height: 50px;
-                font-size: 20px;
-            }
-            
-            h2 {
                 font-size: 20px;
             }
         }
@@ -275,11 +189,11 @@
         <div class="progress-bar">
             <div class="progress" id="progressBar"></div>
         </div>
-        
-        <h2>Verify Your Identity</h2>
-        <p class="subtitle">We've sent a 6-digit code to your email/phone</p>
 
-        <!-- Display flash messages -->
+        <h2>Verify Your Identity</h2>
+        <p class="subtitle">We've sent a 7-digit code to your email/phone</p>
+
+        <!-- Flask Flash Messages -->
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
@@ -290,193 +204,100 @@
 
         <form method="POST" action="/verify-otp" id="otpForm">
             <div class="otp-container" id="otpContainer">
-                <input type="text" class="otp-input" name="otp1" maxlength="1" pattern="\d" required autocomplete="off">
-                <input type="text" class="otp-input" name="otp2" maxlength="1" pattern="\d" required autocomplete="off">
-                <input type="text" class="otp-input" name="otp3" maxlength="1" pattern="\d" required autocomplete="off">
-                <input type="text" class="otp-input" name="otp4" maxlength="1" pattern="\d" required autocomplete="off">
-                <input type="text" class="otp-input" name="otp5" maxlength="1" pattern="\d" required autocomplete="off">
-                <input type="text" class="otp-input" name="otp6" maxlength="1" pattern="\d" required autocomplete="off">
-                <input type="text" class="otp-input" name="otp7" maxlength="1" pattern="\d" required autocomplete="off">
-
+                {% for i in range(1, 8) %}
+                    <input type="text" class="otp-input" name="otp{{i}}" maxlength="1" required autocomplete="off" pattern="\d">
+                {% endfor %}
             </div>
-            <!-- This hidden field will contain the complete OTP -->
             <input type="hidden" name="otp" id="fullOtp">
-            <button type="submit" class="verify-btn" id="verifyBtn">Verify Code</button>
+            <button type="submit" class="verify-btn" id="verifyBtn" disabled>Verify Code</button>
         </form>
-        
+
         <div class="resend-container">
-            Didn't receive code? <a class="resend-link" id="resendLink">Resend</a>
+            Didn't receive code? 
+            <form method="POST" action="/forgot-password-resend" style="display:inline;" id="resendForm">
+                <button type="submit" id="resendLink" class="resend-link" disabled style="all: unset; color: var(--primary); font-weight: 600; cursor: pointer;">Resend</button>
+            </form>
+            
             <span id="timer" class="timer"></span>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const otpInputs = document.querySelectorAll('.otp-input');
-            const fullOtpInput = document.getElementById('fullOtp');
-            const verifyBtn = document.getElementById('verifyBtn');
-            const resendLink = document.getElementById('resendLink');
-            const timerElement = document.getElementById('timer');
-            const progressBar = document.getElementById('progressBar');
-            const container = document.querySelector('.container');
-            const otpForm = document.getElementById('otpForm');
-            
-            // Initialize the progress bar animation
-            function initProgressBar() {
-                let progress = 0;
-                const duration = 3000; // 3 seconds
-                const interval = 30; // update every 30ms
-                const increment = (interval / duration) * 100;
-                
-                const progressInterval = setInterval(() => {
-                    progress += increment;
-                    progressBar.style.width = `${Math.min(progress, 100)}%`;
-                    
-                    if (progress >= 100) {
-                        clearInterval(progressInterval);
-                    }
-                }, interval);
-            }
-            
-            // Handle OTP input navigation and validation
-            function setupOTPInputs() {
-                // Start with the first input focused
-                otpInputs[0].focus();
-                
-                otpInputs.forEach((input, index) => {
-                    // Allow only numbers
-                    input.addEventListener('input', function() {
-                        this.value = this.value.replace(/[^0-9]/g, '');
-                        
-                        if (this.value.length === 1) {
-                            this.classList.add('filled');
-                            if (index < otpInputs.length - 1) {
-                                setTimeout(() => {
-                                    otpInputs[index + 1].focus();
-                                }, 10);
-                            }
-                        } else {
-                            this.classList.remove('filled');
-                        }
-                        
-                        updateFullOtp();
-                    });
-                    
-                    // Handle backspace
-                    input.addEventListener('keydown', function(e) {
-                        if (e.key === 'Backspace' && this.value.length === 0 && index > 0) {
-                            otpInputs[index - 1].focus();
-                        }
-                    });
-                    
-                    // Handle paste
-                    input.addEventListener('paste', function(e) {
-                        e.preventDefault();
-                        const pasteData = e.clipboardData.getData('text/plain').replace(/[^0-9]/g, '');
-                        
-                        if (pasteData.length === otpInputs.length) {
-                            otpInputs.forEach((input, i) => {
-                                input.value = pasteData[i] || '';
-                                input.classList.add('filled');
-                                if (i === otpInputs.length - 1) {
-                                    input.focus();
-                                }
-                            });
-                            updateFullOtp();
-                        }
-                    });
-                });
-            }
-            
-            // Combine all OTP digits into one hidden field before submission
-            function updateFullOtp() {
-                let fullOtp = '';
-                otpInputs.forEach(input => {
-                    fullOtp += input.value;
-                });
-                fullOtpInput.value = fullOtp;
-                
-                // Enable/disable verify button based on complete OTP
-                verifyBtn.disabled = fullOtp.length !== otpInputs.length;
-            }
-            
-            // Timer for resend functionality
-            function setupResendTimer() {
-                let timeLeft = 30;
-                
-                function updateTimer() {
-                    if (timeLeft > 0) {
-                        const minutes = Math.floor(timeLeft / 60);
-                        const seconds = timeLeft % 60;
-                        timerElement.textContent = `(${minutes}:${seconds < 10 ? '0' : ''}${seconds})`;
-                        timeLeft--;
-                        setTimeout(updateTimer, 1000);
-                        resendLink.style.pointerEvents = 'none';
-                        resendLink.style.opacity = '0.5';
+        document.addEventListener("DOMContentLoaded", function () {
+            const inputs = document.querySelectorAll(".otp-input");
+            const hiddenOtp = document.getElementById("fullOtp");
+            const verifyBtn = document.getElementById("verifyBtn");
+            const resendBtn = document.getElementById("resendLink");
+            const timer = document.getElementById("timer");
+            const progress = document.getElementById("progressBar");
+
+            let seconds = 30;
+            function startTimer() {
+                resendBtn.disabled = true;
+                resendBtn.style.opacity = 0.5;
+                const countdown = setInterval(() => {
+                    if (seconds <= 0) {
+                        clearInterval(countdown);
+                        timer.textContent = "";
+                        resendBtn.disabled = false;
+                        resendBtn.style.opacity = 1;
                     } else {
-                        timerElement.textContent = '';
-                        resendLink.style.pointerEvents = 'auto';
-                        resendLink.style.opacity = '1';
+                        timer.textContent = `(${seconds--}s)`;
                     }
-                }
-                
-                // Start the timer
-                updateTimer();
-                
-                // Handle resend click
-                resendLink.addEventListener('click', function(e) {
+                }, 1000);
+            }
+
+            function updateProgressBar() {
+                let width = 0;
+                const interval = setInterval(() => {
+                    if (width >= 100) {
+                        clearInterval(interval);
+                    } else {
+                        width += 1;
+                        progress.style.width = width + "%";
+                    }
+                }, 30);
+            }
+
+            function updateOtpValue() {
+                let otp = "";
+                inputs.forEach((input) => otp += input.value);
+                hiddenOtp.value = otp;
+                verifyBtn.disabled = otp.length !== inputs.length;
+            }
+
+            inputs.forEach((input, index) => {
+                input.addEventListener("input", (e) => {
+                    input.value = input.value.replace(/[^0-9]/g, "");
+                    if (input.value.length === 1 && index < inputs.length - 1) {
+                        inputs[index + 1].focus();
+                    }
+                    input.classList.toggle("filled", input.value !== "");
+                    updateOtpValue();
+                });
+
+                input.addEventListener("keydown", (e) => {
+                    if (e.key === "Backspace" && input.value === "" && index > 0) {
+                        inputs[index - 1].focus();
+                    }
+                });
+
+                input.addEventListener("paste", (e) => {
                     e.preventDefault();
-                    
-                    // Show loading state
-                    const originalText = resendLink.textContent;
-                    resendLink.textContent = 'Sending...';
-                    
-                    // Simulate API call
-                    setTimeout(() => {
-                        // Reset the timer
-                        timeLeft = 30;
-                        updateTimer();
-                        
-                        // Show success message
-                        const messageDiv = document.createElement('div');
-                        messageDiv.className = 'message success';
-                        messageDiv.textContent = 'New OTP sent successfully!';
-                        container.insertBefore(messageDiv, otpForm);
-                        
-                        // Reset resend link text
-                        resendLink.textContent = originalText;
-                        
-                        // Remove message after 5 seconds
-                        setTimeout(() => {
-                            messageDiv.classList.add('animate__animated', 'animate__fadeOut');
-                            setTimeout(() => {
-                                messageDiv.remove();
-                            }, 500);
-                        }, 5000);
-                    }, 1500);
+                    const paste = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, inputs.length);
+                    paste.split("").forEach((char, i) => {
+                        if (inputs[i]) {
+                            inputs[i].value = char;
+                            inputs[i].classList.add("filled");
+                        }
+                    });
+                    inputs[Math.min(paste.length, inputs.length - 1)].focus();
+                    updateOtpValue();
                 });
-            }
-            
-            // Form submission handling
-            function setupFormSubmission() {
-                otpForm.addEventListener('submit', function(e) {
-                    // Ensure the full OTP is properly set before submission
-                    updateFullOtp();
-                    
-                    // Show loading state
-                    verifyBtn.textContent = 'Verifying...';
-                    verifyBtn.disabled = true;
-                    
-                    // The form will now submit normally with the full OTP in the 'otp' field
-                    // which matches your backend expectation: request.form['otp']
-                });
-            }
-            
-            // Initialize all functionality
-            initProgressBar();
-            setupOTPInputs();
-            setupResendTimer();
-            setupFormSubmission();
+            });
+
+            startTimer();
+            updateProgressBar();
         });
     </script>
 </body>

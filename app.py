@@ -94,6 +94,37 @@ def forgot_password():
     
     return render_template('forms/forgot_password.html')
 
+
+# Route: Forgot Password (Enter Email)
+@app.route('/forgot-password-resend', methods=['GET', 'POST'])
+def forgot_password_resend():
+    
+    if request.method == 'POST':
+        email = session['email']
+        user = users_collection.find_one({"email": email})
+
+        if user:
+            otp = generate_otp()
+            forgot_collection.update_one({"email": email}, {"$set": {"otp": otp}}, upsert=True)
+            print("OTP sent to email:", email)  # Debugging line
+            if send_otp_email(email, otp):
+                session['email'] = email  # Store email in session
+                return redirect(url_for('verify_otp'))
+            else:
+                flash("Failed to send OTP", "danger")
+        else:
+            flash("Email not registered", "danger")
+    
+    return render_template('forms/forgot_password.html')
+
+
+
+
+
+
+
+
+
 # Route: Verify OTP
 @app.route('/verify-otp', methods=['GET', 'POST'])
 def verify_otp():

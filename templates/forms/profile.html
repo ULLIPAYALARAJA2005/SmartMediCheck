@@ -22,8 +22,8 @@
             background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
             padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 25px;
+            box-shadow: 0 9px 10px rgba(0, 0, 0, 0.2);
             width: 350px;
             text-align: center;
             color: white;
@@ -36,7 +36,6 @@
             font-size: 14px;
             color: #e0e0e0;
         }
-
         .buttons {
             margin-top: 20px;
             display: flex;
@@ -94,6 +93,10 @@
             border-radius: 50%;
             overflow: hidden;
             border: 3px solid rgba(255, 255, 255, 0.2);
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+        .profile-img-wrapper.has-image {
+            background: transparent;
         }
         .skeleton-loader {
             position: absolute;
@@ -103,6 +106,10 @@
             height: 100%;
             background: rgba(255, 255, 255, 0.1);
             z-index: 1;
+            display: none;
+        }
+        .profile-img-wrapper.loading .skeleton-loader {
+            display: block;
         }
         .skeleton-loader::after {
             content: '';
@@ -129,13 +136,18 @@
             height: 100%;
             object-fit: cover;
             z-index: 2;
-            opacity: 0;
-            transition: opacity 0.4s ease;
         }
-        .profile-img.loaded {
-            opacity: 1;
+        .profile-initial {
+            position: absolute;
+            font-size: 4rem;
+            font-weight: bold;
+            color: white;
+            z-index: 3;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
-        .profile-img-wrapper.loaded .skeleton-loader {
+        .profile-img-wrapper.has-image .profile-initial {
             display: none;
         }
         .edit-photo-wrapper {
@@ -143,12 +155,29 @@
             width: 150px;
             height: 150px;
             margin: 0 auto 20px;
+            border-radius: 50%;
+            overflow: visible;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: 3px solid rgba(255, 255, 255, 0.2);
         }
-        .edit-photo-wrapper img {
+        .edit-photo-img {
             width: 100%;
             height: 100%;
-            border-radius: 50%;
             object-fit: cover;
+            overflow: hidden;
+            border-radius: 50%;
+        }
+        .edit-photo-initial {
+            position: absolute;
+            font-size: 4rem;
+            font-weight: bold;
+            color: white;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .edit-photo-wrapper.has-image .edit-photo-initial {
+            display: none;
         }
         .edit-photo-wrapper label {
             position: absolute;
@@ -160,6 +189,10 @@
             cursor: pointer;
             color: white;
             font-size: 20px;
+            z-index: 3;
+        }
+        .edit-photo-wrapper input[type="file"] {
+            display: none;
         }
         .edit-buttons {
             display: flex;
@@ -176,30 +209,27 @@
 </head>
 <body>
     <div class="container">
-
         <!-- Profile Section -->
         <div id="profileSection">
             <h2>Welcome, {{ user.name }}</h2>
-            <p>Email: {{ user.email }}</p>
 
-            {% if user.photo_id %}
-            <div class="profile-img-wrapper" id="profileImgWrapper">
+            <div class="profile-img-wrapper {% if user.photo_id %}has-image{% endif %}" id="profileImgWrapper">
+                {% if user.photo_id %}
                 <div class="skeleton-loader"></div>
                 <img class="profile-img" 
                      src="{{ url_for('get_photo', photo_id=user.photo_id) }}" 
                      alt="User Photo"
-                     onload="this.classList.add('loaded'); this.parentElement.classList.add('loaded')">
+                     onload="this.parentElement.classList.remove('loading')"
+                     onerror="handleImageError(this)">
+                {% endif %}
+                <div class="profile-initial">{{ user.name[0] | upper }}</div>
             </div>
-            {% else %}
-            <p>No photo uploaded.</p>
-            {% endif %}
+            <p>Email: {{ user.email }}</p>
+
 
             <div class="buttons">
                 <button class="btn edit-btn" onclick="showEditForm()">Edit Profile</button>
-                <button class="btn back-btn" onclick="history.back()">Back</button>
-                <form action="{{ url_for('logout') }}" method="post">
-                    <button type="submit" class="btn logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
-                </form>
+                <button class="btn back-btn" onclick="history.back()"><i class="fas fa-sign-out-alt"></i> Back</button>
             </div>
         </div>
 
@@ -207,12 +237,16 @@
         <div class="edit-form" id="editForm">
             <h3>Edit Profile</h3>
             <form action="/update_profile" method="post" enctype="multipart/form-data">
-
                 <label for="new_photo">Update Profile Picture:</label>
-                <div class="edit-photo-wrapper">
-                    <img src="{{ url_for('get_photo', photo_id=user.photo_id) if user.photo_id else url_for('static', filename='images/default-user.png') }}" alt="Current Photo">
+                <div class="edit-photo-wrapper {% if user.photo_id %}has-image{% endif %}" id="editPhotoWrapper">
+                    {% if user.photo_id %}
+                    <img class="edit-photo-img" 
+                         src="{{ url_for('get_photo', photo_id=user.photo_id) }}" 
+                         alt="Current Photo">
+                    {% endif %}
+                    <div class="edit-photo-initial">{{ user.name[0] | upper }}</div>
                     <label for="new_photo"><i class="fas fa-plus"></i></label>
-                    <input type="file" name="new_photo" id="new_photo" style="display:none">
+                    <input type="file" name="new_photo" id="new_photo" onchange="previewImage(this)">
                 </div>
                 <label for="new_name">Update Name:</label>
                 <input type="text" name="new_name" value="{{ user.name }}" required><br>
@@ -221,6 +255,7 @@
                     <button class="btn edit-btn" type="submit">Update</button>
                     <button class="btn cancel-btn" type="button" onclick="cancelEdit()">Cancel</button>
                 </div>
+                
             </form>
         </div>
     </div>
@@ -236,28 +271,43 @@
             document.getElementById("profileSection").style.display = "block";
         }
 
+        function handleImageError(img) {
+            img.style.display = 'none';
+            img.parentElement.classList.remove('has-image');
+        }
+
+        function previewImage(input) {
+            const wrapper = document.getElementById('editPhotoWrapper');
+            const initial = wrapper.querySelector('.edit-photo-initial');
+            const img = wrapper.querySelector('.edit-photo-img') || document.createElement('img');
+            
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    if (!img.classList.contains('edit-photo-img')) {
+                        img.className = 'edit-photo-img';
+                        wrapper.insertBefore(img, initial);
+                    }
+                    img.src = e.target.result;
+                    wrapper.classList.add('has-image');
+                }
+                
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // Initialize loading state for profile image
         document.addEventListener('DOMContentLoaded', function() {
-            const wrapper = document.getElementById('profileImgWrapper');
-            if (wrapper) {
-                const startTime = Date.now();
-                const minDisplayTime = 1000;
-                const img = wrapper.querySelector('.profile-img');
-                if (img.complete) {
-                    img.classList.add('loaded');
-                    wrapper.classList.add('loaded');
-                } else {
-                    img.onload = function() {
-                        const elapsed = Date.now() - startTime;
-                        const remaining = Math.max(0, minDisplayTime - elapsed);
-                        setTimeout(() => {
-                            img.classList.add('loaded');
-                            wrapper.classList.add('loaded');
-                        }, remaining);
-                    };
-                    img.onerror = function() {
-                        wrapper.classList.add('error');
-                        wrapper.innerHTML = '<div class="error-icon"><i class="fas fa-user-circle"></i></div>';
-                    };
+            const profileWrapper = document.getElementById('profileImgWrapper');
+            const profileImg = profileWrapper.querySelector('.profile-img');
+            
+            if (profileImg) {
+                profileWrapper.classList.add('loading');
+                
+                // If image is already cached and loaded
+                if (profileImg.complete) {
+                    profileWrapper.classList.remove('loading');
                 }
             }
         });

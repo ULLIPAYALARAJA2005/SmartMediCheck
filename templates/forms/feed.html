@@ -6,290 +6,198 @@
     <title>Feedback Portal</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Modern CSS Reset with Variables */
-        :root {
-            --primary: #4361ee;
-            --primary-dark: #3a56d4;
-            --primary-light: #4895ef;
-            --secondary: #7209b7;
-            --accent: #f72585;
-            --dark: #1a1a2e;
-            --light: #f8f9fa;
-            --success: #4cc9f0;
-            --card-bg: rgba(255, 255, 255, 0.95);
-            --glass-bg: rgba(255, 255, 255, 0.15);
-            --glass-border: rgba(255, 255, 255, 0.18);
-            --text: #2b2d42;
-            --text-light: #8d99ae;
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            --border-radius: 16px;
-            --blur: blur(12px);
-        }
-
-        * {
+        /* Base Styles */
+        body {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-
-        /* Base Styles with Gradient Background */
-        body {
-            font-family: 'Poppins', system-ui, -apple-system, sans-serif;
-            background: linear-gradient(135deg, #000428, #004e92);
-            color: var(--text);
-            line-height: 1.6;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
+            font-family: 'Arial', sans-serif;
+            background-color: #e6f2ff;
+            color: #003366;
             overflow-x: hidden;
-            perspective: 1000px;
+            min-height: 100vh;
         }
 
-        /* Floating Glass Morphism Container */
-        .container {
-            background: var(--glass-bg);
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
-            border: 1px solid var(--glass-border);
-            padding: 2.5rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            text-align: center;
+        /* Particles Background */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            max-width: 420px;
-            transform-style: preserve-3d;
-            transition: var(--transition);
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #e6f2ff 0%, #cce6ff 100%);
+            opacity: 0.8;
+        }
+
+        /* Main Container with Animated Border */
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 40px;
+            background-color: white;
+            border-radius: 25px;
+            box-shadow: 0 0 25px rgba(0, 102, 204, 0.15);
+            text-align: center;
             position: relative;
             overflow: hidden;
-            z-index: 1;
+            animation: borderPulse 4s infinite;
         }
+
+        
 
         .container::before {
-            content: '';
+            content: "";
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
-            z-index: -1;
-            animation: rotate 20s linear infinite;
+            top: 0;
+            left: 0;
+            width: 10px;
+            height: 100%;
+            background: linear-gradient(to bottom, #0066cc, #0099ff);
         }
 
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Header with Animated Gradient */
         h2 {
-            color: white;
-            margin-bottom: 2rem;
-            font-size: 2rem;
-            font-weight: 700;
+            color: #0066cc;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #b3d9ff;
             position: relative;
-            display: inline-block;
-            background: linear-gradient(90deg, #f72585, #4361ee, #4cc9f0);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            background-size: 300% 300%;
-            animation: gradient 8s ease infinite;
-        }
-
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
         }
 
         h2::after {
-            content: '';
+            content: "";
             position: absolute;
-            bottom: -10px;
+            bottom: -2px;
             left: 50%;
             transform: translateX(-50%);
-            width: 60px;
+            width: 100px;
             height: 3px;
-            background: linear-gradient(90deg, #f72585, #4361ee);
-            border-radius: 3px;
-            animation: linePulse 2s ease-in-out infinite;
-        }
-
-        @keyframes linePulse {
-            0%, 100% { width: 60px; }
-            50% { width: 100px; }
+            background-color: #0099ff;
         }
 
         /* Menu List */
         ul {
             list-style: none;
             padding: 0;
-            margin: 0 0 2rem;
+            margin: 0 0 30px 0;
         }
 
         li {
-            margin: 1rem 0;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: var(--transition);
+            margin: 20px 0;
         }
 
-        li:hover {
-            transform: translateY(-5px);
-        }
-
-        /* 3D Animated Buttons */
         a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            display: block;
+            padding: 15px 25px;
+            background-color: #f0f8ff;
+            color: #0066cc;
             text-decoration: none;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            padding: 1.2rem;
-            border-radius: var(--border-radius);
-            transition: var(--transition);
-            font-weight: 600;
-            font-size: 1rem;
-            letter-spacing: 0.5px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid #cce6ff;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 6px 15px rgba(67, 97, 238, 0.3);
-            transform: translateZ(20px);
-            border: none;
-            cursor: pointer;
-        }
-
-        a i {
-            font-size: 1.2rem;
-            transition: var(--transition);
-        }
-
-        a:hover i {
-            transform: translateX(5px);
-        }
-
-        a::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: 0.6s;
         }
 
         a:hover {
-            background: linear-gradient(135deg, var(--primary-light), var(--primary));
-            transform: translateY(-3px) translateZ(30px);
-            box-shadow: 0 10px 25px rgba(67, 97, 238, 0.4);
+            background-color: #e6f2ff;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 102, 204, 0.1);
         }
 
-        a:hover::before {
-            left: 100%;
+        a:active {
+            transform: translateY(0);
         }
 
-        /* Back Button with Different Style */
+        a i {
+            margin-right: 10px;
+            color: #0099ff;
+        }
+
+        /* Back Button */
         .back-btn {
-            margin-top: 1.5rem;
-            background: linear-gradient(135deg, var(--secondary), #560bad);
-            box-shadow: 0 6px 15px rgba(114, 9, 183, 0.3);
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #0066cc;
+            color: white !important;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border: none;
+            margin-top: 20px;
         }
 
         .back-btn:hover {
-            background: linear-gradient(135deg, #560bad, var(--secondary));
-            transform: translateY(-3px) translateZ(30px);
-            box-shadow: 0 10px 25px rgba(114, 9, 183, 0.4);
+            background-color: #0052a3;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 102, 204, 0.2);
         }
 
-        /* Floating Particles Background */
-        .particles {
+        .back-btn i {
+            color: white !important;
+        }
+
+        /* Animated Heart Icon */
+        .icon-heart {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
+            top: 20px;
+            right: 30px;
+            font-size: 5rem;
+            color: #ff0000;
+            animation: heartbeat 1.5s infinite;
+            z-index: 1;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+            cursor: pointer;
         }
 
-        .particle {
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .icon-plus {
             position: absolute;
-            background: rgba(255, 255, 255, 0.6);
-            border-radius: 50%;
-            animation: float linear infinite;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; }
+            bottom: 20px;
+            left: 30px;
+            font-size: 4rem;
+            color: #ff9900;
+            opacity: 0.2;
+            z-index: 0;
         }
 
         /* Responsive Design */
-        @media (max-width: 480px) {
+        @media (max-width: 768px) {
             .container {
-                padding: 2rem 1.5rem;
-                max-width: 90%;
+                margin: 20px;
+                padding: 25px;
             }
             
             h2 {
-                font-size: 1.75rem;
+                font-size: 1.8rem;
             }
             
             a {
-                padding: 1rem;
-                font-size: 0.95rem;
+                padding: 12px 20px;
+                font-size: 1rem;
             }
-        }
 
-        /* Advanced Checkmark Animation for Feedback */
-        .checkmark {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            display: block;
-            stroke-width: 5;
-            stroke: #4cc9f0;
-            stroke-miterlimit: 10;
-            margin: 0 auto 20px;
-            box-shadow: inset 0 0 0 rgba(76, 201, 240, 0.4);
-            animation: fill .6s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
-        }
+            .icon-heart {
+                font-size: 3rem;
+                top: 15px;
+                right: 15px;
+            }
 
-        .checkmark__circle {
-            stroke-dasharray: 166;
-            stroke-dashoffset: 166;
-            stroke-width: 5;
-            stroke-miterlimit: 10;
-            stroke: #4cc9f0;
-            fill: none;
-            animation: stroke .6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
-        }
-
-        .checkmark__check {
-            transform-origin: 50% 50%;
-            stroke-dasharray: 48;
-            stroke-dashoffset: 48;
-            animation: stroke .3s cubic-bezier(0.65, 0, 0.45, 1) .8s forwards;
-        }
-
-        @keyframes stroke {
-            100% { stroke-dashoffset: 0; }
-        }
-
-        @keyframes scale {
-            0%, 100% { transform: none; }
-            50% { transform: scale3d(1.1, 1.1, 1); }
-        }
-
-        @keyframes fill {
-            100% { box-shadow: inset 0 0 0 60px rgba(76, 201, 240, 0); }
+            .icon-plus {
+                font-size: 2.5rem;
+                bottom: 15px;
+                left: 15px;
+            }
         }
     </style>
 </head>
@@ -299,6 +207,10 @@
     
     <!-- Main Container -->
     <div class="container">
+        <!-- Medical Icons -->
+        <i class="fas fa-heartbeat icon-heart" id="heartbeatIcon"></i>
+        <i class="fas fa-plus-circle icon-plus"></i>
+        
         <h2>Feedback Portal</h2>
         <ul>
             <li><a href="{{ url_for('feedback') }}" id="writeFeedback">
@@ -313,56 +225,96 @@
         </a>
     </div>
 
+    <!-- Audio Elements for Heartbeat Sounds -->
+    <audio id="lubSound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-heartbeat-lub-1761.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="dubSound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-heartbeat-dub-1760.mp3" type="audio/mpeg">
+    </audio>
+
     <script>
+        // Simple animation for particles background
         document.addEventListener('DOMContentLoaded', function() {
-            // Create floating particles
-            function createParticles() {
-                const particlesContainer = document.getElementById('particles');
-                const particleCount = window.innerWidth < 768 ? 15 : 30;
+            const particles = document.getElementById('particles');
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.style.position = 'absolute';
+                particle.style.width = Math.random() * 5 + 2 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.backgroundColor = `rgba(0, ${Math.floor(100 + Math.random() * 155)}, ${Math.floor(200 + Math.random() * 55)}, ${Math.random() * 0.5})`;
+                particle.style.borderRadius = '50%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.opacity = Math.random() * 0.5 + 0.1;
                 
-                for (let i = 0; i < particleCount; i++) {
-                    const particle = document.createElement('div');
-                    particle.classList.add('particle');
-                    
-                    // Random properties
-                    const size = Math.random() * 10 + 5;
-                    const posX = Math.random() * window.innerWidth;
-                    const delay = Math.random() * 5;
-                    const duration = Math.random() * 20 + 10;
-                    const opacity = Math.random() * 0.6 + 0.2;
-                    
-                    particle.style.width = `${size}px`;
-                    particle.style.height = `${size}px`;
-                    particle.style.left = `${posX}px`;
-                    particle.style.bottom = `-${size}px`;
-                    particle.style.animationDelay = `${delay}s`;
-                    particle.style.animationDuration = `${duration}s`;
-                    particle.style.opacity = opacity;
-                    
-                    particlesContainer.appendChild(particle);
-                }
+                const duration = Math.random() * 20 + 10;
+                particle.style.animation = `float ${duration}s linear infinite`;
+                
+                particles.appendChild(particle);
+            }
+
+            // Heartbeat sound effects
+            const heartIcon = document.getElementById('heartbeatIcon');
+            const lubSound = document.getElementById('lubSound');
+            const dubSound = document.getElementById('dubSound');
+            
+            let heartbeatInterval;
+            
+            function playHeartbeat() {
+                lubSound.currentTime = 0;
+                lubSound.play();
+                setTimeout(() => {
+                    dubSound.currentTime = 0;
+                    dubSound.play();
+                }, 300);
             }
             
-            createParticles();
+            // Play heartbeat on page load
+            playHeartbeat();
+            heartbeatInterval = setInterval(playHeartbeat, 1500);
             
-            // 3D Tilt Effect
-            const container = document.querySelector('.container');
-            
-            container.addEventListener('mousemove', (e) => {
-                const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
-                const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
-                container.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-            });
-            
-            container.addEventListener('mouseenter', () => {
-                container.style.transition = 'all 0.1s ease';
-            });
-            
-            container.addEventListener('mouseleave', () => {
-                container.style.transition = 'all 0.5s ease';
-                container.style.transform = 'rotateY(0deg) rotateX(0deg)';
+            // Click interaction
+            heartIcon.addEventListener('click', function() {
+                // Play an extra strong beat when clicked
+                clearInterval(heartbeatInterval);
+                lubSound.currentTime = 0;
+                lubSound.play();
+                setTimeout(() => {
+                    dubSound.currentTime = 0;
+                    dubSound.play();
+                    setTimeout(() => {
+                        lubSound.currentTime = 0;
+                        lubSound.play();
+                        setTimeout(() => {
+                            dubSound.currentTime = 0;
+                            dubSound.play();
+                            // Resume normal heartbeat
+                            heartbeatInterval = setInterval(playHeartbeat, 1500);
+                        }, 200);
+                    }, 200);
+                }, 200);
             });
         });
     </script>
+    <style>
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0);
+            }
+            25% {
+                transform: translateY(-20px) translateX(10px);
+            }
+            50% {
+                transform: translateY(0) translateX(20px);
+            }
+            75% {
+                transform: translateY(20px) translateX(10px);
+            }
+            100% {
+                transform: translateY(0) translateX(0);
+            }
+        }
+    </style>
 </body>
 </html>
