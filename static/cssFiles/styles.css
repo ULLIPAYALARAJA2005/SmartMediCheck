@@ -39,16 +39,19 @@
   }
   
   /* Form container styling */
-  .form-container {
-    width: 420px;
-    background: transparent;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    color: #fff;
-    border-radius: 12px;
-    padding: 30px 40px;
-    z-index: 1;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Optional: Add shadow for better visibility */
-  }
+ .form-container {
+  width: 420px;
+  background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+  backdrop-filter: blur(10px); /* Blur effect */
+  -webkit-backdrop-filter: blur(10px); /* Safari support */
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border-radius: 12px;
+  padding: 30px 40px;
+  z-index: 1;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
   
   .form-container h1 {
     font-size: 36px;

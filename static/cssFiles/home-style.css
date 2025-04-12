@@ -2,7 +2,7 @@
 :root {
     --primary-color: #4CAF50; /* Primary color (light green) */
     --secondary-color: #03A9F4; /* Secondary color (sky blue) */
-    --accent-color: #FF5722; /* Orange accent color */
+    --accent-color: #173fee; /* Orange accent color */
     --dark-color: #2d3436;
     --light-color: #f5f6fa;
     --background-gradient: linear-gradient(135deg, #4CAF50, #03A9F4);
@@ -521,7 +521,8 @@ figcaption {
     background-color: #030303;
     color: antiquewhite;
     padding-bottom: 50px;
-    height: 30vh;
+    height: 40vh;
+    width: 100%;
 }
 
 /* Responsive Design */
@@ -577,3 +578,66 @@ figcaption {
         min-width: 180px;
     }
 }
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 40px;
+    background: rgba(0, 0, 0, 0.2);
+    margin-top: 80px;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    position: relative;
+    border-top: 1px solid var(--glass-border);
+}
+
+footer p {
+    color: white;
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 25px;
+}
+
+.social-links a {
+    color: white;
+    font-size: 1.8rem;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid var(--glass-border);
+}
+
+.social-links a:hover {
+    color: var(--accent-color);
+    transform: translateY(-5px) scale(1.1);
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+/* For WebKit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* For Firefox */
+  html {
+    scrollbar-width: none;
+  }
+  
+  /* For IE/Edge */
+  body {
+    -ms-overflow-style: none;
+  }
