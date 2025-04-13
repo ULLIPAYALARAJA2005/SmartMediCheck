@@ -331,17 +331,18 @@ def userfeedback():
 def feedback():
     return render_template("forms/feedback.html")
 
+from datetime import datetime
 # Route to handle feedback submission
 @app.route("/submit_feedback", methods=["POST"])
 def submit_feedback():
-    
     email = session["user"]  # Get logged-in user's email
     feedback_text = request.form.get("feedback")
-    print("...bbbbbbbbbbbbbbbbbbbbbbbbbbbb..........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa........................")
-    if  not feedback_text:
+    rating = request.form.get('rating')
+    print("Rating:::::::::::::::::::::::::::::", rating)  # Debugging line
+
+    if not feedback_text:
         flash("Please fill in all field!", "danger")
         return redirect(url_for("feedback"))
-    
     
     userpage = session["name"]
 
@@ -356,7 +357,8 @@ def submit_feedback():
         feedbacks_collection = migraine_collection
     elif userpage == "dengue1":
         feedbacks_collection = dengue_collection
- # Check if feedbacks_collection is correctly assigned
+
+    # Check if feedbacks_collection is correctly assigned
     if feedbacks_collection is None:
         print("Error: feedbacks_collection is not assigned properly!")
         raise ValueError("Invalid userpage session value: " + str(userpage))
@@ -366,12 +368,25 @@ def submit_feedback():
     if existing_feedback:
         flash("You have already submitted feedback!", "danger")
         return redirect(url_for("feedback"))
-    useremail = users_collection.find_one({"email": session["user"]})
+
+    useremail = users_collection.find_one({"email": email})
     username = useremail["name"]
-    # Insert feedback if not already given
-    feedbacks_collection.insert_one({"email": email, "name":username, "feedback": feedback_text})
+
+    # Get current date and time
+    current_date = datetime.now().strftime("%d-%m-%Y")
+
+    # Insert feedback with date
+    feedbacks_collection.insert_one({
+        "email": email,
+        "name": username,
+        "feedback": feedback_text,
+        "date": current_date,
+        "rating": rating
+    })
+
     flash("Feedback submitted successfully!", "success")
     return redirect(url_for("feedback"))
+
 
 # Route to display all feedback
 @app.route("/all_feedback")
@@ -415,31 +430,41 @@ def delete_feedback(feedback_id):
         flash("You are not authorized to delete this feedback.", "danger")
 
     return redirect(url_for("all_feedback"))
-
 # Route to edit feedback
 @app.route("/edit_feedback/<feedback_id>", methods=["POST"])
 def edit_feedback(feedback_id):
     if "user" not in session:
         flash("You must be logged in to edit feedback.", "danger")
         return redirect(url_for("login"))
-    userpage = session["name"]
-    if(userpage == "obesity1"):
-        feedbacks_collection = feedbacks_collection1;
-    elif(userpage == "depression1"):
-        feedbacks_collection =depression_collection;
-    elif(userpage == "migraine1"):
-        feedbacks_collection =migraine_collection;    
-    elif(userpage == "dengue1"):
-        feedbacks_collection =dengue_collection; 
-     
     
+    userpage = session["name"]
+    if userpage == "obesity1":
+        feedbacks_collection = feedbacks_collection1
+    elif userpage == "depression1":
+        feedbacks_collection = depression_collection
+    elif userpage == "migraine1":
+        feedbacks_collection = migraine_collection
+    elif userpage == "dengue1":
+        feedbacks_collection = dengue_collection
+
     new_feedback_text = request.form.get("edited_feedback")
+    rating = request.form.get("rating")
+    current_date = datetime.now().strftime("%d-%m-%Y")
+
+    print("Rating:::::::::::::::::::::::::::::", rating)  # Debugging line
+
     feedback = feedbacks_collection.find_one({"_id": ObjectId(feedback_id)})
 
-    if feedback and feedback["email"] == session["user"]:  
+    if feedback and feedback["email"] == session["user"]:
         feedbacks_collection.update_one(
             {"_id": ObjectId(feedback_id)},
-            {"$set": {"feedback": new_feedback_text}}
+            {
+                "$set": {
+                    "feedback": new_feedback_text,
+                    "rating": rating,
+                    "date": current_date
+                }
+            }
         )
         flash("Feedback updated successfully!", "success")
     else:

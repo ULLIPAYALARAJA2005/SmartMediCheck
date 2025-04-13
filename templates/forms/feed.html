@@ -6,296 +6,207 @@
     <title>Feedback Portal</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Modern CSS Reset with Variables */
+        /* Base Styles */
         :root {
             --primary: #4361ee;
-            --primary-dark: #3a56d4;
-            --primary-light: #4895ef;
-            --secondary: #7209b7;
+            --secondary: #3a0ca3;
             --accent: #f72585;
-            --dark: #1a1a2e;
             --light: #f8f9fa;
+            --dark: #212529;
             --success: #4cc9f0;
-            --card-bg: rgba(255, 255, 255, 0.95);
-            --glass-bg: rgba(255, 255, 255, 0.15);
-            --glass-border: rgba(255, 255, 255, 0.18);
-            --text: #2b2d42;
-            --text-light: #8d99ae;
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            --border-radius: 16px;
-            --blur: blur(12px);
+            --warning: #f8961e;
         }
-
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
         }
-
-        /* Base Styles with Gradient Background */
+        
         body {
-            font-family: 'Poppins', system-ui, -apple-system, sans-serif;
-            background: linear-gradient(135deg, #000428, #004e92);
-            color: var(--text);
-            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--light);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
             padding: 20px;
-            overflow-x: hidden;
-            perspective: 1000px;
+            background-attachment: fixed;
+            background-size: cover;
         }
-
-        /* Floating Glass Morphism Container */
+        
+        /* Glassmorphism Container */
         .container {
-            background: var(--glass-bg);
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
-            border: 1px solid var(--glass-border);
-            padding: 2.5rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            text-align: center;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            padding: 40px;
             width: 100%;
-            max-width: 420px;
-            transform-style: preserve-3d;
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
+            max-width: 500px;
+            text-align: center;
+            transition: all 0.4s ease;
             z-index: 1;
         }
-
-        .container::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
-            z-index: -1;
-            animation: rotate 20s linear infinite;
+        
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.5);
         }
-
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Header with Animated Gradient */
+        
         h2 {
             color: white;
-            margin-bottom: 2rem;
-            font-size: 2rem;
+            margin-bottom: 30px;
+            font-size: 2.2rem;
             font-weight: 700;
-            position: relative;
-            display: inline-block;
-            background: linear-gradient(90deg, #f72585, #4361ee, #4cc9f0);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            background-size: 300% 300%;
-            animation: gradient 8s ease infinite;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 3px;
-            background: linear-gradient(90deg, #f72585, #4361ee);
-            border-radius: 3px;
-            animation: linePulse 2s ease-in-out infinite;
-        }
-
-        @keyframes linePulse {
-            0%, 100% { width: 60px; }
-            50% { width: 100px; }
-        }
-
-        /* Menu List */
+        
+        /* List Styles */
         ul {
-            list-style: none;
-            padding: 0;
-            margin: 0 0 2rem;
+            list-style-type: none;
+            margin: 40px 0;
         }
-
+        
         li {
-            margin: 1rem 0;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: var(--transition);
+            margin-bottom: 20px;
         }
-
-        li:hover {
-            transform: translateY(-5px);
-        }
-
-        /* 3D Animated Buttons */
+        
+        /* Button Styles */
         a {
-            display: flex;
+            text-decoration: none;
+            display: block;
+            padding: 18px 25px;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Primary Button */
+        #writeFeedback {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 4px 15px rgba(247, 37, 133, 0.4);
+            border: none;
+        }
+        
+        /* Secondary Button */
+        #showFeedback {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+        }
+        
+        /* Hover Effects */
+        #writeFeedback:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(247, 37, 133, 0.6);
+            background: linear-gradient(45deg, #f72585, #b5179e);
+        }
+        
+        #showFeedback:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Back Button */
+        .back-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            margin-top: 30px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            text-decoration: none;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            padding: 1.2rem;
-            border-radius: var(--border-radius);
-            transition: var(--transition);
-            font-weight: 600;
-            font-size: 1rem;
-            letter-spacing: 0.5px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 6px 15px rgba(67, 97, 238, 0.3);
-            transform: translateZ(20px);
-            border: none;
-            cursor: pointer;
+            padding: 12px 20px;
+            width: auto;
         }
-
-        a i {
-            font-size: 1.2rem;
-            transition: var(--transition);
-        }
-
-        a:hover i {
-            transform: translateX(5px);
-        }
-
-        a::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: 0.6s;
-        }
-
-        a:hover {
-            background: linear-gradient(135deg, var(--primary-light), var(--primary));
-            transform: translateY(-3px) translateZ(30px);
-            box-shadow: 0 10px 25px rgba(67, 97, 238, 0.4);
-        }
-
-        a:hover::before {
-            left: 100%;
-        }
-
-        /* Back Button with Different Style */
-        .back-btn {
-            margin-top: 1.5rem;
-            background: linear-gradient(135deg, var(--secondary), #560bad);
-            box-shadow: 0 6px 15px rgba(114, 9, 183, 0.3);
-        }
-
+        
         .back-btn:hover {
-            background: linear-gradient(135deg, #560bad, var(--secondary));
-            transform: translateY(-3px) translateZ(30px);
-            box-shadow: 0 10px 25px rgba(114, 9, 183, 0.4);
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
         }
-
-        /* Floating Particles Background */
-        .particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
+        
+        /* Icon Styles */
+        i {
+            margin-right: 12px;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
         }
-
-        .particle {
+        
+        /* Floating Circles Decoration */
+        .circle {
             position: absolute;
-            background: rgba(255, 255, 255, 0.6);
             border-radius: 50%;
-            animation: float linear infinite;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: -1;
         }
-
+        
+        .circle-1 {
+            width: 150px;
+            height: 150px;
+            top: 10%;
+            left: 5%;
+            animation: float 8s infinite ease-in-out;
+        }
+        
+        .circle-2 {
+            width: 200px;
+            height: 200px;
+            bottom: 15%;
+            right: 8%;
+            animation: float 10s infinite ease-in-out;
+        }
+        
+        .circle-3 {
+            width: 80px;
+            height: 80px;
+            top: 70%;
+            left: 15%;
+            animation: float 6s infinite ease-in-out;
+        }
+        
         @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; }
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
         }
-
+        
         /* Responsive Design */
-        @media (max-width: 480px) {
+        @media (max-width: 600px) {
             .container {
-                padding: 2rem 1.5rem;
-                max-width: 90%;
+                padding: 30px 20px;
+                border-radius: 15px;
             }
             
             h2 {
-                font-size: 1.75rem;
+                font-size: 1.8rem;
             }
             
             a {
-                padding: 1rem;
-                font-size: 0.95rem;
+                padding: 15px 20px;
+                font-size: 1rem;
             }
-        }
-
-        /* Advanced Checkmark Animation for Feedback */
-        .checkmark {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            display: block;
-            stroke-width: 5;
-            stroke: #4cc9f0;
-            stroke-miterlimit: 10;
-            margin: 0 auto 20px;
-            box-shadow: inset 0 0 0 rgba(76, 201, 240, 0.4);
-            animation: fill .6s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
-        }
-
-        .checkmark__circle {
-            stroke-dasharray: 166;
-            stroke-dashoffset: 166;
-            stroke-width: 5;
-            stroke-miterlimit: 10;
-            stroke: #4cc9f0;
-            fill: none;
-            animation: stroke .6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
-        }
-
-        .checkmark__check {
-            transform-origin: 50% 50%;
-            stroke-dasharray: 48;
-            stroke-dashoffset: 48;
-            animation: stroke .3s cubic-bezier(0.65, 0, 0.45, 1) .8s forwards;
-        }
-
-        @keyframes stroke {
-            100% { stroke-dashoffset: 0; }
-        }
-
-        @keyframes scale {
-            0%, 100% { transform: none; }
-            50% { transform: scale3d(1.1, 1.1, 1); }
-        }
-
-        @keyframes fill {
-            100% { box-shadow: inset 0 0 0 60px rgba(76, 201, 240, 0); }
+            
+            .circle {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Floating Particles Background -->
-    <div class="particles" id="particles"></div>
+    <!-- Decorative Circles -->
+    <div class="circle circle-1"></div>
+    <div class="circle circle-2"></div>
+    <div class="circle circle-3"></div>
     
     <!-- Main Container -->
     <div class="container">
@@ -312,57 +223,5 @@
             <i class="fas fa-arrow-left"></i> Back to Dashboard
         </a>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Create floating particles
-            function createParticles() {
-                const particlesContainer = document.getElementById('particles');
-                const particleCount = window.innerWidth < 768 ? 15 : 30;
-                
-                for (let i = 0; i < particleCount; i++) {
-                    const particle = document.createElement('div');
-                    particle.classList.add('particle');
-                    
-                    // Random properties
-                    const size = Math.random() * 10 + 5;
-                    const posX = Math.random() * window.innerWidth;
-                    const delay = Math.random() * 5;
-                    const duration = Math.random() * 20 + 10;
-                    const opacity = Math.random() * 0.6 + 0.2;
-                    
-                    particle.style.width = `${size}px`;
-                    particle.style.height = `${size}px`;
-                    particle.style.left = `${posX}px`;
-                    particle.style.bottom = `-${size}px`;
-                    particle.style.animationDelay = `${delay}s`;
-                    particle.style.animationDuration = `${duration}s`;
-                    particle.style.opacity = opacity;
-                    
-                    particlesContainer.appendChild(particle);
-                }
-            }
-            
-            createParticles();
-            
-            // 3D Tilt Effect
-            const container = document.querySelector('.container');
-            
-            container.addEventListener('mousemove', (e) => {
-                const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
-                const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
-                container.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-            });
-            
-            container.addEventListener('mouseenter', () => {
-                container.style.transition = 'all 0.1s ease';
-            });
-            
-            container.addEventListener('mouseleave', () => {
-                container.style.transition = 'all 0.5s ease';
-                container.style.transform = 'rotateY(0deg) rotateX(0deg)';
-            });
-        });
-    </script>
 </body>
 </html>

@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Modern CSS Reset */
         :root {
             --primary: #6C4DF6;
             --primary-dark: #5A3BE8;
@@ -39,10 +38,9 @@
             align-items: center;
             padding: 2rem;
             position: relative;
-            overflow-x: hidden;
+            overflow: hidden; /* Removed scroll */
         }
 
-        /* Background Decorative Elements */
         body::before,
         body::after {
             content: '';
@@ -66,7 +64,6 @@
             right: -200px;
         }
 
-        /* Card Container */
         .feedback-card {
             background: white;
             border-radius: var(--border-radius);
@@ -83,7 +80,6 @@
             box-shadow: 0 32px 64px -16px rgba(0, 0, 0, 0.3);
         }
 
-        /* Header Section */
         .card-header {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
@@ -111,7 +107,6 @@
             opacity: 0.7;
         }
 
-        /* Form Section */
         .card-body {
             padding: 2rem;
         }
@@ -120,12 +115,18 @@
             margin-bottom: 1.5rem;
         }
 
-        label {
-            display: block;
-            margin-bottom: 0.75rem;
+        .rating-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .rating-label {
             font-weight: 500;
             color: var(--dark);
             font-size: 0.95rem;
+            white-space: nowrap;
         }
 
         textarea {
@@ -135,7 +136,7 @@
             border-radius: 12px;
             font-family: 'Inter', sans-serif;
             font-size: 1rem;
-            resize: vertical;
+            resize: none; /* Removed resize handle */
             min-height: 150px;
             transition: var(--transition);
             background: #F8F9FF;
@@ -148,7 +149,6 @@
             background: white;
         }
 
-        /* Button */
         .submit-btn {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
@@ -175,38 +175,71 @@
             transform: translateY(0);
         }
 
-        /* Flash Messages */
-        .flash-message {
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-            border-radius: 8px;
-            font-weight: 500;
+        /* Extreme Toast Notification Styles */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .toast {
+            padding: 1.25rem 1.75rem;
+            border-radius: 12px;
+            font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            animation: slideIn 0.5s ease-out;
+            gap: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateX(150%) rotate(15deg);
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            position: relative;
+            overflow: hidden;
         }
 
-        .flash-success {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--success);
-            border-left: 4px solid var(--success);
+        .toast::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 5px;
+            background: rgba(255,255,255,0.5);
+            animation: progress 5s linear forwards;
         }
 
-        .flash-error, .flash-warning {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--error);
-            border-left: 4px solid var(--error);
+        .toast.show {
+            opacity: 1;
+            transform: translateX(0) rotate(0);
         }
 
-        /* Special case for duplicate feedback message */
-        .flash-message[data-message*="already submitted"] {
-            background: rgba(239, 68, 68, 0.15);
-            color: var(--error);
-            border-left: 4px solid var(--error);
+        .toast.hide {
+            animation: bounceOut 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
         }
 
-        /* Back Link */
+        .toast-success {
+            background: linear-gradient(135deg, #10B981, #059669);
+            color: white;
+        }
+
+        .toast-error {
+            background: linear-gradient(135deg, #EF4444, #DC2626);
+            color: white;
+        }
+
+        .toast-warning {
+            background: linear-gradient(135deg, #F59E0B, #D97706);
+            color: white;
+        }
+
+        .toast i {
+            font-size: 1.5rem;
+        }
+
         .back-link {
             display: inline-flex;
             align-items: center;
@@ -225,57 +258,118 @@
             background: rgba(108, 77, 246, 0.1);
         }
 
-        /* Animations */
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes progress {
+            from { width: 100%; }
+            to { width: 0%; }
         }
 
-        /* Responsive */
+        @keyframes bounceIn {
+            0% { transform: translateX(150%) rotate(15deg); opacity: 0; }
+            60% { transform: translateX(-10%) rotate(-5deg); opacity: 1; }
+            80% { transform: translateX(5%) rotate(2deg); }
+            100% { transform: translateX(0) rotate(0); }
+        }
+
+        @keyframes bounceOut {
+            0% { transform: translateX(0) rotate(0); opacity: 1; }
+            30% { transform: translateX(-20%) rotate(-5deg); }
+            100% { transform: translateX(150%) rotate(15deg); opacity: 0; }
+        }
+
         @media (max-width: 600px) {
             body {
                 padding: 1rem;
             }
-            
+
             .feedback-card {
                 max-width: 100%;
             }
-            
+
             .card-header, .card-body {
                 padding: 1.5rem;
             }
+
+            .rating-container {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .toast-container {
+                top: 10px;
+                right: 10px;
+                left: 10px;
+                align-items: center;
+            }
+
+            .toast {
+                width: calc(100% - 20px);
+            }
+        }
+
+        /* Star Rating */
+        .star-rating {
+            display: flex;
+            direction: rtl;
+            gap: 0.5rem;
+        }
+
+        .star-rating input {
+            display: none;
+        }
+
+        .star-rating label {
+            font-size: 2rem;
+            color: #d1d5db;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .star-rating input:checked ~ label,
+        .star-rating label:hover,
+        .star-rating label:hover ~ label {
+            color: #ffc107;
+            transform: scale(1.2);
         }
     </style>
 </head>
 <body>
+    <!-- Extreme Toast Notifications Container -->
+    <div class="toast-container" id="toastContainer">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="toast toast-{{ category }}" id="toast-{{ loop.index }}">
+                        <i class="fas {% if category == 'success' %}fa-check-circle{% else %}fa-exclamation-circle{% endif %}"></i>
+                        <span>{{ message }}</span>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
     <div class="feedback-card">
         <div class="card-header">
             <i class="fas fa-comment-alt"></i>
             <h2>Share Your Feedback</h2>
             <p>We value your thoughts and suggestions</p>
         </div>
-        
+
         <div class="card-body">
-            {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="flash-message flash-{{ category }}" data-message="{{ message }}">
-                        <i class="fas {% if category == 'success' %}fa-check-circle{% else %}fa-exclamation-circle{% endif %}"></i>
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}
-            {% endwith %}
-            
             <form action="{{ url_for('submit_feedback') }}" method="POST">
+                <div class="form-group rating-container">
+                    <span class="rating-label">Rate Your Experience</span>
+                    <div class="star-rating">
+                        <input type="radio" name="rating" id="star5" value="5"><label for="star5" title="5 stars">★</label>
+                        <input type="radio" name="rating" id="star4" value="4"><label for="star4" title="4 stars">★</label>
+                        <input type="radio" name="rating" id="star3" value="3"><label for="star3" title="3 stars">★</label>
+                        <input type="radio" name="rating" id="star2" value="2"><label for="star2" title="2 stars">★</label>
+                        <input type="radio" name="rating" id="star1" value="1"><label for="star1" title="1 star">★</label>
+                    </div>
+                </div>
+
                 <div class="form-group">
-                    <label for="feedback">Your honest feedback helps us improve</label>
+                    <label for="feedback" class="rating-label">Your honest feedback helps us improve</label>
                     <textarea name="feedback" required placeholder="What did you like? What can we do better?"></textarea>
                 </div>
 
@@ -283,11 +377,81 @@
                     <i class="fas fa-paper-plane"></i> Submit Feedback
                 </button>
             </form>
-            
+
             <a href="{{ url_for('userfeedback') }}" class="back-link">
                 <i class="fas fa-arrow-left"></i> Back to Dashboard
             </a>
         </div>
     </div>
+
+    <script>
+        // Extreme Toast Notifications
+        document.addEventListener('DOMContentLoaded', function() {
+            const toasts = document.querySelectorAll('.toast');
+            
+            toasts.forEach((toast, index) => {
+                setTimeout(() => {
+                    toast.classList.add('show');
+                    
+                    // Auto-remove toast after 5 seconds
+                    setTimeout(() => {
+                        toast.classList.add('hide');
+                        setTimeout(() => toast.remove(), 600);
+                    }, 5000);
+                }, index * 300);
+            });
+
+            // Special handling for "already submitted" message
+            const alreadySubmitted = document.querySelector('.toast-error');
+            if (alreadySubmitted && alreadySubmitted.textContent.includes('already submitted')) {
+                alreadySubmitted.style.background = 'linear-gradient(135deg, #EF4444, #991B1B)';
+                alreadySubmitted.innerHTML = `
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>You've already submitted feedback today!</span>
+                `;
+            }
+        });
+
+        // Form validation
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const rating = document.querySelector('input[name="rating"]:checked');
+            const feedback = document.querySelector('textarea');
+            
+            if (!rating) {
+                e.preventDefault();
+                showExtremeToast('Please select a rating', 'error');
+                return;
+            }
+            
+            if (feedback.value.trim().length < 10) {
+                e.preventDefault();
+                showExtremeToast('Please provide more detailed feedback (at least 10 characters)', 'error');
+                return;
+            }
+        });
+
+        function showExtremeToast(message, type) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            
+            const icon = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
+            toast.innerHTML = `
+                <i class="fas ${icon}"></i>
+                <span>${message}</span>
+            `;
+            
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('show');
+                
+                setTimeout(() => {
+                    toast.classList.add('hide');
+                    setTimeout(() => toast.remove(), 600);
+                }, 5000);
+            }, 100);
+        }
+    </script>
 </body>
 </html>
