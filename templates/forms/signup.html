@@ -20,7 +20,7 @@
     {% endwith %}
   <!-- Video background -->
   <video class="background-video" autoplay muted loop>
-    <source src="{{ url_for('static', filename='images/snow.mp4') }}" type="video/mp4">
+    <source src="{{ url_for('static', filename='images/hospital.mp4') }}" type="video/mp4">
     <img src="{{ url_for('static', filename='images/bg.jpg') }}" alt="background image" class="background-image">
 </video>
 
@@ -37,10 +37,6 @@
       </div>
       <div class="input-field">
         <input type="password" placeholder="Password" name="password" required>
-        <i class='bx bxs-lock-alt'></i>
-      </div>
-      <div class="input-field">
-        <input type="password" placeholder="Confirm Password" name="confirm_password" required>
         <i class='bx bxs-lock-alt'></i>
       </div>
       <button type="submit" class="submit-btn">Sign Up</button>
