@@ -1,3 +1,4 @@
+/* Global Styles */
 :root {
     --primary-color: #6c5ce7;
     --secondary-color: #a29bfe;
@@ -14,6 +15,7 @@
     --glass-border: rgba(255, 255, 255, 0.2);
 }
 
+
 /* Reset and Base Styles */
 * {
     margin: 0;
@@ -29,6 +31,8 @@ body {
     line-height: 1.6;
     overflow-x: hidden;
 }
+
+/* Navigation Bar - Updated to match obesity.html */
 
 /* Navigation Bar */
 .sticky-nav {
@@ -279,6 +283,74 @@ body {
     color: var(--primary-color);
 }
 
+
+/* Form Container - Preserved original styles */
+.form-container {
+    max-width: 670px;
+    margin: 4rem auto;
+    padding: 2rem;
+    background: #bae8e8; 
+    backdrop-filter: blur(15px);
+    border-radius: 15px;
+    box-shadow: 
+    0 2px 8px #1e56a0,
+    0 2px 4px #1e56a0;
+transform: translateY(-4px);
+}
+
+.form-container h1 {
+    color: #070f4e;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 2rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.form-container label {
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+    font-weight: bold;
+}
+
+.form-container input,
+.form-container select {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.8);
+    color: #333;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.form-container input[type="radio"] {
+    width: auto;
+    margin-right: 1rem;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.form-container input[type="submit"] {
+    background: var(--primary-color);.form-container h1 {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        color: var(--text-color);
+    }
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    padding: 1rem;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.form-container input[type="submit"]:hover {
+    background: #0914af;
+}
+
+/* Footer - Preserved original styles */
 /* Footer */
 footer {
     text-align: center;
@@ -340,97 +412,7 @@ footer p {
         min-width: 220px;
     }
 }
-
-.delete-account {
-    color: #ff4757 !important;
-    font-weight: 500;
-}.form-container {
-    max-width: 600px;
-    margin: 4rem auto;
-    padding: 2rem;
-    background: #bae8e8; 
-    backdrop-filter: blur(15px);
-    border-radius: 15px;
-    box-shadow: 
-    0 2px 8px #1e56a0,
-    0 2px 4px #1e56a0;
-transform: translateY(-4px);
-}
-
-
-
-/* Form heading */
-.form-container h1 {
-    color: #070f4e;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    margin-bottom: 2rem;
-    font-weight: 600;
-    text-align: center;
-}
-
-/* Input fields */
-.form-container input,
-.form-container select {
-    width: 100%;
-    padding: 1rem;
-    margin-bottom: 1.5rem;
-    background: rgba(255, 255, 255, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 10px;
-    color: #2d3436;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
-
-.form-container input:focus,
-.form-container select:focus {
-    background: white;
-    outline: none;
-    box-shadow: 0 0 0 1px black;
-    border-color: black;
-}
-
-/* Submit button */
-.form-container input[type="submit"] {
-    background: var(--accent-color);
-    color: white;
-    border: none;
-    padding: 1.2rem;
-    font-size: 1.1rem;
-    font-weight: 600;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 1rem;
-    box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
-    width: 100%;
-}
-
-.form-container input[type="submit"]:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(108, 92, 231, 0.4);
-    background : blue;
-}
-
-.form-container input[type="submit"]:active {
-    transform: translateY(0);
-}
-
-/* Label styling */
-.form-container label {
-    color:#070f4e;;
-    font-weight: 500;
-    margin-bottom: 0.8rem;
-    display: block;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-}
-
-.form-container input[type="radio"] {
-    width: auto; /* Set width to auto for radio buttons */
-    margin-right: 1rem; /* Add some space between radio buttons */
-    display: inline-block; /* Display radio buttons inline */
-    vertical-align: middle; /* Align radio buttons vertically */
-}
+/* Add this to your CSS file */
 #response {
     max-width: 1000px;
     margin: 0 auto 4rem;
@@ -441,16 +423,26 @@ transform: translateY(-4px);
     display: none; /* Initially hidden */
     transition: var(--transition);
     border: 5px solid blue;
-    color: #2d3436;
 }
 
 #response.show {
     display: block;
     animation: fadeIn 0.5s ease-in-out;
 }
-#submitBtn{
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Update the form container margin to reduce space when response shows */
+.form-container {
+    margin: 2rem auto 1rem; /* Reduced top margin */
+    /* rest of your existing form-container styles */
+}
+.submit-btn{
     color: #e3f6f5;
-    background:#6ce6dd;
+    background:#04b9ad;
     border: none;
     padding: 1rem 2rem;
     border-radius: 5px; 
@@ -461,100 +453,7 @@ transform: translateY(-4px);
     width: 100%;
 
 }
-#submitBtn:hover{
-    background: #2b186d;
+submit-btn:hover{
+    background: #5e42c5;
     color: white;
 }
-/* Label Styling */
-.form-container label {
-    display: block;
-    color: #070f4e;
-    font-weight: 500;
-    margin-bottom: 0.8rem;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-}
-
-/* Radio Button Group Styling */
-.radio-group {
-    margin-bottom: 1.5rem;
-}
-
-.radio-group label {
-    display: block;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-    color: #070f4e;
-}
-
-/* Styling for Radio Button Options (Yes/No) */
-.radio-options {
-    display: flex;
-    align-items: center;
-    gap: 1rem; /* Space between radio options */
-}
-
-.radio-options input[type="radio"] {
-    margin-right: 0.5rem; /* Space between radio button and label */
-}
-
-.radio-options label {
-    font-size: 1rem;
-    margin: 0; /* Remove any default margin */
-    cursor: pointer;
-}
-
-/* Textarea Styling */
-textarea {
-    width: 100%;
-    padding: 1rem;
-    background: rgba(255, 255, 255, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 10px;
-    font-size: 1rem;
-    color: #2d3436;
-    transition: all 0.3s ease;
-    resize: vertical; /* Allow vertical resizing */
-}
-
-textarea:focus {
-    background: white;
-    outline: none;
-    box-shadow: 0 0 0 1px black;
-    border-color: black;
-}
-
-/* Adjust form section padding */
-.form-section {
-    margin-bottom: 2rem;
-}
-
-/* Textarea placeholder styling */
-textarea::placeholder {
-    color: #aaa;
-    font-style: italic;
-}
-
-/* Adjust input fields and textarea behavior */
-input[type="number"], input[type="text"], select, textarea {
-    width: 100%;
-    padding: 1rem;
-    margin-bottom: 1.5rem;
-    background: rgba(255, 255, 255, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 10px;
-    color: #2d3436;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
-
-input[type="number"]:focus, input[type="text"]:focus, select:focus, textarea:focus {
-    background: white;
-    outline: none;
-    box-shadow: 0 0 0 1px black;
-    border-color: black;
-}
-
-  
-
-  
-  
