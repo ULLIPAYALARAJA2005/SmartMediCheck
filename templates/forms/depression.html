@@ -11,29 +11,21 @@
 <body>
     <!-- Navigation Bar -->
     <nav class="sticky-nav">
-        <!-- Logo -->
-        <a href="#" class="logo">
-            <i class='bx bx-heart'></i>Health & Lifestyle
-        </a>
-
-        <!-- Navigation Links -->
+        <a href="#" class="logo"><i class='bx bx-heart'></i>Health & Lifestyle</a>
         <ul class="nav-links">
-            <li><a href="{{ url_for('index') }}">Home</a></li> <!-- Home link -->
-            <li><a href="#survey" style="color: #1e345e;">Depression</a></li> <!-- Survey link -->
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="#survey" style="color: #6ce6dd;">Depression</a></li>
             <li><a href="{{ url_for('userfeedback') }}">Feed back</a></li>
-            <li><a href="{{ url_for('About_depression') }}">About</a></li> <!-- About link -->
-            <li><a href="{{ url_for('contact_depression') }}">Contact</a></li> <!-- Contact link -->
+            <li><a href="{{ url_for('About_depression') }}">About</a></li>
+            <li><a href="{{ url_for('contact_depression') }}">Contact</a></li>
         </ul>
-
         <!-- Profile Dropdown -->
         <div class="profile-container">
             <button class="profile-btn" id="profileToggle">
                 {% if user.photo_id %}
                     <img src="{{ url_for('get_photo', photo_id=user.photo_id) }}" alt="Profile" class="profile-img">
-                    <span class="notification-badge">3</span>
                 {% else %}
                     <div class="profile-icon">{{ user.name[0] | upper}}</div>
-                    <span class="notification-badge">3</span>
                 {% endif %}
             </button>
             <div class="dropdown-content" id="dropdownContent">
@@ -48,6 +40,7 @@
             </div>
         </div>
     </nav>
+
     <!-- Survey Form -->
     <div class="form-container">
         <h1>STUDENT DEPRESSION TEST</h1>
@@ -59,7 +52,6 @@
                 <option value="female">Female</option>
                 <option value="other">Other</option>
             </select>
-
 
             <label for="age">Age:</label>
             <input type="number" id="age" name="age" min="1" placeholder="Enter your age" required>
@@ -90,14 +82,14 @@
             </select>
 
             <label for="suicide">Have you ever had suicidal thoughts?</label>
-            <select id="suicide" name="smoke" required>
+            <select id="suicide" name="suicide" required>
                 <option value="" disabled selected>Select an option</option>
                 <option value="yes">Yes</option>
                 <option value="no">No</option>
             </select>
 
             <label for="study_hours">Study hours:</label>
-            <input type="number" id="study_hours" name="studt_hours" min="0" max="24" placeholder="Study hours" required>
+            <input type="number" id="study_hours" name="study_hours" min="0" max="24" placeholder="Study hours" required>
 
             <label for="fin_stress">Financial Stress(0-5):</label>
             <input type="number" id="fin_stress" name="fin_stress" min="0" max="5" placeholder=" 0 - 5 " required>
@@ -109,19 +101,23 @@
                 <option value="no">No</option>
             </select>
 
-            <input type="submit" value="Submit" onclick="getFormData(event)">
+            <button type="submit" id="submitBtn" onclick="getFormData(event)">Submit</button>
         </form>
     </div>
-    <p id="response" class="hidden" style="margin-top: 20px; padding: 15px; font-size: 18px; font-style: italic; font-weight: 600; color: #333; background-color: var(--primary-color); border-left: 5px solid black; border-top: 5px solid black;border-radius: 8px; text-align: left; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);"></p>
+
+    <div id="response" class="response-container" style="margin-top: 20px; display: none;"></div>
+
     <!-- Footer -->
     <footer>
         <p>WE ARE TRYING TO GIVE 100% ACCURACY PREDICTION</p>
     </footer>
 
+    <!-- JavaScript -->
     <script>
-        // Enhanced Profile Dropdown
+        // Profile dropdown script (unchanged)
         const profileToggle = document.getElementById('profileToggle');
         const dropdownContent = document.getElementById('dropdownContent');
+        const profileContainer = document.querySelector('.profile-container');
         let dropdownTimeout;
 
         profileToggle.addEventListener('click', function(e) {
@@ -130,41 +126,38 @@
             dropdownContent.classList.toggle('show');
         });
 
-        // Close dropdown when clicking outside
         document.addEventListener('click', function(e) {
             if (!e.target.closest('.profile-container')) {
                 dropdownContent.classList.remove('show');
             }
         });
 
-        // Close dropdown when pressing Escape key
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 dropdownContent.classList.remove('show');
             }
         });
 
-        // Add hover effect with delay for desktop
         if (window.innerWidth > 768) {
-            profileToggle.addEventListener('mouseenter', function() {
+            profileToggle.addEventListener('mouseenter', function () {
                 clearTimeout(dropdownTimeout);
                 dropdownTimeout = setTimeout(() => {
                     dropdownContent.classList.add('show');
                 }, 300);
             });
 
-            profileContainer.addEventListener('mouseleave', function() {
+            profileContainer.addEventListener('mouseleave', function () {
                 clearTimeout(dropdownTimeout);
                 dropdownTimeout = setTimeout(() => {
                     dropdownContent.classList.remove('show');
                 }, 500);
             });
 
-            dropdownContent.addEventListener('mouseenter', function() {
+            dropdownContent.addEventListener('mouseenter', function () {
                 clearTimeout(dropdownTimeout);
             });
 
-            dropdownContent.addEventListener('mouseleave', function() {
+            dropdownContent.addEventListener('mouseleave', function () {
                 clearTimeout(dropdownTimeout);
                 dropdownTimeout = setTimeout(() => {
                     dropdownContent.classList.remove('show');
@@ -172,27 +165,34 @@
             });
         }
 
-        // Navbar scroll effect
-        window.addEventListener('scroll', function() {
-            const nav = document.querySelector('.sticky-nav');
-            if (window.scrollY > 50) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
-        });
+       
 
-        // Notification badge interaction
         const notificationBadge = document.querySelector('.notification-badge');
         if (notificationBadge) {
-            notificationBadge.addEventListener('click', function(e) {
+            notificationBadge.addEventListener('click', function (e) {
                 e.stopPropagation();
             });
         }
+
+        // Main form processing
         function getFormData(event) {
             event.preventDefault();
-            
-            let formData = {
+
+            const form = document.getElementById('depressionForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const responsePara = document.getElementById('response');
+
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            // Button loading state
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Processing...";
+            responsePara.style.display = "none";
+
+            const formData = {
                 gender: document.getElementById('gender').value,
                 age: document.getElementById('age').value,
                 acd_pressure: document.getElementById('acd_pressure').value,
@@ -204,23 +204,28 @@
                 fin_stress: document.getElementById('fin_stress').value,
                 mental_ill: document.getElementById('mental_ill').value
             };
-            
-            console.log("Form Data as JSON:", JSON.stringify(formData));
-            
-            fetch('http://127.0.0.1:5000/enter', {
+
+            fetch("/enter", {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
             })
             .then(response => response.json())
             .then(data => {
-                document.getElementById('response').innerText = data.reply || data.error;
-            })
-            .catch(error => console.error("Error:", error));
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Submit";
+                responsePara.textContent = data.reply ?? data.error ?? "No response from server.";
+                responsePara.style.display = "block";
+                responsePara.scrollIntoView({ behavior: "smooth", block: "center" });
+            });
         }
-        
+
+        // Hide result on input change
+        document.querySelectorAll('#depressionForm input, #depressionForm select').forEach(el => {
+            el.addEventListener('input', () => {
+                document.getElementById('response').style.display = "none";
+            });
+        });
     </script>
 </body>
 </html>

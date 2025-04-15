@@ -1,19 +1,17 @@
-/* Global Styles */
 :root {
-    --primary-color: #4CAF50; /* Primary color (light green) */
-    --secondary-color: #03A9F4; /* Secondary color (sky blue) */
-    --accent-color: #FF5722; /* Orange accent color */
+    --primary-color: #6c5ce7;
+    --secondary-color: #a29bfe;
+    --accent-color: #00C6FF;
     --dark-color: #2d3436;
     --light-color: #f5f6fa;
-    --background-gradient: linear-gradient(135deg, #4CAF50, #03A9F4);
-    --glassmorphism-bg: rgba(255, 255, 255, 0.1);
-    --glass-border: rgba(255, 255, 255, 0.2);
-    --neumorphism-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1), -5px -5px 15px rgba(255, 255, 255, 0.5);
-    --font-primary: 'Poppins', sans-serif;
-    --text-color: #333;
+    --success-color: #00b894;
+    --warning-color: #fdcb6e;
+    --danger-color: #d63031;
     --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
     --box-shadow-hover: 0 14px 28px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.08);
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
 }
 
 /* Reset and Base Styles */
@@ -24,15 +22,15 @@
 }
 
 body {
-    font-family: var(--font-primary);
-    background: var(--background-gradient);
-    color: var(--text-color);
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+	background: #e3f6f5; 
     min-height: 100vh;
     line-height: 1.6;
     overflow-x: hidden;
 }
 
-/* Navigation Bar - Updated to match obesity.html */
+/* Navigation Bar */
 .sticky-nav {
     position: sticky;
     top: 0;
@@ -40,7 +38,7 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 15px 5%;
-    background: var(--glassmorphism-bg);
+	background: #000278; 
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     box-shadow: var(--box-shadow);
@@ -51,7 +49,7 @@ body {
 
 .sticky-nav.scrolled {
     padding: 10px 5%;
-    background: rgba(76, 175, 80, 0.95); /* Using primary color with opacity */
+    background: rgba(44, 44, 44, 0.95);
 }
 
 .logo {
@@ -70,7 +68,7 @@ body {
 }
 
 .logo i {
-    color: var(--dark-color);
+    color: var(--accent-color);
     font-size: 2rem;
 }
 
@@ -140,8 +138,8 @@ body {
     position: absolute;
     top: -5px;
     right: -5px;
-    background: var(--secondary-color);
-    color: var(--dark-color);
+    background: var(--danger-color);
+    color: white;
     border-radius: 50%;
     width: 20px;
     height: 20px;
@@ -263,7 +261,7 @@ body {
 }
 
 .dropdown-content li:not(:first-child):not(:nth-child(2)):hover {
-    background: rgba(76, 175, 80, 0.08);
+    background: rgba(108, 92, 231, 0.08);
     padding-left: 30px;
 }
 
@@ -281,112 +279,27 @@ body {
     color: var(--primary-color);
 }
 
-.delete-account {
-    color: #ff4757 !important;
-    font-weight: 500;
-}
-
-/* Form Container - Preserved original styles */
-.form-container {
-    max-width: 600px;
-    margin: 4rem auto;
-    padding: 2rem;
-    background: var(--glassmorphism-bg);
-    backdrop-filter: blur(15px);
-    border-radius: 15px;
-    box-shadow: var(--neumorphism-shadow);
-}
-
-.form-container h1 {
-    text-align: center;
-    margin-bottom: 1.5rem;
-    color: var(--text-color);
-}
-
-.form-container label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: var(--text-color);
-    font-weight: bold;
-}
-
-.radio-group {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 1rem;
-}
-
-.radio-option {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.radio-option input[type="radio"] {
-    width: auto;
-    margin: 0;
-    accent-color: var(--primary-color);
-}
-
-.radio-option label {
-    font-weight: normal;
-    cursor: pointer;
-    margin: 0;
-}
-
-.form-container input,
-.form-container select,
-.form-container textarea {
-    width: 100%;
-    padding: 0.75rem;
-    margin-bottom: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background: rgba(255, 255, 255, 0.8);
-    color: #333;
-    font-size: 1rem;
-    box-sizing: border-box;
-}
-
-.form-container textarea {
-    min-height: 100px;
-    resize: vertical;
-}
-
-.form-container input[type="submit"] {
-    background: var(--primary-color);
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    padding: 1rem;
-    border-radius: 5px;
-    font-size: 1rem;
-    width: 100%;
-    margin-top: 1rem;
-    transition: var(--transition);
-}
-
-.form-container input[type="submit"]:hover {
-    background: #388E3C;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
 /* Footer */
 footer {
     text-align: center;
-    padding: 1rem;
-    background: var(--glassmorphism-bg);
-    backdrop-filter: blur(10px);
-    margin-top: 2rem;
+    padding: 15px;
+    background: #22267b;
+    margin-top: 80px;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    position: relative;
+    border-top: 1px solid var(--glass-border);
     box-shadow: var(--neumorphism-shadow);
     clear: both;
+
+
 }
 
 footer p {
+    color: white;
     margin: 0;
-    color: #fff;
+    font-size: 1rem;
+    line-height: 1.7;
 }
 
 /* Responsive Design */
@@ -416,12 +329,6 @@ footer p {
         flex-wrap: wrap;
         justify-content: center;
     }
-
-    .radio-group {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-    }
 }
 
 @media (max-width: 576px) {
@@ -432,8 +339,222 @@ footer p {
     .dropdown-content {
         min-width: 220px;
     }
-
-    .form-container {
-        padding: 1.5rem;
-    }
 }
+
+.delete-account {
+    color: #ff4757 !important;
+    font-weight: 500;
+}.form-container {
+    max-width: 600px;
+    margin: 4rem auto;
+    padding: 2rem;
+    background: #bae8e8; 
+    backdrop-filter: blur(15px);
+    border-radius: 15px;
+    box-shadow: 
+    0 2px 8px #1e56a0,
+    0 2px 4px #1e56a0;
+transform: translateY(-4px);
+}
+
+
+
+/* Form heading */
+.form-container h1 {
+    color: #070f4e;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 2rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Input fields */
+.form-container input,
+.form-container select {
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    color: #2d3436;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-container input:focus,
+.form-container select:focus {
+    background: white;
+    outline: none;
+    box-shadow: 0 0 0 1px black;
+    border-color: black;
+}
+
+/* Submit button */
+.form-container input[type="submit"] {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 1.2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+    box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
+    width: 100%;
+}
+
+.form-container input[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(108, 92, 231, 0.4);
+    background : blue;
+}
+
+.form-container input[type="submit"]:active {
+    transform: translateY(0);
+}
+
+/* Label styling */
+.form-container label {
+    color:#070f4e;;
+    font-weight: 500;
+    margin-bottom: 0.8rem;
+    display: block;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.form-container input[type="radio"] {
+    width: auto; /* Set width to auto for radio buttons */
+    margin-right: 1rem; /* Add some space between radio buttons */
+    display: inline-block; /* Display radio buttons inline */
+    vertical-align: middle; /* Align radio buttons vertically */
+}
+#response {
+    max-width: 1000px;
+    margin: 0 auto 4rem;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 30px;
+    box-shadow: var(--box-shadow);
+    display: none; /* Initially hidden */
+    transition: var(--transition);
+    border: 5px solid blue;
+    color: #2d3436;
+}
+
+#response.show {
+    display: block;
+    animation: fadeIn 0.5s ease-in-out;
+}
+#submitBtn{
+    color: #e3f6f5;
+    background:#6ce6dd;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 5px; 
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    width: 100%;
+
+}
+#submitBtn:hover{
+    background: #2b186d;
+    color: white;
+}
+/* Label Styling */
+.form-container label {
+    display: block;
+    color: #070f4e;
+    font-weight: 500;
+    margin-bottom: 0.8rem;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Radio Button Group Styling */
+.radio-group {
+    margin-bottom: 1.5rem;
+}
+
+.radio-group label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #070f4e;
+}
+
+/* Styling for Radio Button Options (Yes/No) */
+.radio-options {
+    display: flex;
+    align-items: center;
+    gap: 1rem; /* Space between radio options */
+}
+
+.radio-options input[type="radio"] {
+    margin-right: 0.5rem; /* Space between radio button and label */
+}
+
+.radio-options label {
+    font-size: 1rem;
+    margin: 0; /* Remove any default margin */
+    cursor: pointer;
+}
+
+/* Textarea Styling */
+textarea {
+    width: 100%;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    font-size: 1rem;
+    color: #2d3436;
+    transition: all 0.3s ease;
+    resize: vertical; /* Allow vertical resizing */
+}
+
+textarea:focus {
+    background: white;
+    outline: none;
+    box-shadow: 0 0 0 1px black;
+    border-color: black;
+}
+
+/* Adjust form section padding */
+.form-section {
+    margin-bottom: 2rem;
+}
+
+/* Textarea placeholder styling */
+textarea::placeholder {
+    color: #aaa;
+    font-style: italic;
+}
+
+/* Adjust input fields and textarea behavior */
+input[type="number"], input[type="text"], select, textarea {
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    color: #2d3436;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+input[type="number"]:focus, input[type="text"]:focus, select:focus, textarea:focus {
+    background: white;
+    outline: none;
+    box-shadow: 0 0 0 1px black;
+    border-color: black;
+}
+
+  
+
+  
+  

@@ -14,7 +14,7 @@
         <a href="#" class="logo"><i class='bx bx-heart'></i>Health & Lifestyle</a>
         <ul class="nav-links">
             <li><a href="{{ url_for('index') }}">Home</a></li>
-            <li><a href="#survey" style="color: #1e345e;">BMI</a></li>
+            <li><a href="#survey" style="color:#6ce6dd;">BMI</a></li>
             <li><a href="{{ url_for('userfeedback') }}">Feedback</a></li>
             <li><a href="{{ url_for('About_obesity') }}">About</a></li>
             <li><a href="{{ url_for('contact') }}">Contact</a></li>
@@ -25,10 +25,8 @@
             <button class="profile-btn" id="profileToggle">
                 {% if user.photo_id %}
                     <img src="{{ url_for('get_photo', photo_id=user.photo_id) }}" alt="Profile" class="profile-img">
-                    <span class="notification-badge">3</span>
                 {% else %}
                     <div class="profile-icon">{{ user.name[0] | upper}}</div>
-                    <span class="notification-badge">3</span>
                 {% endif %}
             </button>
             <div class="dropdown-content" id="dropdownContent">

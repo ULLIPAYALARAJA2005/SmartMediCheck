@@ -26,7 +26,7 @@
             <li><a href="{{ url_for('dengue') }}" >Dengue</a></li>
             <li><a href="{{ url_for('userfeedback') }}">Feed back</a></li>
     <li><a href="{{ url_for('About_dengue') }}">About</a></li>
-            <li><a href="#about" style="color: #1e345e;">Contact</a></li>
+            <li><a href="#about" style="color:  #00C6FF;">Contact</a></li>
         </ul>
 
         <!-- Profile Dropdown -->
@@ -34,10 +34,8 @@
             <button class="profile-btn" id="profileToggle">
                 {% if user.photo_id %}
                     <img src="{{ url_for('get_photo', photo_id=user.photo_id) }}" alt="Profile" class="profile-img">
-                    <span class="notification-badge">3</span>
                 {% else %}
                     <div class="profile-icon">{{ user.name[0] | upper}}</div>
-                    <span class="notification-badge">3</span>
                 {% endif %}
             </button>
             <div class="dropdown-content" id="dropdownContent">
@@ -61,14 +59,14 @@
             <img src="{{ url_for('static', filename='images/pngegg4.png') }}" alt="Hospital Photo" class="hospital-photo">
         </div>
         
-        <h1 class="fade-in">INDIA Hospital</h1>
+        <h1 class="fade-in">Enel Hospitals</h1>
 
         <!-- Contact Information and Map -->
         <div class="contact-section" id="contact">
             <div class="contact-info slide-up" style="animation-delay: 0.2s;">
                 <h2>Contact Information</h2>
-                <p><i class='bx bx-map'></i> <strong>Address:</strong> 123 Health Lane, Green Valley, City, Country</p>
-                <p><i class='bx bx-phone'></i> <strong>Phone:</strong> <a href="tel:+1234567890">+1 (234) 567-890</a></p>
+                <p><i class='bx bx-map'></i> <strong>Address:</strong>24/7/231, opposite PVR kalyana mandapam, Magunta Layout, Nellore, Andhra Pradesh 524003, India</p>
+                <p><i class='bx bx-phone'></i> <strong>Phone:</strong> <a href="tel:+1234567890">08612328899</a></p>
                 <p><i class='bx bx-envelope'></i> <strong>Email:</strong> <a href="mailto:info@greenvalleyhospital.com">info@greenvalleyhospital.com</a></p>
                 <p><i class='bx bx-time'></i> <strong>Working Hours:</strong> Monday - Friday: 8:00 AM - 8:00 PM</p>
                 <p><i class='bx bx-user'></i> <strong>Doctor's Name:</strong> Dr. John Doe</p>
@@ -77,8 +75,13 @@
             </div>
 
             <div class="contact-map slide-up" style="animation-delay: 0.4s;">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.215373510518!2d-73.9878449241646!3d40.74844097138988!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259a9b3117469%3A0xd134e199a405a163!2sEmpire%20State%20Building!5e0!3m2!1sen!2sus!4v1620000000000!5m2!1sen!2sus" allowfullscreen="" loading="lazy"></iframe>
-            </div>
+                <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3827.579030736221!2d79.97035231527212!3d14.42710812256335!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a4cf38166c958b1%3A0xdc0f8997f0a333c2!2sEnel%20Hospitals!5e0!3m2!1sen!2sin!4v1718978762260!5m2!1sen!2sin" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade"
+                class="dengue-map">
+            </iframe>            </div>
         </div>
     </div>
 

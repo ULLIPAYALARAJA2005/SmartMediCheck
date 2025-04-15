@@ -19,7 +19,7 @@
         <!-- Navigation Links -->
         <ul class="nav-links">
             <li><a href="{{ url_for('index') }}">Home</a></li>
-            <li><a href="#about" style="color: #1e345e;">Dengue</a></li>
+            <li><a href="#about" style="color:#6ce6dd;">Dengue</a></li>
             <li><a href="{{ url_for('userfeedback') }}">Feedback</a></li>
             <li><a href="{{ url_for('About_dengue') }}">About</a></li>
             <li><a href="{{ url_for('contact_dengue') }}">Contact</a></li>
@@ -30,10 +30,8 @@
             <button class="profile-btn" id="profileToggle">
                 {% if user.photo_id %}
                     <img src="{{ url_for('get_photo', photo_id=user.photo_id) }}" alt="Profile" class="profile-img">
-                    <span class="notification-badge">3</span>
                 {% else %}
                     <div class="profile-icon">{{ user.name[0] | upper}}</div>
-                    <span class="notification-badge">3</span>
                 {% endif %}
             </button>
             <div class="dropdown-content" id="dropdownContent">
@@ -90,12 +88,12 @@
 </br>	
 
 
-            <input type="submit" value="Submit" class="submit-btn">
+            <input type="submit" value="Submit" class="submit-btn" id ="submitBtn">
         </form>
     </div>
 <!-- This should be right after your form-container div -->
 <div id="response" class="response-container"></div>
-;
+
     <!-- Footer -->
     <footer>
         <p>WE ARE TRYING TO GIVE 100% ACCURACY PREDICTION</p>
@@ -156,15 +154,7 @@
             });
         }
 
-        // Navbar scroll effect
-        window.addEventListener('scroll', function() {
-            const nav = document.querySelector('.sticky-nav');
-            if (window.scrollY > 50) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
-        });
+
 
         // Notification badge interaction
         const notificationBadge = document.querySelector('.notification-badge');

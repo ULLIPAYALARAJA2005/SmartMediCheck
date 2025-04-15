@@ -26,7 +26,7 @@
             <li><a href="{{ url_for('obesity') }}">BMI</a></li>
             <li><a href="{{ url_for('userfeedback') }}">Feedback</a></li>
             <li><a href="{{ url_for('About_obesity') }}">About</a></li>
-            <li><a href="#contact" style="color: #1e345e;">Contact</a></li>
+            <li><a href="#contact" style="color:  #00C6FF;">Contact</a></li>
         </ul>
 
         <!-- Profile Dropdown -->
@@ -34,10 +34,8 @@
             <button class="profile-btn" id="profileToggle">
                 {% if user.photo_id %}
                     <img src="{{ url_for('get_photo', photo_id=user.photo_id) }}" alt="Profile" class="profile-img">
-                    <span class="notification-badge">3</span>
                 {% else %}
                     <div class="profile-icon">{{ user.name[0] | upper}}</div>
-                    <span class="notification-badge">3</span>
                 {% endif %}
             </button>
             <div class="dropdown-content" id="dropdownContent">
@@ -61,24 +59,34 @@
             <img src="{{ url_for('static', filename='images/pngegg.png') }}" alt="Hospital Photo" class="hospital-photo">
         </div>
         
-        <h1 class="fade-in">NELLORE TIGER Hospital</h1>
+        <h1 class="fade-in">Dr Tulip's Obesity & Diabetes Surgery Centre
+        </h1>
 
         <!-- Contact Information and Map -->
         <div class="contact-section" id="contact">
             <div class="contact-info slide-up" style="animation-delay: 0.2s;">
                 <h2>Contact Information</h2>
-                <p><i class='bx bx-map'></i> <strong>Address:</strong> 123 Health Lane, Green Valley, City, Country</p>
-                <p><i class='bx bx-phone'></i> <strong>Phone:</strong> <a href="tel:+1234567890">+1 (234) 567-890</a></p>
+                <p><i class='bx bx-map'></i> <strong>Address:</strong> Dr Tulip's Obesity & Diabetes Surgery Centre | Bariatric surgery weightloss surgery specialist
+                    6th phase, 2, 15th Cross Rd, KR Layout, JP Nagar Phase 6, J. P. Nagar, Bengaluru, Karnataka 560078
+                     
+                    </p>
+                <p><i class='bx bx-phone'></i> <strong>Phone:</strong> <a href="tel:+1234567890">08880537537</a></p>
                 <p><i class='bx bx-envelope'></i> <strong>Email:</strong> <a href="mailto:info@greenvalleyhospital.com">info@greenvalleyhospital.com</a></p>
                 <p><i class='bx bx-time'></i> <strong>Working Hours:</strong> Monday - Friday: 8:00 AM - 8:00 PM</p>
-                <p><i class='bx bx-user'></i> <strong>Doctor's Name:</strong> Dr. John Doe</p>
+                <p><i class='bx bx-user'></i> <strong>Doctor's Name:</strong>Dr.sujatha</p>
                 <p><i class='bx bx-certification'></i> <strong>Emergency:</strong> <a href="tel:+1234567890">+1 (234) 567-891</a></p>
                 <p><i class='bx bx-clinic'></i> <strong>Departments:</strong> Cardiology, Neurology, Pediatrics, Surgery</p>
             </div>
 
             <div class="contact-map slide-up" style="animation-delay: 0.4s;">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.215373510518!2d-73.9878449241646!3d40.74844097138988!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259a9b3117469%3A0xd134e199a405a163!2sEmpire%20State%20Building!5e0!3m2!1sen!2sus!4v1620000000000!5m2!1sen!2sus" allowfullscreen="" loading="lazy"></iframe>
-            </div>
+                <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d62271.50172804502!2d77.5362041!3d12.906119!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae145d4643eb3d%3A0x3ba99b8ef2c12cce!2sDr%20Tulip's%20Obesity%20%26%20Diabetes%20Surgery%20Centre%20%7C%20Bariatric%20surgery%20weightloss%20surgery%20specialist!5e0!3m2!1sen!2sin!4v1713173081540!5m2!1sen!2sin" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+            
+        </iframe>            </div>
         </div>
     </div>
 

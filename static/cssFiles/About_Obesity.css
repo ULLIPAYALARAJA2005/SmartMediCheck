@@ -24,7 +24,7 @@
 body {
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    color: var(--light-color);
+	background: #fff; 
     min-height: 100vh;
     line-height: 1.6;
     overflow-x: hidden;
@@ -38,7 +38,7 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 15px 5%;
-    background: var(--glass-bg);
+	background: #000278; 
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     box-shadow: var(--box-shadow);
@@ -283,7 +283,7 @@ body {
 footer {
     text-align: center;
     padding: 20px;
-    background: rgba(0, 0, 0, 0.2);
+	background: #30317e; 
     margin-top: 80px;
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
@@ -343,9 +343,9 @@ footer p {
 }
 /* Header */
 header {
-    background: linear-gradient(135deg, rgba(0, 123, 255, 0.8), rgba(0, 198, 255, 0.8));
-    color: #fff;
-    padding: 80px 0;
+    background:#ace7ef; 
+    color: #30317e;
+    padding: 50px 0;
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -358,9 +358,9 @@ header {
     max-width: 800px;
     margin: 40px auto;
     padding: 30px;
-    background: rgba(255, 255, 255, 0.1);
+    background: #fff; 
     border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 30px  #000278;
     backdrop-filter: blur(10px);
     transition: background 0.5s ease, box-shadow 0.5s ease;
     margin-bottom: 100px;
@@ -372,9 +372,10 @@ body.light-mode .container {
 
 /* Sections */
 .section {
+    border: 1px solid #000278;
     margin-bottom: 50px;
     padding: 25px;
-    background: rgba(255, 255, 255, 0.1);
+    background:#cefff1; 
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -391,7 +392,7 @@ body.light-mode .section {
 }
 h2 {
     font-size: 2rem;
-    color: #00C6FF;
+    color: #000278;
     margin-bottom: 20px;
     border-bottom: 3px solid #00C6FF;
     padding-bottom: 10px;
@@ -399,14 +400,15 @@ h2 {
     transition: color 0.5s ease;
 }h3 {
     font-size: 1.6rem;
-    color: #fff;
+    color: #30317e; 
+
     margin-top: 30px;
     margin-bottom: 15px;
     transition: color 0.5s ease;
 }p {
     font-size: 1.1rem;
     margin-bottom: 25px;
-    color: #ddd;
+    color: #050505;
     transition: color 0.5s ease;
 }
 .section ul {
@@ -416,6 +418,6 @@ h2 {
 
 .section ul li {
     margin-bottom: 10px;
-    color: #ddd;
+    color:#050505;
     transition: color 0.5s ease;
 }

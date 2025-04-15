@@ -24,7 +24,7 @@
 body {
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    color: var(--light-color);
+	background: #e3f6f5; 
     min-height: 100vh;
     line-height: 1.6;
     overflow-x: hidden;
@@ -38,7 +38,7 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 15px 5%;
-    background: var(--glass-bg);
+	background: #000278; 
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     box-shadow: var(--box-shadow);
@@ -283,7 +283,7 @@ body {
 footer {
     text-align: center;
     padding: 15px;
-    background: rgba(0, 0, 0, 0.2);
+    background: #22267b;
     margin-top: 80px;
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
@@ -348,13 +348,12 @@ footer p {
     max-width: 600px;
     margin: 4rem auto;
     padding: 2rem;
-    background: var(--glassmorphism-bg);
+    background: #bae8e8; 
     backdrop-filter: blur(15px);
     border-radius: 15px;
-    box-shadow: var(--neumorphism-shadow);
     box-shadow: 
-    0 12px 40px rgb(243, 243, 245),
-    0 6px 20px rgb(243, 243, 245);
+    0 2px 8px #1e56a0,
+    0 2px 4px #1e56a0;
 transform: translateY(-4px);
 }
 
@@ -362,7 +361,7 @@ transform: translateY(-4px);
 
 /* Form heading */
 .form-container h1 {
-    color: white;
+    color: #070f4e;
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     margin-bottom: 2rem;
     font-weight: 600;
@@ -419,7 +418,7 @@ transform: translateY(-4px);
 
 /* Label styling */
 .form-container label {
-    color: white;
+    color:#070f4e;;
     font-weight: 500;
     margin-bottom: 0.8rem;
     display: block;
@@ -432,4 +431,41 @@ transform: translateY(-4px);
     display: inline-block; /* Display radio buttons inline */
     vertical-align: middle; /* Align radio buttons vertically */
 }
+#response {
+    max-width: 1000px;
+    margin: 0 auto 4rem;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 30px;
+    box-shadow: var(--box-shadow);
+    display: none; /* Initially hidden */
+    transition: var(--transition);
+    border: 5px solid blue;
+    color: #2d3436;
+}
 
+#response.show {
+    display: block;
+    animation: fadeIn 0.5s ease-in-out;
+}
+#submitBtn{
+    color: #e3f6f5;
+    background:#6ce6dd;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 5px; 
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    width: 100%;
+
+}
+#submitBtn:hover{
+    background: #2b186d;
+    color: white;
+}
+  
+
+  
+  

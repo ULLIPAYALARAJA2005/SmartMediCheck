@@ -23,7 +23,7 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+	background: #e3f6f5; 
     color: var(--light-color);
     min-height: 100vh;
     line-height: 1.6;
@@ -43,7 +43,7 @@ html {
     align-items: center;
     justify-content: space-between;
     padding: 15px 5%;
-    background: var(--glass-bg);
+	background: #000278; 
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     box-shadow: var(--box-shadow);
@@ -369,7 +369,7 @@ h1::after {
 .contact-info {
     flex: 1;
     min-width: 300px;
-    background: var(--glass-bg);
+    background: #bae8e8; 
     padding: 40px;
     border-radius: 15px;
     backdrop-filter: blur(10px);
@@ -386,7 +386,7 @@ h1::after {
 }
 
 .contact-info h2 {
-    color: white;
+    color:  #000278;
     margin-bottom: 25px;
     font-size: 1.8rem;
     position: relative;
@@ -405,7 +405,7 @@ h1::after {
 }
 
 .contact-info p {
-    color: #eee;
+    color:  #000278;
     margin-bottom: 20px;
     font-size: 1.05rem;
     display: flex;
@@ -492,7 +492,7 @@ h1::after {
 footer {
     text-align: center;
     padding: 40px;
-    background: rgba(0, 0, 0, 0.2);
+    background: #22267b;
     margin-top: 80px;
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
@@ -637,6 +637,7 @@ footer p {
 /* Animation Classes */
 .fade-in {
     animation: fadeIn 1s ease-in-out forwards;
+    color:  #000278;
 }
 
 @keyframes fadeIn {

@@ -561,7 +561,7 @@ depressionmodel=pickle.load(open("depression.pkl","rb"))
 
 #GROQ_API_KEY = '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'GROQ_API_KEY
 GROQ_API_KEY="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"
-client = groq.Groq(api_key=GROQ_API_KEY)
+lient = groq.Groq(api_key=GROQ_API_KEY)
 
 
 def yes_no(str):
@@ -602,7 +602,7 @@ def food(str):
       return 3
 
 
-def sleep(str):
+def sleepy(str):
     if str=="less than 5":
        return 2
     elif str=="5-6 hours":
@@ -692,7 +692,7 @@ def submit():
 
         prompt = f"Suggest some recommendations for {disease_status} patient after mentioning which disease he has along with recommendations as paragraphs. If the patient does not have any disease, leave it."
 
-        response = client.chat.completions.create(
+        response = lient.chat.completions.create(
             model="llama-3.3-70b-versatile",
             messages=[{"role": "user", "content": prompt}],
             max_tokens=200
@@ -746,7 +746,7 @@ def click():
 
         prompt = f"Suggest some recommendations for {x} patient after mentioning which disease he has along with recommendations as paragraphs. If the patient does not have any disease, leave it."
 
-        response = client.chat.completions.create(
+        response = lient.chat.completions.create(
             model="llama-3.3-70b-versatile",
             messages=[{"role": "user", "content": prompt}],
             max_tokens=200
@@ -820,13 +820,14 @@ def give():
 
         if pred[0] == 1:
             disease_status = "Migraine"
+            print("hi");
         else:
             disease_status = "No Migraine"
 
         # Generate recommendation response
         prompt = f"Suggest some recommendations for {disease_status} patient after mentioning which disease he has along with recommendations as paragraphs. If the patient does not have any disease, leave it."
 
-        response = client.chat.completions.create(
+        response = lient.chat.completions.create(
             model="llama-3.3-70b-versatile",
             messages=[{"role": "user", "content": prompt}],
             max_tokens=200
@@ -840,10 +841,10 @@ def give():
         print(f"Error in /give: {str(e)}")  # Logs error to console
         return jsonify({'error': str(e)}), 500
 
-  
 @app.route("/enter", methods=['POST', 'GET'])
 def enter():
     try:
+        # Get JSON data
         data = request.get_json()
 
         if not data:
@@ -851,50 +852,51 @@ def enter():
 
         print(f"Received data: {data}")  # Debugging
 
-        # Extracting form data with default values to prevent NoneType errors
-        age = data.get('age', "0")  # Default to "0" if missing
+        # Extracting form data with default values
+        age = data.get('age', "0")
         acd_pressure = data.get('acd_pressure', "0")
         cgpa = data.get('cgpa', "0.0")
-        study_hours = data.get('study_hours', "0")  # Fixed typo
+        study_hours = data.get('study_hours', "0")
         fin_stress = data.get('fin_stress', "0")
-        sleep_data = data.get('sleep', "unknown")  # Default to avoid None
+        sleep_data = data.get('sleep', "unknown")
         diet_data = data.get('diet', "unknown")
-        smoke = data.get('suicide', "no")  # Fixed key from "suicide" to "smoke"
+        smoke = data.get('suicide', "no")  # Assuming it's about suicide thought
         mental_ill = data.get('mental_ill', "no")
         gender_data = data.get('gender', "unknown")
 
         # Convert input values safely
         try:
             Age = float(age) if age.replace('.', '', 1).isdigit() else 0
-            Academic_Pressure = float(acd_pressure) if acd_pressure.isdigit() else 0
+            Academic_Pressure = float(acd_pressure) if acd_pressure.replace('.', '', 1).isdigit() else 0
             CGPA = float(cgpa) if cgpa.replace('.', '', 1).isdigit() else 0
-            StudyHours = float(study_hours) if study_hours.isdigit() else 0
-            Financial_Stress = float(fin_stress) if fin_stress.isdigit() else 0
+            StudyHours = float(study_hours) if study_hours.replace('.', '', 1).isdigit() else 0
+            Financial_Stress = float(fin_stress) if fin_stress.replace('.', '', 1).isdigit() else 0
         except ValueError:
             return jsonify({'error': 'Invalid numeric values'}), 400
 
-        Sleep_Duration = sleep(sleep_data)
+        # Map categorical inputs using helper functions
+        Sleep_Duration = sleepy(sleep_data)
         Dietary_Habits = diet_habit(diet_data)
         Suicide = yes_no(smoke)
         Mental_Illness_History = yes_no(mental_ill)
         Gender = gender(gender_data)
 
-        # Prepare input for model
+        # Prepare input DataFrame for model
         column_names = ["Age", "Academic_Pressure", "CGPA", "StudyHours", "Financial_Stress", 
                         "Sleep_Duration", "Dietary_Habits", "Suicide", "Mental_Illness_History", "Gender"]
 
-        arr = np.array([[Age, Academic_Pressure, CGPA, StudyHours, Financial_Stress, 
-                         Sleep_Duration, Dietary_Habits, Suicide, Mental_Illness_History, Gender]])
+        arr = [[Age, Academic_Pressure, CGPA, StudyHours, Financial_Stress, 
+                Sleep_Duration, Dietary_Habits, Suicide, Mental_Illness_History, Gender]]
 
         arr_df = pd.DataFrame(arr, columns=column_names)
 
         print(f"Input Array: {arr_df}")  # Debugging
 
         # Make prediction using the depression model
-        pred = depressionmodel.predict(arr_df)
+        pred = depressionmodel.predict(arr_df.values)
 
         print(f"Prediction: {pred}")  # Debugging
-
+# After prediction:
         if pred[0] == 1:
             disease_status = "Depression"
         else:
@@ -902,20 +904,19 @@ def enter():
 
         prompt = f"Suggest some recommendations for {disease_status} patient after mentioning which disease he has along with recommendations as paragraphs. If the patient does not have any disease, leave it."
 
-        response = client.chat.completions.create(
+        response = lient.chat.completions.create(
             model="llama-3.3-70b-versatile",
             messages=[{"role": "user", "content": prompt}],
             max_tokens=200
         )
 
         response_text = response.choices[0].message.content
-
+        print(response_text)
         return jsonify({'reply': response_text})
 
     except Exception as e:
-        print(f"Error in /enter: {str(e)}")  # Logs error to console
+        print(f"Error in /enter: {str(e)}")
         return jsonify({'error': str(e)}), 500
-
-
+    
 if __name__ == "__main__":
     app.run(debug=True, port=5000)

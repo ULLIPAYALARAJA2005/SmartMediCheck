@@ -1,20 +1,20 @@
 /* Global Styles */
 :root {
-    --primary-color: #F44336; /* Primary color (red) */
-    --secondary-color: #FFEB3B; /* Secondary color (yellow) */
-    --accent-color: #FF5722; /* Orange accent color */
+    --primary-color: #6c5ce7;
+    --secondary-color: #a29bfe;
+    --accent-color: #00C6FF;
     --dark-color: #2d3436;
     --light-color: #f5f6fa;
-    --background-gradient: linear-gradient(135deg, #F44336, #FFEB3B);
-    --glassmorphism-bg: rgba(255, 255, 255, 0.1);
-    --glass-border: rgba(255, 255, 255, 0.2);
-    --neumorphism-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1), -5px -5px 15px rgba(255, 255, 255, 0.5);
-    --font-primary: 'Poppins', sans-serif;
-    --text-color: #333;
+    --success-color: #00b894;
+    --warning-color: #fdcb6e;
+    --danger-color: #d63031;
     --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
     --box-shadow-hover: 0 14px 28px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.08);
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
 }
+
 
 /* Reset and Base Styles */
 * {
@@ -24,15 +24,17 @@
 }
 
 body {
-    font-family: var(--font-primary);
-    background: var(--background-gradient);
-    color: var(--text-color);
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+	background: #e3f6f5; 
     min-height: 100vh;
     line-height: 1.6;
     overflow-x: hidden;
 }
 
 /* Navigation Bar - Updated to match obesity.html */
+
+/* Navigation Bar */
 .sticky-nav {
     position: sticky;
     top: 0;
@@ -40,7 +42,7 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 15px 5%;
-    background: var(--glassmorphism-bg);
+	background: #000278; 
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     box-shadow: var(--box-shadow);
@@ -51,7 +53,7 @@ body {
 
 .sticky-nav.scrolled {
     padding: 10px 5%;
-    background: rgba(244, 67, 54, 0.95); /* Using primary color with opacity */
+    background: rgba(44, 44, 44, 0.95);
 }
 
 .logo {
@@ -70,7 +72,7 @@ body {
 }
 
 .logo i {
-    color: var(--light-color);
+    color: var(--accent-color);
     font-size: 2rem;
 }
 
@@ -140,8 +142,8 @@ body {
     position: absolute;
     top: -5px;
     right: -5px;
-    background: var(--secondary-color);
-    color: var(--dark-color);
+    background: var(--danger-color);
+    color: white;
     border-radius: 50%;
     width: 20px;
     height: 20px;
@@ -263,7 +265,7 @@ body {
 }
 
 .dropdown-content li:not(:first-child):not(:nth-child(2)):hover {
-    background: rgba(244, 67, 54, 0.08);
+    background: rgba(108, 92, 231, 0.08);
     padding-left: 30px;
 }
 
@@ -281,26 +283,27 @@ body {
     color: var(--primary-color);
 }
 
-.delete-account {
-    color: #ff4757 !important;
-    font-weight: 500;
-}
 
 /* Form Container - Preserved original styles */
 .form-container {
     max-width: 600px;
     margin: 4rem auto;
     padding: 2rem;
-    background: var(--glassmorphism-bg);
+    background: #bae8e8; 
     backdrop-filter: blur(15px);
     border-radius: 15px;
-    box-shadow: var(--neumorphism-shadow);
+    box-shadow: 
+    0 2px 8px #1e56a0,
+    0 2px 4px #1e56a0;
+transform: translateY(-4px);
 }
 
 .form-container h1 {
+    color: #070f4e;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 2rem;
+    font-weight: 600;
     text-align: center;
-    margin-bottom: 1.5rem;
-    color: var(--text-color);
 }
 
 .form-container label {
@@ -330,7 +333,11 @@ body {
 }
 
 .form-container input[type="submit"] {
-    background: var(--primary-color);
+    background: var(--primary-color);.form-container h1 {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        color: var(--text-color);
+    }
     color: #fff;
     border: none;
     cursor: pointer;
@@ -344,18 +351,27 @@ body {
 }
 
 /* Footer - Preserved original styles */
+/* Footer */
 footer {
     text-align: center;
-    padding: 1rem;
-    background: var(--glassmorphism-bg);
-    backdrop-filter: blur(10px);
+    padding: 15px;
+    background: #22267b;
+    margin-top: 80px;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    position: relative;
+    border-top: 1px solid var(--glass-border);
     box-shadow: var(--neumorphism-shadow);
     clear: both;
+
+
 }
 
 footer p {
+    color: white;
     margin: 0;
-    color: #fff;
+    font-size: 1rem;
+    line-height: 1.7;
 }
 
 /* Responsive Design */
@@ -398,16 +414,15 @@ footer p {
 }
 /* Add this to your CSS file */
 #response {
-    max-width: 600px;
+    max-width: 1000px;
     margin: 0 auto 4rem;
     padding: 20px;
     background: rgba(255, 255, 255, 0.9);
-    border-radius: 10px;
+    border-radius: 30px;
     box-shadow: var(--box-shadow);
     display: none; /* Initially hidden */
     transition: var(--transition);
-    border-left: 5px solid var(--primary-color);
-    border-top: 5px solid var(--primary-color);
+    border: 5px solid blue;
 }
 
 #response.show {
@@ -424,4 +439,21 @@ footer p {
 .form-container {
     margin: 2rem auto 1rem; /* Reduced top margin */
     /* rest of your existing form-container styles */
+}
+#submitBtn{
+    color: #e3f6f5;
+    background:#04b9ad;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 5px; 
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    width: 100%;
+
+}
+#submitBtn:hover{
+    background: #5e42c5;
+    color: white;
 }

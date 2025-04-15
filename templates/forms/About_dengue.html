@@ -21,7 +21,7 @@
                 <li><a href="{{ url_for('index') }}">Home</a></li>
                 <li><a href="{{ url_for('dengue') }}">Dengue</a></li>
                 <li><a href="{{ url_for('userfeedback') }}">Feedback</a></li>
-                <li><a href="#about" style="color: #1e345e;">About</a></li>
+                <li><a href="#about" style="color: #00C6FF;">About</a></li>
                 <li><a href="{{ url_for('contact_dengue') }}" >Contact</a></li>
         </ul>
 
@@ -30,10 +30,8 @@
             <button class="profile-btn" id="profileToggle">
                 {% if user.photo_id %}
                     <img src="{{ url_for('get_photo', photo_id=user.photo_id) }}" alt="Profile" class="profile-img">
-                    <span class="notification-badge">3</span>
                 {% else %}
                     <div class="profile-icon">{{ user.name[0] | upper}}</div>
-                    <span class="notification-badge">3</span>
                 {% endif %}
             </button>
             <div class="dropdown-content" id="dropdownContent">
