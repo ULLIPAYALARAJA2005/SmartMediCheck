@@ -23,6 +23,8 @@ client = MongoClient(MONGO_URL)
 print("Mongo connected")
 db = client["mydatabase"]  # Database name
 users_collection = db["userdetails"]  # Collection name and emaile
+users_collection_demo = db["userdetails_demo"]  # Collection name and emaile
+
 fs = gridfs.GridFS(db)  # GridFS for storing images
 
 feedbacks_collection1 = db["feedback"]  # Obesity feedback
@@ -168,7 +170,50 @@ def update_password():
     
 @app.route("/")
 def start():
-      return render_template("forms/start.html")    
+    all_collections = [
+        feedbacks_collection1,
+        depression_collection,
+        migraine_collection,
+        dengue_collection
+        
+        
+    ]
+    
+    total_sum = 0
+    total_ratings = 0
+    total_users = 0
+    total_feedbacks = 0
+    total_login = 0
+
+    feedbacks = list(users_collection.find())
+    total_users += len(feedbacks)
+    
+    feedbacks = list(users_collection_demo.find())
+    total_login += len(feedbacks)
+    
+    for collection in all_collections:
+        feedbacks = list(collection.find())
+        total_feedbacks += len(feedbacks)
+
+        for feed in feedbacks:
+            if 'rating' in feed:
+                try:
+                    rating = float(feed['rating'])  # Ensure numeric
+                    total_sum += rating
+                    total_ratings += 1
+                except ValueError:
+                    continue
+
+    avg = 0
+    if total_ratings > 0:
+        avg = round(total_sum / (total_ratings * 5), 1) * 100  # Normalized to 100%
+
+    print(f"Average Feedback Rating: {avg}%")
+    print(f"Total Feedback Users: {total_users}")
+    
+    return render_template("forms/start.html", average_rating=avg, total_users=total_users,total_feedbacks=total_feedbacks,total_login=total_login)
+  
+     
 @app.route("/getstart")
 def getstart():
       return render_template("forms/demo_index.html")      
@@ -204,7 +249,9 @@ def signup_action():
     # Insert new user if email does not exist
         # Store User Data in MongoDB
     user_data = {"name": name, "email": email, "password":password, "photo_id": photo_id}
-    users_collection.insert_one(user_data)    
+    users_collection.insert_one(user_data)  
+    user_data_full = {"name": name, "email": email, "password":password, "photo_id": photo_id}
+    users_collection_demo.insert_one(user_data_full)   
     flash("Registration successful!", "success")
     return redirect(url_for("login"))
 
@@ -403,9 +450,25 @@ def all_feedback():
         feedbacks_collection =migraine_collection;    
     elif(userpage == "dengue1"):
         feedbacks_collection =dengue_collection; 
-     
-    feedbacks = list(feedbacks_collection.find())  # Fetch all feedbacks
-    return render_template("forms/all_feedback.html", feedbacks=feedbacks, user_email=user_email)
+    feedbacks = list(feedbacks_collection.find())
+    sum_feed = 0
+    valid_ratings = 0
+    for feed in feedbacks:
+        if 'rating' in feed:
+            try:
+                rating = float(feed['rating'])  # Ensures numeric
+                sum_feed += rating
+                valid_ratings += 1
+            except ValueError:
+                continue
+
+    avg = 0
+    if valid_ratings > 0:
+        avg = round(sum_feed / (valid_ratings * 5), 1) * 100
+
+    print(f"Average Feedback Rating: {avg}%")
+    # Fetch all feedbacks
+    return render_template("forms/all_feedback.html", feedbacks=feedbacks, user_email=user_email,avg=avg)
 
 # Route to delete feedback
 @app.route("/delete_feedback/<feedback_id>", methods=["POST"])

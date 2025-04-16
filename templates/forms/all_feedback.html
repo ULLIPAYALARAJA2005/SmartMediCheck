@@ -982,6 +982,51 @@
             -webkit-mask-composite: xor;
             mask-composite: exclude;
         }
+        .stats-container {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+        
+        .stat-box {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 200px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: default;
+            position: relative;
+        }
+        
+        .stat-box:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .stat-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .stat-value {
+            font-size: 2.4rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.3rem;
+        }
+        
+        .stat-label {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+        }
+        
     </style>
 </head>
 <body>
@@ -1001,10 +1046,25 @@
         </div>
     </header>
     
-    <div class="section-title">
-        <h2>User Feedback & Reviews</h2>
-        <p>See what our community is saying about their experiences</p>
+
+
+    <div class="stats-container">
+        <div class="stat-box">
+            <div class="stat-icon"><i class='bx bx-message-square-detail'></i></div>
+            <div class="stat-value">{{ feedbacks|length }}</div>
+            <div class="stat-label">Total Feedbacks</div>
+        </div>
+        <div class="section-title">
+            <h2>User Feedback & Reviews</h2>
+            <p>See what our community is saying about their experiences</p>
+        </div>
+        <div class="stat-box">
+            <div class="stat-icon"><i class='bx bx-bar-chart-alt-2'></i></div>
+            <div class="stat-value">{{ avg }}%</div>
+            <div class="stat-label">Accuracy</div>
+        </div>
     </div>
+    
     
     <div class="feedback-grid">
         {% if feedbacks|length > 0 %}
@@ -1058,7 +1118,7 @@
         {% endif %}
     </div>
     
-    <a href="{{ url_for('userfeedback') }}" class="nav-link">
+    <a href="{{ url_for('back_to_menu') }}" class="nav-link">
         <i class="fas fa-arrow-left"></i> Back to Dashboard
     </a>
 </div>
@@ -1233,67 +1293,48 @@
             hideDeleteModal();
         }
     });
-
     function deleteFeedback(feedbackId) {
-        const feedbackItem = document.getElementById('feedback-' + feedbackId);
-        
-        // Add deleting class for animation
-        feedbackItem.classList.add('deleting');
-        
-        // After animation completes, submit the form
-        setTimeout(() => {
-            fetch(`/delete_feedback/${feedbackId}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            })
-            .then(response => {
-                if (response.ok) {
-                    // Remove the item from DOM
-                    feedbackItem.remove();
-                    
-                    // Show success message
-                    showAlert('Feedback deleted successfully!', 'success');
-                    
-                    // Check if no feedback left
-                    if (document.querySelectorAll('.feedback-item').length === 0) {
-                        showNoFeedbackMessage();
-                    }
-                } else {
-                    // Remove deleting class if there was an error
-                    feedbackItem.classList.remove('deleting');
-                    throw new Error('Failed to delete feedback');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                showAlert('Failed to delete feedback. Please try again.', 'error');
-            });
-        }, 400); // Match this duration with the CSS animation duration
+        fetch(`/delete_feedback/${feedbackId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                // Reload the page immediately after successful deletion
+                location.reload();
+            } else {
+                throw new Error('Failed to delete feedback');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showAlert('Failed to delete feedback. Please try again.', 'error');
+        });
     }
-
+    
     function showAlert(message, type) {
-        // Remove any existing alerts first
+        // Remove any existing alerts
         const existingAlert = document.querySelector('.status-message');
         if (existingAlert) {
             existingAlert.remove();
         }
-        
+    
         const alertDiv = document.createElement('div');
         alertDiv.className = `status-message ${type}`;
-        
+    
         const icon = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
         alertDiv.innerHTML = `
             <i class="${icon}"></i>
             <span>${message}</span>
             <span class="close-alert" onclick="this.parentElement.remove()">&times;</span>
         `;
-        
+    
         const container = document.querySelector('.container');
         container.insertBefore(alertDiv, container.children[1]);
-        
-        // Remove alert after 5 seconds
+    
+        // Fade out and remove alert after 5 seconds
         setTimeout(() => {
             if (alertDiv.parentNode) {
                 alertDiv.style.opacity = '0';
