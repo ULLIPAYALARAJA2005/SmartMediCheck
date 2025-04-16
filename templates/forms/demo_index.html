@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Disease Prediction</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='cssFiles/home-style.css') }}">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    /* Navbar */
+    .navbar {
+
+        height: 80px;
+    }
+
+    .login-button {
+      background-color: #2563eb;
+      padding: 10px 18px;
+      border-radius: 8px;
+      color: white !important;
+      font-weight: 500;
+      transition: background-color 0.3s ease;
+    }
+
+    .login-button:hover {
+      background-color: #1d4ed8;
+    }
+
+    /* Login Modal */
+    .login-modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 15% auto;
+      padding: 30px 25px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .close-btn {
+      position: absolute;
+      right: 20px;
+      top: 15px;
+      font-size: 24px;
+      cursor: pointer;
+      color: #aaa;
+    }
+
+    .close-btn:hover {
+      color: #000;
+    }
+
+    .modal-content h3 {
+      font-size: 22px;
+      color: #1e293b;
+      margin-bottom: 10px;
+    }
+
+    .modal-content p {
+      color: #475569;
+      font-size: 16px;
+    }
+
+    .modal-buttons {
+      margin-top: 25px;
+    }
+
+    .modal-buttons a {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 0 10px;
+      border-radius: 5px;
+      text-decoration: none;
+      color: white;
+      font-weight: 500;
+      font-size: 15px;
+    }
+
+    .login-btn {
+      background-color: #2563eb;
+    }
+
+    .cancel-btn {
+      background-color: #64748b;
+    }
+
+    /* Add custom responsive text animation if needed */
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <div class="navbar">
+    <div style="display: flex; align-items: center;">
+      <img src="static/images/logo.png" alt="logo" class="logo">
+      <p>MedPredict</p>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#container">Home</a></li>
+        <li><a href="{{ url_for('login') }}" class="login-button">Login</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li class="profile-icon">
+          <a href="#"><i class='bx bxs-user-circle' style = "font-size:58px;"></i></a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="login-modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <h3>Login Required</h3>
+      <p>You must be logged in to access this feature.</p>
+      <div class="modal-buttons">
+        <a href="{{ url_for('login') }}" class="login-btn">Login</a>
+        <a href="#" class="cancel-btn" id="cancelModal">Cancel</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Home Content -->
+  <div id="container">
+    <div class="row">
+      <div class="col">
+        <h1 class="cursor typewriter-animation">Predict. Protect. Live.</h1>
+        <p class="p_in_img">Get personalised disease predictions based on your health data. Take control of your health today for a healthier you.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Image Section -->
+  <div class="bgimg">
+    <div style="width:100%;height:70vh;">
+      <div class="imag"><img width="50%" src="{{ url_for('static', filename='images/bg2.png') }}" align="left"></div>
+      <div class="text-container">
+        <span style="position: relative; top: 25px; left: 20px;">Healthy living results in&nbsp;</span>
+        <span>
+          <div class="dropping-texts">
+            <div>Happiness</div>
+            <div>Strength</div>
+            <div>Peace</div>
+            <div>Confidence</div>
+          </div>
+        </span>
+      </div>
+    </div>
+
+    <!-- About Section -->
+    <div id="about">
+      <h2 id="about_head">About Us</h2>
+      <p style="font-size:25px;">At MedPredict, we leverage advanced machine learning algorithms and medical expertise to provide personalized disease predictions.
+        Our platform empowers individuals to take proactive control of their health by identifying potential risks and recommending preventive measures.
+        We are committed to transforming healthcare through AI-driven innovation.</p>
+    </div>
+
+    <!-- Disease Tests -->
+    <div class="disease">
+      <h2 style="margin-bottom: 30px; padding-top: 100px; color: #03055B;">Check Your Health!</h2>
+      <div class="images">
+        <figure><a href="#" class="test-link"><img src="{{ url_for('static', filename='images/obesity.jpeg') }}" alt="obesity"></a><figcaption>Obesity Test</figcaption></figure>
+        <figure><a href="#" class="test-link"><img src="{{ url_for('static', filename='images/depression.jpg') }}" alt="depression"></a><figcaption>Student Depression Test</figcaption></figure>
+        <figure><a href="#" class="test-link"><img src="{{ url_for('static', filename='images/migrains.jpg') }}" alt="migraine"></a><figcaption>Migraine Test</figcaption></figure>
+        <figure><a href="#" class="test-link"><img src="{{ url_for('static', filename='images/dengue.jpeg') }}" alt="dengue"></a><figcaption>Dengue Test</figcaption></figure>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact -->
+  <div id="contact">
+    <h2 style="font-size:40px; margin-bottom: 30px; color:rgb(22, 132, 151);">Contact Details</h2>
+    <p style="font-size:25px; line-height:35px;">Email: diseaseprediction@gmail.com<br>Contact No: 1234567890</p>
+    <div class="social-links">
+      <a href="#"><i class='bx bxl-facebook'></i></a>
+      <a href="#"><i class='bx bxl-twitter'></i></a>
+      <a href="#"><i class='bx bxl-instagram'></i></a>
+      <a href="#"><i class='bx bxl-linkedin'></i></a>
+      <a href="#"><i class='bx bxl-youtube'></i></a>
+    </div>
+  </div>
+
+  <script>
+    // Modal functionality
+    const testLinks = document.querySelectorAll('.test-link');
+    const loginModal = document.getElementById('loginModal');
+    const closeBtn = document.querySelector('.close-btn');
+    const cancelModal = document.getElementById('cancelModal');
+
+    testLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        loginModal.style.display = 'block';
+      });
+    });
+
+    closeBtn.addEventListener('click', function() {
+      loginModal.style.display = 'none';
+    });
+
+    cancelModal.addEventListener('click', function(e) {
+      e.preventDefault();
+      loginModal.style.display = 'none';
+    });
+
+    window.addEventListener('click', function(e) {
+      if (e.target === loginModal) {
+        loginModal.style.display = 'none';
+      }
+    });
+
+    // Dropping text animation delay
+    const droppingTexts = document.querySelectorAll('.dropping-texts > div');
+    droppingTexts.forEach((text, index) => {
+      text.style.animationDelay = `${index * 1}s`;
+    });
+  </script>
+</body>
+</html>

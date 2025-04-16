@@ -166,12 +166,15 @@ def update_password():
     
     
     
-    
-    
-    
+@app.route("/")
+def start():
+      return render_template("forms/start.html")    
+@app.route("/getstart")
+def getstart():
+      return render_template("forms/demo_index.html")      
     
 # Route to display registration page
-@app.route("/")
+@app.route("/signup")
 def signup():
     return render_template("forms/signup.html")
 
@@ -229,7 +232,6 @@ def login_user():
 
     # Store user session
     session["user"] = email
-    flash("Login successful!", "success")
     return redirect(url_for("index"))  # Redirect to menu page after login
 
 
