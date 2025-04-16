@@ -334,41 +334,96 @@
                 justify-content: center;
             }
         }
-
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.2rem;
+        @media (max-width: 576px) {
+            nav {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+                padding: 1rem 1.5rem;
             }
-            
-            .btn-group {
+        
+            .logo {
+                font-size: 1.2rem;
+            }
+        
+            .hero {
+                padding: 7rem 1rem 4rem;
+            }
+        
+            h1 {
+                font-size: 1.8rem;
+            }
+        
+            .hero-container {
+                gap: 2rem;
+            }
+        
+            .hero p {
+                font-size: 1rem;
+                max-width: 100%;
+            }
+        
+            .btn {
+                padding: 0.8rem 1.2rem;
+                font-size: 0.95rem;
+            }
+        
+            .stats {
                 flex-direction: column;
                 align-items: center;
             }
-            
-            .btn {
+        
+            .stat-item {
                 width: 100%;
-                max-width: 250px;
+                max-width: 300px;
             }
-            
-            .stats {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            
+        
             .footer-container {
                 flex-direction: column;
                 gap: 2rem;
+                padding: 0 1.5rem;
             }
-            
+        
             .footer-links {
-                grid-template-columns: repeat(2, 1fr);
-                width: 100%;
+                grid-template-columns: 1fr;
             }
-            
-            .nav-links {
-                display: none;
+        
+            .footer-col {
+                margin-bottom: 1rem;
+            }
+        
+            .footer-logo {
+                font-size: 1.3rem;
+            }
+        
+            .footer-about {
+                font-size: 0.9rem;
+            }
+        
+            .footer-col h3 {
+                font-size: 1rem;
+            }
+        
+            .footer-col a {
+                font-size: 0.85rem;
+            }
+        
+            .footer-bottom {
+                font-size: 0.8rem;
+            }
+        
+            .auth-buttons {
+                flex-direction: column;
+                width: 100%;
+                gap: 0.5rem;
+            }
+        
+            .auth-buttons .btn {
+                width: 100%;
+                justify-content: center;
             }
         }
+        
     </style>
 </head>
 <body>

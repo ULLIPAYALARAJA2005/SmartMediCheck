@@ -223,4 +223,56 @@ input[type="file"] {
   -webkit-mask-composite: xor;
   mask-composite: exclude;
 }
-  
+/* Responsive for mobile devices */
+@media (max-width: 600px) {
+  .form-container {
+    width: 90%;
+    padding: 25px 20px;
+    border-radius: 10px;
+  }
+
+  .form-container h1 {
+    font-size: 28px;
+  }
+
+  .input-field {
+    margin: 20px 0;
+  }
+
+  .input-field input {
+    font-size: 14px;
+    padding: 15px 20px;
+  }
+
+  .options {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+  }
+
+  .submit-btn {
+    height: 40px;
+    font-size: 15px;
+  }
+
+  .signup-link, .login-link {
+    font-size: 13px;
+  }
+
+  .website-signature {
+    top: 10px;
+    left: 10px;
+    padding: 10px 16px;
+    gap: 8px;
+  }
+
+  .signature-logo {
+    width: 32px;
+    height: 32px;
+  }
+
+  .signature-text {
+    font-size: 1.1rem;
+  }
+}
