@@ -423,7 +423,17 @@
                 justify-content: center;
             }
         }
-        
+        <style>
+            body {
+              overflow: auto;
+              scrollbar-width: none; /* Firefox */
+            }
+          
+            body::-webkit-scrollbar {
+              display: none; /* Chrome, Safari, Edge */
+            }
+          </style>
+          
     </style>
 </head>
 <body>
