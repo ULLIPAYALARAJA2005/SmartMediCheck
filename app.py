@@ -31,6 +31,8 @@ feedbacks_collection1 = db["feedback"]  # Obesity feedback
 depression_collection = db["depression"]  # Depression feedback
 migraine_collection = db["migraine"]  # Migraine feedback
 dengue_collection = db["dengue"]  # Dengue feedback
+Allfeedbacks_collection = db["allfeedbacks"]  
+Best_feedbacks_collection = db["bestfeedbacks"]
 forgot_collection = db['forgot_password']
 
 
@@ -163,11 +165,138 @@ def update_password():
         return redirect(url_for('login'))
 
     return render_template('forms/update_password.html')
+
+
+@app.route("/admin")
+def admin_dashboard():
+    depression_users = depression_collection.count_documents({})
+    migraine_users = migraine_collection.count_documents({})
+    dengue_users = dengue_collection.count_documents({})
+    feedback_users = feedbacks_collection1.count_documents({})
+    
+    # Get last 7 users (latest first) from users_collection
+    recent_users = list(feedbacks_collection1.find().sort("_id", -1).limit(4))
+
+    return render_template(
+        "forms/admin.html",
+        depression_users=depression_users,
+        migraine_users=migraine_users,
+        dengue_users=dengue_users,
+        feedback_users=feedback_users,
+        recent_users=recent_users
+    )
     
     
     
+#bmi
+@app.route("/bmi-feedbacks")
+def bmi_feedbacks():
+    feedbacks = list(feedbacks_collection1.find())
+    return render_template("forms/admin_bmi.html", bmi_feedbacks=feedbacks)
+
     
+# Route to delete a feedback
+@app.route("/bmi-feedbacks/delete/<id>")
+def delete_bmi_feedback(id):
+    feedbacks_collection1.delete_one({"_id": ObjectId(id)})
+    return redirect(url_for('bmi_feedbacks'))
+
+# Route to "Add" feedback to bestfeedbacks
+@app.route("/bmi-feedbacks/add/<id>")
+def add_bmi_feedback(id):
+    fb = feedbacks_collection1.find_one({"_id": ObjectId(id)})
+    if fb:
+        fb.pop("_id")  # Remove original _id to avoid duplication error
+        Best_feedbacks_collection.insert_one(fb)
+    return redirect(url_for('bmi_feedbacks'))
+
+
+
+#dep
+@app.route("/dep-feedbacks")
+def dep_feedbacks():
+    feedbacks = list(depression_collection.find())
+    return render_template("forms/admin_depression.html", bmi_feedbacks=feedbacks)
+
     
+# Route to delete a feedback
+@app.route("/dep-feedbacks/delete/<id>")
+def delete_dep_feedback(id):
+    depression_collection.delete_one({"_id": ObjectId(id)})
+    return redirect(url_for('dep_feedbacks'))
+
+# Route to "Add" feedback to bestfeedbacks
+@app.route("/dep-feedbacks/add/<id>")
+def add_dep_feedback(id):
+    fb = depression_collection.find_one({"_id": ObjectId(id)})
+    if fb:
+        fb.pop("_id")  # Remove original _id to avoid duplication error
+        Best_feedbacks_collection.insert_one(fb)
+    return redirect(url_for('dep_feedbacks'))
+        
+    
+#dengue    
+@app.route("/deg-feedbacks")
+def deg_feedbacks():
+    feedbacks = list(dengue_collection.find())
+    return render_template("forms/admin_dengue.html", bmi_feedbacks=feedbacks)
+
+    
+# Route to delete a feedback
+@app.route("/deg-feedbacks/delete/<id>")
+def delete_deg_feedback(id):
+    dengue_collection.delete_one({"_id": ObjectId(id)})
+    return redirect(url_for('deg_feedbacks'))
+
+# Route to "Add" feedback to bestfeedbacks
+@app.route("/deg-feedbacks/add/<id>")
+def add_deg_feedback(id):
+    fb = dengue_collection.find_one({"_id": ObjectId(id)})
+    if fb:
+        fb.pop("_id")  # Remove original _id to avoid duplication error
+        Best_feedbacks_collection.insert_one(fb)
+    return redirect(url_for('deg_feedbacks'))
+ 
+
+#migrain
+@app.route("/degm-feedbacks")
+def degm_feedbacks():
+    feedbacks = list(migraine_collection.find())
+    return render_template("forms/admin_migraine.html", bmi_feedbacks=feedbacks)
+
+    
+# Route to delete a feedback
+@app.route("/degm-feedbacks/delete/<id>")
+def delete_degm_feedback(id):
+    migraine_collection.delete_one({"_id": ObjectId(id)})
+    return redirect(url_for('degm_feedbacks'))
+
+# Route to "Add" feedback to bestfeedbacks
+@app.route("/degm-feedbacks/add/<id>")
+def add_degm_feedback(id):
+    fb = migraine_collection.find_one({"_id": ObjectId(id)})
+    if fb:
+        fb.pop("_id")  # Remove original _id to avoid duplication error
+        Best_feedbacks_collection.insert_one(fb)
+    return redirect(url_for('degm_feedbacks'))
+
+
+#bestfeedback
+
+@app.route("/best-feedbacks")
+def best_feedbacks():
+    feedbacks = list(Best_feedbacks_collection.find())
+    return render_template("forms/admin_best_feedback.html", bmi_feedbacks=feedbacks)
+
+# Route to delete a feedback
+@app.route("/best-feedbacks/delete/<id>")
+def delete_best_feedback(id):
+    Best_feedbacks_collection.delete_one({"_id": ObjectId(id)})
+    return redirect(url_for('best_feedbacks'))
+
+ 
+ 
+          
 @app.route("/")
 def start():
     all_collections = [
@@ -175,8 +304,6 @@ def start():
         depression_collection,
         migraine_collection,
         dengue_collection
-        
-        
     ]
     
     total_sum = 0
@@ -185,12 +312,9 @@ def start():
     total_feedbacks = 0
     total_login = 0
 
-    feedbacks = list(users_collection.find())
-    total_users += len(feedbacks)
-    
-    feedbacks = list(users_collection_demo.find())
-    total_login += len(feedbacks)
-    
+    # Use pre-stored best feedbacks from collection
+    best_feedbacks = list(Best_feedbacks_collection.find())
+
     for collection in all_collections:
         feedbacks = list(collection.find())
         total_feedbacks += len(feedbacks)
@@ -198,21 +322,31 @@ def start():
         for feed in feedbacks:
             if 'rating' in feed:
                 try:
-                    rating = float(feed['rating'])  # Ensure numeric
+                    rating = float(feed['rating'])
                     total_sum += rating
                     total_ratings += 1
                 except ValueError:
                     continue
 
+    feedbacks = list(users_collection.find())
+    total_users += len(feedbacks)
+    
+    feedbacks = list(users_collection_demo.find())
+    total_login += len(feedbacks)
+
     avg = 0
     if total_ratings > 0:
-        avg = round(total_sum / (total_ratings * 5), 1) * 100  # Normalized to 100%
+        avg = round(total_sum / (total_ratings * 5), 1) * 100
 
-    print(f"Average Feedback Rating: {avg}%")
-    print(f"Total Feedback Users: {total_users}")
-    
-    return render_template("forms/start.html", average_rating=avg, total_users=total_users,total_feedbacks=total_feedbacks,total_login=total_login)
-  
+    return render_template(
+        "forms/start.html", 
+        average_rating=avg, 
+        total_users=total_users,
+        total_feedbacks=total_feedbacks,
+        total_login=total_login,
+        best_feedbacks=best_feedbacks
+    )
+
      
 @app.route("/getstart")
 def getstart():
@@ -266,6 +400,8 @@ def login_user():
     email = request.form.get("email")
     password = request.form.get("password")
 
+    if(email=="admin@gmail.com" or password=="admin123"):
+        return redirect(url_for("admin_dashboard"))
     # Check if email exists
     user = users_collection.find_one({"email": email})
     if not user:
@@ -432,6 +568,13 @@ def submit_feedback():
         "date": current_date,
         "rating": rating
     })
+    Allfeedbacks_collection.insert_one({
+        "email": email,
+        "name": username,
+        "feedback": feedback_text,
+        "date": current_date,
+        "rating": rating
+    })
 
     flash("Feedback submitted successfully!", "success")
     return redirect(url_for("feedback"))
@@ -490,6 +633,7 @@ def delete_feedback(feedback_id):
     feedback = feedbacks_collection.find_one({"_id": ObjectId(feedback_id)})
     if feedback and feedback["email"] == session["user"]:  
         feedbacks_collection.delete_one({"_id": ObjectId(feedback_id)})
+        Allfeedbacks_collection.delete_one({"_id": ObjectId(feedback_id)})
         flash("Feedback deleted successfully!", "success")
     else:
         flash("You are not authorized to delete this feedback.", "danger")
@@ -531,6 +675,17 @@ def edit_feedback(feedback_id):
                 }
             }
         )
+        Allfeedbacks_collection.update_one(
+            {"_id": ObjectId(feedback_id)},
+            {
+                "$set": {
+                    "feedback": new_feedback_text,
+                    "rating": rating,
+                    "date": current_date
+                }
+            }
+        )
+        
         flash("Feedback updated successfully!", "success")
     else:
         flash("You are not authorized to edit this feedback.", "danger")
