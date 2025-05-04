@@ -18,8 +18,10 @@
             --light-gray: #e2e8f0;
             --rounded-md: 8px;
             --rounded-lg: 12px;
+            --rounded-xl: 16px;
             --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
             --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s ease;
         }
 
@@ -242,6 +244,197 @@
             color: var(--gray);
         }
 
+        /* Testimonials Section */
+        .testimonials {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, #f8fafc 0%, #f0f9ff 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testimonials::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -10%;
+            width: 60%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.1) 0%, transparent 70%);
+            z-index: 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .section-header p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+
+        .testimonials-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .testimonials-carousel {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            width: 100%;
+        }
+
+        .testimonial-slide {
+            min-width: 100%;
+            padding: 0 1rem;
+            box-sizing: border-box;
+        }
+
+        .testimonial-card {
+            background: var(--white);
+            border-radius: var(--rounded-xl);
+            padding: 3rem;
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+            position: relative;
+            margin: 0 auto;
+            max-width: 700px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .testimonial-card::before {
+            content: '\201C';
+            position: absolute;
+            top: 1rem;
+            left: 2rem;
+            font-family: Georgia, serif;
+            font-size: 5rem;
+            color: rgba(37, 99, 235, 0.1);
+            line-height: 1;
+        }
+
+        .user-profile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .user-info h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .date {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .rating {
+            display: flex;
+            justify-content: center;
+            gap: 0.3rem;
+            margin-bottom: 2rem;
+        }
+
+        .rating i {
+            color: #fbbf24;
+            font-size: 1.5rem;
+        }
+
+        .feedback-text {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            color: var(--dark);
+            font-style: italic;
+            position: relative;
+            padding: 0 2rem;
+        }
+
+        .carousel-nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 3rem;
+            gap: 2rem;
+        }
+
+        .carousel-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--white);
+            border: none;
+            box-shadow: var(--shadow-md);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            color: var(--primary);
+        }
+
+        .carousel-btn:hover {
+            background: var(--primary);
+            color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
+        }
+
+        .carousel-btn i {
+            font-size: 1.3rem;
+        }
+
+        .carousel-dots {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--light-gray);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .dot.active {
+            background: var(--primary);
+            transform: scale(1.2);
+        }
+
         /* Footer */
         footer {
             background-color: var(--dark);
@@ -313,7 +506,7 @@
             font-size: 0.9rem;
         }
 
-        /* Responsive */
+        /* Responsive Design */
         @media (max-width: 992px) {
             .hero-container {
                 flex-direction: column;
@@ -333,7 +526,38 @@
             .stats {
                 justify-content: center;
             }
+            
+            .footer-container {
+                flex-wrap: wrap;
+                gap: 2rem;
+            }
+            
+            .footer-about {
+                max-width: 100%;
+            }
         }
+        
+        @media (max-width: 768px) {
+            .testimonial-card {
+                padding: 2rem;
+            }
+            
+            .testimonial-card::before {
+                font-size: 4rem;
+            }
+            
+            .avatar {
+                width: 70px;
+                height: 70px;
+                font-size: 1.8rem;
+            }
+            
+            .feedback-text {
+                font-size: 1.1rem;
+                padding: 0 1rem;
+            }
+        }
+        
         @media (max-width: 576px) {
             nav {
                 flex-direction: column;
@@ -422,18 +646,33 @@
                 width: 100%;
                 justify-content: center;
             }
+            
+            .testimonial-card {
+                padding: 1.5rem;
+            }
+            
+            .avatar {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+            
+            .feedback-text {
+                font-size: 1rem;
+            }
+            
+            .carousel-btn {
+                width: 45px;
+                height: 45px;
+            }
         }
-        <style>
-            body {
-              overflow: auto;
-              scrollbar-width: none; /* Firefox */
-            }
-          
-            body::-webkit-scrollbar {
-              display: none; /* Chrome, Safari, Edge */
-            }
-          </style>
-          
+        img {
+            width: 120px;
+            height: 120px;
+            border-radius: 100%;
+            object-fit: cover;
+            border: 7px solid skyblue;
+        }
     </style>
 </head>
 <body>
@@ -444,8 +683,6 @@
                     <div class="logo-icon"><i class="fas fa-brain"></i></div>
                     <div class="logo-text" style="font-size:30px; color:blue;">SmartMediCheck</div>
                 </a>
-                
-           
                 
                 <div class="auth-buttons">
                     <a href="{{ url_for('login') }}" class="btn btn-secondary">Log In</a>
@@ -499,20 +736,103 @@
                 </div>
             </div>
         </section>
+
+        <!-- Testimonials Section -->
+        <section class="testimonials">
+            <div class="container">
+                <div class="section-header">
+                    <h2>What Our Users Say</h2>
+                    <p>Hear from people who have experienced our AI healthcare platform</p>
+                </div>
+                
+                <div class="testimonials-container">
+                    <div class="testimonials-carousel" id="testimonialsCarousel">
+                        {% for feedback in best_feedbacks %}
+                        <div class="testimonial-slide">
+                            <div class="testimonial-card">
+                                <div class="user-profile">
+                                    <div class="avatar">
+                                        <img src="https://randomuser.me/api/portraits/men/{{ loop.index * 3 % 99 }}.jpg" alt="User">
+                                    </div>
+                                    <div class="user-info">
+                                        <h4>{{ feedback.name }}</h4>
+                                        <p class="date">{{ feedback.date }}</p>
+                                    </div>
+                                </div>
+                                <div class="rating">
+                                    {% for i in range(1, 6) %}
+                                    <i class="fas fa-star {% if i <= feedback.rating|int %}filled{% endif %}"></i>
+                                    {% endfor %}
+                                </div>
+                                <p class="feedback-text">{{ feedback.feedback }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="carousel-nav">
+                        <button class="carousel-btn" id="prevBtn">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        
+                        <div class="carousel-dots" id="carouselDots">
+                            {% for feedback in best_feedbacks %}
+                            <div class="dot {% if loop.first %}active{% endif %}" data-index="{{ loop.index0 }}"></div>
+                            {% endfor %}
+                        </div>
+                        
+                        <button class="carousel-btn" id="nextBtn">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <footer>
         <div class="container">
             <div class="footer-container">
                 <div class="footer-about">
-                    <a href="#" class="footer-logo">Preventi<span>Care</span></a>
+                    <a href="#" class="footer-logo">Smart<span>MediCheck</span></a>
                     <p>Advanced AI for predictive healthcare and early disease detection. Our mission is to revolutionize preventive medicine.</p>
                 </div>
                 
-               
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h3>Company</h3>
+                        <ul>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Our Team</a></li>
+                            <li><a href="#">Careers</a></li>
+                            <li><a href="#">Press</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-col">
+                        <h3>Resources</h3>
+                        <ul>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Research</a></li>
+                            <li><a href="#">Case Studies</a></li>
+                            <li><a href="#">Help Center</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-col">
+                        <h3>Legal</h3>
+                        <ul>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                            <li><a href="#">HIPAA Compliance</a></li>
+                            <li><a href="#">Cookie Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2023 PreventiCare AI. All rights reserved. | HIPAA Compliant | FDA Cleared</p>
+                <p>&copy; 2023 SmartMediCheck. All rights reserved. | HIPAA Compliant | FDA Cleared</p>
             </div>
         </div>
     </footer>
@@ -539,6 +859,80 @@
             heroImage.style.opacity = '0';
             heroImage.style.transform = 'translateY(20px)';
             heroImage.style.transition = 'opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s';
+            
+            // Testimonials Carousel
+            const carousel = document.getElementById('testimonialsCarousel');
+            const dots = document.querySelectorAll('.dot');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            let currentIndex = 0;
+            let intervalId;
+            const cardCount = document.querySelectorAll('.testimonial-slide').length;
+            
+            function updateCarousel() {
+                carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+                
+                // Update dots
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentIndex);
+                });
+            }
+            
+            function nextSlide() {
+                currentIndex = (currentIndex + 1) % cardCount;
+                updateCarousel();
+            }
+            
+            function prevSlide() {
+                currentIndex = (currentIndex - 1 + cardCount) % cardCount;
+                updateCarousel();
+            }
+            
+            function goToSlide(index) {
+                currentIndex = index;
+                updateCarousel();
+            }
+            
+            function startAutoSlide() {
+                intervalId = setInterval(nextSlide, 5000); // Changed to 5 seconds
+            }
+            
+            function resetAutoSlide() {
+                clearInterval(intervalId);
+                startAutoSlide();
+            }
+            
+            // Event listeners
+            nextBtn.addEventListener('click', () => {
+                nextSlide();
+                resetAutoSlide();
+            });
+            
+            prevBtn.addEventListener('click', () => {
+                prevSlide();
+                resetAutoSlide();
+            });
+            
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    goToSlide(index);
+                    resetAutoSlide();
+                });
+            });
+            
+            // Start auto-slide
+            if (cardCount > 1) {
+                startAutoSlide();
+                
+                // Pause on hover
+                carousel.addEventListener('mouseenter', () => {
+                    clearInterval(intervalId);
+                });
+                
+                carousel.addEventListener('mouseleave', () => {
+                    startAutoSlide();
+                });
+            }
         });
     </script>
 </body>
