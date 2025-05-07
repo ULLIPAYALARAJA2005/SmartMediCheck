@@ -57,14 +57,13 @@ def generate_otp():
 # Function to send OTP via email
 def send_otp_email(receiver_email, otp):
     try:
-        msg = MIMEText(f"Your OTP for password reset is: {otp}")
+        msg = MIMEText(f"Your OTP for password reset is: {otp}") 
         msg["Subject"] = "Password Reset OTP"
         msg["From"] = EMAIL_SENDER
         msg["To"] = receiver_email
-
         server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
         server.starttls()
-        server.login(EMAIL_SENDER, EMAIL_PASSWORD)
+        server.login(EMAIL_SENDER, EMAIL_PASSWORD) 
         server.sendmail(EMAIL_SENDER, receiver_email, msg.as_string())
         server.quit()
         return True
@@ -143,7 +142,7 @@ def verify_otp():
         record = forgot_collection.find_one({"email": email, "otp": otp})
 
         if record:
-            session.pop('otp', None)
+            session.pop('otp', None) # Clear OTP from session
             return redirect(url_for('update_password'))
         else:
             flash("Invalid OTP", "danger")
@@ -158,7 +157,7 @@ def update_password():
 
     if request.method == 'POST':
         new_password = request.form['password']
-        email = session.pop('email', None)
+        email = session.pop('email', None)# Clear email from session
 
         users_collection.update_one({"email": email}, {"$set": {"password": new_password}})
         flash("Password updated successfully. Please log in.", "success")
@@ -174,7 +173,7 @@ def admin_dashboard():
     dengue_users = dengue_collection.count_documents({})
     feedback_users = feedbacks_collection1.count_documents({})
     
-    # Get last 7 users (latest first) from users_collection
+    # Get last 4 users (latest first) from users_collection
     recent_users = list(feedbacks_collection1.find().sort("_id", -1).limit(4))
 
     return render_template(
@@ -323,8 +322,8 @@ def start():
             if 'rating' in feed:
                 try:
                     rating = float(feed['rating'])
-                    total_sum += rating
-                    total_ratings += 1
+                    total_sum += rating 
+                    total_ratings += 1 
                 except ValueError:
                     continue
 
@@ -352,6 +351,8 @@ def start():
 def getstart():
       return render_template("forms/demo_index.html")      
     
+from werkzeug.security import generate_password_hash, check_password_hash
+
 # Route to display registration page
 @app.route("/signup")
 def signup():
@@ -365,14 +366,15 @@ def signup_action():
     email = request.form.get("email")
     password = request.form.get("password")
     photo = request.files["photo"]
+
     # Hash Password
+    hashed_password = generate_password_hash(password)
 
     # Store Image in GridFS
     if photo:
         photo_id = fs.put(photo.read(), filename=photo.filename)
     else:
         photo_id = None
-
 
     # Check if email already exists
     existing_user = users_collection.find_one({"email": email})
@@ -381,18 +383,23 @@ def signup_action():
         return redirect(url_for("signup"))
 
     # Insert new user if email does not exist
-        # Store User Data in MongoDB
-    user_data = {"name": name, "email": email, "password":password, "photo_id": photo_id}
-    users_collection.insert_one(user_data)  
-    user_data_full = {"name": name, "email": email, "password":password, "photo_id": photo_id}
-    users_collection_demo.insert_one(user_data_full)   
+    user_data = {
+        "name": name,
+        "email": email,
+        "password": hashed_password,
+        "photo_id": photo_id
+    }
+    users_collection.insert_one(user_data)
+    users_collection_demo.insert_one(user_data)
     flash("Registration successful!", "success")
     return redirect(url_for("login"))
+
 
 # Route to display login page
 @app.route("/login")
 def login():
     return render_template("forms/login.html")
+
 
 # Route to handle login form submission
 @app.route("/login", methods=["POST"])
@@ -400,16 +407,17 @@ def login_user():
     email = request.form.get("email")
     password = request.form.get("password")
 
-    if(email=="admin@gmail.com" or password=="admin123"):
+    if email == "admin@gmail.com" or password == "admin123":
         return redirect(url_for("admin_dashboard"))
+
     # Check if email exists
     user = users_collection.find_one({"email": email})
     if not user:
         flash("Email is not registered. Please sign up.", "danger")
         return redirect(url_for("login"))
 
-    # Check if password matches
-    if user["password"] != password:
+    # Check if password matches (with hash)
+    if not check_password_hash(user["password"], password):
         flash("Incorrect password. Please try again.", "danger")
         return redirect(url_for("login"))
 
